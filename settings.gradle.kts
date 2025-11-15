@@ -21,3 +21,12 @@ dependencyResolutionManagement {
 
 rootProject.name = "GenCanvas"
 include(":app")
+include(":domain")
+include(":data")
+include(":auth")
+include(":auth")
+include(":features")
+include(":features:auth")
+include(":features:home")
+include(":core")
+include(":features:onboarding")

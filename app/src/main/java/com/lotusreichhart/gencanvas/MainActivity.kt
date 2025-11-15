@@ -4,44 +4,58 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.lotusreichhart.gencanvas.ui.theme.GenCanvasTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
+import com.lotusreichhart.core.ui.theme.GenCanvasTheme
+import com.lotusreichhart.gencanvas.navigation.MainNavHost
+import com.lotusreichhart.gencanvas.presentation.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val splashScreen = installSplashScreen()
+
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        splashScreen.setKeepOnScreenCondition {
+            viewModel.isLoading.value
+        }
+
+        enableEdgeToEdge() // bật tràn viền
         setContent {
-            GenCanvasTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            GenCanvasTheme(
+                dynamicColor = false
+            ) {
+
+                val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+                val startDestination by viewModel.startDestination.collectAsStateWithLifecycle()
+
+                if (!isLoading) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        val navController = rememberNavController()
+
+                        MainNavHost(
+                            navController = navController,
+                            startDestination = startDestination
+                        )
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GenCanvasTheme {
-        Greeting("Android")
     }
 }
