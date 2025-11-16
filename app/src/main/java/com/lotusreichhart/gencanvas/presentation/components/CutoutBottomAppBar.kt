@@ -55,15 +55,15 @@ fun CutoutBottomAppBar(
     }
 }
 
-@Preview
-@Composable
-private fun PreviewCutoutBottomAppBar() {
-    CutoutBottomAppBar {
-        repeat(2) {
-            Text("a")
-        }
-    }
-}
+//@Preview
+//@Composable
+//private fun PreviewCutoutBottomAppBar() {
+//    CutoutBottomAppBar {
+//        repeat(2) {
+//            Text("a")
+//        }
+//    }
+//}
 
 private class BottomAppBarCutoutShape(
     private val fabDiameter: Float,

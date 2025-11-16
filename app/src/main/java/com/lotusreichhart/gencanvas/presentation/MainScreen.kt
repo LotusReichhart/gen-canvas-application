@@ -30,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +44,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.lotusreichhart.core.navigation.Route
+import com.lotusreichhart.core.ui.theme.primaryGradient
 import com.lotusreichhart.gencanvas.presentation.components.CutoutBottomAppBar
 import com.lotusreichhart.home.navigation.homeGraph
 
@@ -68,14 +68,6 @@ fun MainScreen() {
 
     Scaffold(
         floatingActionButton = {
-            val fabGradient = Brush.linearGradient(
-                colors = listOf(
-                    MaterialTheme.colorScheme.secondary,
-                    MaterialTheme.colorScheme.primaryContainer,
-                    MaterialTheme.colorScheme.primary
-                )
-            )
-
             FloatingActionButton(
                 onClick = {
 
@@ -87,7 +79,7 @@ fun MainScreen() {
                 modifier = Modifier
                     .offset(y = 40.dp)
                     .background(
-                        brush = fabGradient,
+                        brush = primaryGradient(),
                         shape = CircleShape
                     )
             ) {

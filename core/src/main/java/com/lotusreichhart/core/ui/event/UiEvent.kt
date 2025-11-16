@@ -1,0 +1,24 @@
+package com.lotusreichhart.core.ui.event
+
+sealed class UiEvent {
+    data class ShowToast(val message: String) : UiEvent()
+
+    enum class SnackBarType {
+        INFO,
+        SUCCESS,
+        ERROR
+    }
+
+    data class ShowSnackBar(
+        val message: String,
+        val actionLabel: String? = null,
+        val type: SnackBarType = SnackBarType.INFO
+    ) : UiEvent()
+
+    data class ShowDialog(
+        val title: String,
+        val message: String,
+        val positiveButtonText: String = "OK",
+        val onConfirm: () -> Unit = {}
+    ) : UiEvent()
+}

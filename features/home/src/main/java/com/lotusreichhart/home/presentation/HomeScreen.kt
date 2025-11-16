@@ -58,6 +58,8 @@ import com.lotusreichhart.home.utils.StartHeight
 
 import com.lotusreichhart.home.R
 
+import com.lotusreichhart.core.ui.theme.primaryGradient
+
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalMotionApi::class,
@@ -272,13 +274,7 @@ private fun HomeHeader(
                 .layoutId("avatar")
                 .clip(CircleShape)
                 .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.secondary,
-                            MaterialTheme.colorScheme.primaryContainer,
-                            MaterialTheme.colorScheme.primary
-                        )
-                    )
+                    brush = primaryGradient()
                 ),
             contentAlignment = Alignment.Center
         ) {

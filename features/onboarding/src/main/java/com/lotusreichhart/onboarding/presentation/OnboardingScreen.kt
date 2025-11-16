@@ -36,6 +36,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lotusreichhart.core.ui.components.GradientButton
+import com.lotusreichhart.core.ui.theme.errorGradient
+import com.lotusreichhart.core.ui.theme.primaryGradient
 import kotlinx.coroutines.launch
 
 private data class OnboardingPage(
@@ -72,22 +74,6 @@ fun OnboardingScreen(
     val pagerState = rememberPagerState(pageCount = { pageCount })
     val scope = rememberCoroutineScope()
 
-    val nextButtonGradient = Brush.linearGradient(
-        colors = listOf(
-            MaterialTheme.colorScheme.secondary,
-            MaterialTheme.colorScheme.primaryContainer,
-            MaterialTheme.colorScheme.primary
-        )
-    )
-
-    val startButtonGradient = Brush.linearGradient(
-        colors = listOf(
-            MaterialTheme.colorScheme.tertiary,
-            MaterialTheme.colorScheme.errorContainer,
-            MaterialTheme.colorScheme.error
-        )
-    )
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -107,7 +93,7 @@ fun OnboardingScreen(
         if (pagerState.currentPage < pageCount - 1) {
             GradientButton(
                 text = "Tiếp tục",
-                gradient = nextButtonGradient,
+                gradient = primaryGradient(),
                 onClick = {
                     scope.launch {
                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
@@ -117,7 +103,7 @@ fun OnboardingScreen(
         } else {
             GradientButton(
                 text = "Bắt đầu ngay",
-                gradient = startButtonGradient,
+                gradient = errorGradient(),
                 onClick = {
                     scope.launch {
                         viewModel.onGetStartedClick()

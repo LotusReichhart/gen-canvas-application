@@ -1,4 +1,4 @@
-package com.lotusreichhart.core.utils
+package com.lotusreichhart.core.ui.event
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -14,8 +14,12 @@ class GlobalUiEventManager @Inject constructor() {
         _events.emit(UiEvent.ShowToast(message))
     }
 
-    suspend fun showSnackBar(message: String, actionLabel: String? = null) {
-        _events.emit(UiEvent.ShowSnackBar(message, actionLabel))
+    suspend fun showSnackBar(
+        message: String,
+        actionLabel: String? = null,
+        type: UiEvent.SnackBarType = UiEvent.SnackBarType.INFO
+    ) {
+        _events.emit(UiEvent.ShowSnackBar(message, actionLabel, type))
     }
 
     suspend fun showDialog(

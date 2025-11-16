@@ -10,6 +10,7 @@ data class HomeUiState(
     val isLoading: Boolean = false,
     val banners: List<BannerEntity> = emptyList(),
     val error: String? = null,
+    val isOffline: Boolean = false,
 
     val gridItems: List<GridItemData> = emptyList(),
     val horizontalListItems: List<HorizontalItemData> = emptyList(),

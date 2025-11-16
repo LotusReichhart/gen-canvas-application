@@ -8,7 +8,9 @@ import okhttp3.Request
 import okhttp3.Response
 
 
-class AuthInterceptor(private val tokenDataSource: TokenLocalDataSource) : Interceptor {
+class AuthInterceptor(
+    private val tokenDataSource: TokenLocalDataSource
+) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
@@ -16,7 +18,7 @@ class AuthInterceptor(private val tokenDataSource: TokenLocalDataSource) : Inter
             return chain.proceed(request)
         }
 
-        val token = runBlocking { tokenDataSource.accessToken.firstOrNull() }
+        val token = tokenDataSource.getAccessTokenValue()
 
         val newRequest = if (token != null) {
             request.newBuilder()
