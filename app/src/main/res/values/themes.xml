@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.GenCanvas" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background_color</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/gen_canvas</item>
+        <item name="postSplashScreenTheme">@style/Theme.GenCanvas</item>
+    </style>
 </resources>
