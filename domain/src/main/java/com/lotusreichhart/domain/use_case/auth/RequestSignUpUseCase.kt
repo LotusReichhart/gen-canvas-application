@@ -1,6 +1,6 @@
-package com.lotusreichhart.domain.use_cases.auth
+package com.lotusreichhart.domain.use_case.auth
 
-import com.lotusreichhart.domain.repositories.AuthRepository
+import com.lotusreichhart.domain.repository.AuthRepository
 
 class RequestSignUpUseCase(
     private val authRepository: AuthRepository

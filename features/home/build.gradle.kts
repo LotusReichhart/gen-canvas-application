@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -6,6 +8,15 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
 }
+
+val properties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    properties.load(localPropertiesFile.inputStream())
+}
+
+val rewardedAdUnitIdDev = properties.getProperty("REWARDED_AD_UNIT_ID_DEV") ?: ""
+val rewardedAdUnitIdProd = properties.getProperty("REWARDED_AD_UNIT_ID_PROD") ?: ""
 
 android {
     namespace = "com.lotusreichhart.home"
@@ -25,24 +36,34 @@ android {
         buildConfig = true
     }
 
-    buildTypes {
-        debug {
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
             buildConfigField(
                 "String",
                 "REWARDED_AD_UNIT_ID",
-                "\"ca-app-pub-3940256099942544/5224354917\""
+                "\"$rewardedAdUnitIdDev\""
             )
         }
+
+        create("prod") {
+            dimension = "environment"
+            buildConfigField(
+                "String",
+                "REWARDED_AD_UNIT_ID",
+                "\"$rewardedAdUnitIdProd\""
+            )
+        }
+    }
+
+    buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
-            )
-            buildConfigField(
-                "String",
-                "REWARDED_AD_UNIT_ID",
-                "\"ca-app-pub-YOUR_REAL_REWARDED_UNIT_ID\""
             )
         }
     }

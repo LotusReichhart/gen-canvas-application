@@ -1,4 +1,4 @@
-package com.lotusreichhart.domain.repositories
+package com.lotusreichhart.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 

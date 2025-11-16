@@ -1,4 +1,4 @@
-package com.lotusreichhart.data.remote.services
+package com.lotusreichhart.data.remote.service
 
 import com.lotusreichhart.data.remote.dto.ResponseWrapper
 import com.lotusreichhart.data.remote.dto.auth.AuthResponse

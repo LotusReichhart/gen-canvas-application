@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lotusreichhart.core.navigation.Route
-import com.lotusreichhart.domain.use_cases.settings.ReadOnboardingStateUseCase
+import com.lotusreichhart.domain.use_case.settings.ReadOnboardingStateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

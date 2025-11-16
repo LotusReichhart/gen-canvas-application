@@ -1,7 +1,7 @@
-package com.lotusreichhart.domain.use_cases.user
+package com.lotusreichhart.domain.use_case.user
 
-import com.lotusreichhart.domain.entities.UserEntity
-import com.lotusreichhart.domain.repositories.UserRepository
+import com.lotusreichhart.domain.entity.UserEntity
+import com.lotusreichhart.domain.repository.UserRepository
 
 class FetchUserProfileUseCase(
     private val userRepository: UserRepository

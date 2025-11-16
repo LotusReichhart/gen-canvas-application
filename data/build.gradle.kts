@@ -10,14 +10,12 @@ plugins {
 
 val properties = Properties()
 val localPropertiesFile = rootProject.file("local.properties")
-
 if (localPropertiesFile.exists()) {
-    localPropertiesFile.inputStream().use { input ->
-        properties.load(input)
-    }
+    properties.load(localPropertiesFile.inputStream())
 }
 
-val baseUrl = properties.getProperty("BASE_URL") ?: ""
+val baseUrlDev = properties.getProperty("BASE_URL_DEV") ?: ""
+val baseUrlProd = properties.getProperty("BASE_URL_PROD") ?: ""
 
 android {
     namespace = "com.lotusreichhart.data"
@@ -36,18 +34,27 @@ android {
         buildConfig = true
     }
 
-    buildTypes {
-        debug {
-            isMinifyEnabled = false
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.117:5000\"")
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            buildConfigField("String", "BASE_URL", "\"$baseUrlDev\"")
         }
+
+        create("prod") {
+            dimension = "environment"
+            buildConfigField("String", "BASE_URL", "\"$baseUrlProd\"")
+        }
+    }
+
+    buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
         }
     }
     compileOptions {

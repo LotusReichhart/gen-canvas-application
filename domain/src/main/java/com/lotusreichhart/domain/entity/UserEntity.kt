@@ -1,4 +1,4 @@
-package com.lotusreichhart.domain.entities
+package com.lotusreichhart.domain.entity
 
 enum class UserStatus {
     ACTIVE,

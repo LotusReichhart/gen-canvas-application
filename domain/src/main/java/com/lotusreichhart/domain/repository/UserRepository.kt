@@ -1,6 +1,6 @@
-package com.lotusreichhart.domain.repositories
+package com.lotusreichhart.domain.repository
 
-import com.lotusreichhart.domain.entities.UserEntity
+import com.lotusreichhart.domain.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {

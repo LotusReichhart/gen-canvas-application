@@ -1,4 +1,4 @@
-package com.lotusreichhart.domain.repositories
+package com.lotusreichhart.domain.repository
 
 interface AuthRepository {
     suspend fun signInWithEmail(email: String, password: String): Result<Unit>

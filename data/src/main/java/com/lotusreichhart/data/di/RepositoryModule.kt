@@ -1,11 +1,11 @@
 package com.lotusreichhart.data.di
 
-import com.lotusreichhart.data.repositories.AuthRepositoryImpl
-import com.lotusreichhart.data.repositories.BannerRepositoryImpl
-import com.lotusreichhart.data.repositories.SettingsRepositoryImpl
-import com.lotusreichhart.domain.repositories.AuthRepository
-import com.lotusreichhart.domain.repositories.BannerRepository
-import com.lotusreichhart.domain.repositories.SettingsRepository
+import com.lotusreichhart.data.repository.AuthRepositoryImpl
+import com.lotusreichhart.data.repository.BannerRepositoryImpl
+import com.lotusreichhart.data.repository.SettingsRepositoryImpl
+import com.lotusreichhart.domain.repository.AuthRepository
+import com.lotusreichhart.domain.repository.BannerRepository
+import com.lotusreichhart.domain.repository.SettingsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

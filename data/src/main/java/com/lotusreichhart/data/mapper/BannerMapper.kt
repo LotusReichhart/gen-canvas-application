@@ -1,7 +1,7 @@
 package com.lotusreichhart.data.mapper
 
 import com.lotusreichhart.data.remote.dto.banner.BannerDTO
-import com.lotusreichhart.domain.entities.BannerEntity
+import com.lotusreichhart.domain.entity.BannerEntity
 
 fun BannerDTO.toDomain(): BannerEntity {
     return BannerEntity(

@@ -1,8 +1,6 @@
-package com.lotusreichhart.data.remote
+package com.lotusreichhart.data.remote.interceptor
 
 import com.lotusreichhart.data.local.TokenLocalDataSource
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

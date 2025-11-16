@@ -1,4 +1,4 @@
-package com.lotusreichhart.data.repositories
+package com.lotusreichhart.data.repository
 
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import com.lotusreichhart.domain.repositories.SettingsRepository
+import com.lotusreichhart.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

@@ -1,8 +1,8 @@
-package com.lotusreichhart.domain.use_cases.auth
+package com.lotusreichhart.domain.use_case.auth
 
-import com.lotusreichhart.domain.entities.UserEntity
-import com.lotusreichhart.domain.repositories.AuthRepository
-import com.lotusreichhart.domain.repositories.UserRepository
+import com.lotusreichhart.domain.entity.UserEntity
+import com.lotusreichhart.domain.repository.AuthRepository
+import com.lotusreichhart.domain.repository.UserRepository
 
 class SignInWithGoogleUseCase(
     private val authRepository: AuthRepository,

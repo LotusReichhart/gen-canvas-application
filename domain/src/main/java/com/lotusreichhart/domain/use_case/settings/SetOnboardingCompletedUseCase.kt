@@ -1,6 +1,6 @@
-package com.lotusreichhart.domain.use_cases.settings
+package com.lotusreichhart.domain.use_case.settings
 
-import com.lotusreichhart.domain.repositories.SettingsRepository
+import com.lotusreichhart.domain.repository.SettingsRepository
 
 class SetOnboardingCompletedUseCase(
     private val settingsRepository: SettingsRepository

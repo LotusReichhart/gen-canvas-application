@@ -1,6 +1,6 @@
 package com.lotusreichhart.home.presentation
 
-import com.lotusreichhart.domain.entities.BannerEntity
+import com.lotusreichhart.domain.entity.BannerEntity
 
 data class GridItemData(val id: Int, val isLarge: Boolean)
 data class HorizontalItemData(val id: Int)

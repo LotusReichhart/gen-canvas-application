@@ -52,7 +52,7 @@ import coil3.request.crossfade
 import kotlinx.coroutines.delay
 import kotlin.math.abs
 
-import com.lotusreichhart.domain.entities.BannerEntity
+import com.lotusreichhart.domain.entity.BannerEntity
 import com.lotusreichhart.home.utils.EndHeight
 import com.lotusreichhart.home.utils.StartHeight
 

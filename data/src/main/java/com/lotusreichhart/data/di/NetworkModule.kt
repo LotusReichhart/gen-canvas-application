@@ -13,13 +13,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import jakarta.inject.Named
 
-import com.lotusreichhart.data.remote.AuthInterceptor
-import com.lotusreichhart.data.remote.TokenAuthenticator
-import com.lotusreichhart.data.remote.services.AuthApiService
+import com.lotusreichhart.data.remote.interceptor.AuthInterceptor
+import com.lotusreichhart.data.remote.interceptor.TokenAuthenticator
+import com.lotusreichhart.data.remote.service.AuthApiService
 
 import com.lotusreichhart.data.BuildConfig
 import com.lotusreichhart.data.local.TokenLocalDataSource
-import com.lotusreichhart.data.remote.services.BannerApiService
+import com.lotusreichhart.data.remote.service.BannerApiService
 
 @Module
 @InstallIn(SingletonComponent::class)

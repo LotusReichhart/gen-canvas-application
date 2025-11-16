@@ -1,10 +1,10 @@
-package com.lotusreichhart.data.repositories
+package com.lotusreichhart.data.repository
 
 import com.lotusreichhart.data.mapper.toDomain
-import com.lotusreichhart.data.remote.services.BannerApiService
+import com.lotusreichhart.data.remote.service.BannerApiService
 import com.lotusreichhart.data.utils.safeApiCallData
-import com.lotusreichhart.domain.entities.BannerEntity
-import com.lotusreichhart.domain.repositories.BannerRepository
+import com.lotusreichhart.domain.entity.BannerEntity
+import com.lotusreichhart.domain.repository.BannerRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

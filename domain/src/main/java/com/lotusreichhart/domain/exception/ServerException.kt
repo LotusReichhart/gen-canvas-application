@@ -1,4 +1,4 @@
-package com.lotusreichhart.domain.exceptions
+package com.lotusreichhart.domain.exception
 
 data class ServerException(
     override val message: String,

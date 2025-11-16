@@ -1,21 +1,19 @@
 package com.lotusreichhart.data.di
 
-import com.lotusreichhart.domain.repositories.UserRepository
-import com.lotusreichhart.domain.use_cases.user.ClaimAdRewardUseCase
-import com.lotusreichhart.domain.use_cases.user.FetchUserProfileUseCase
-import com.lotusreichhart.domain.use_cases.user.GetUserProfileFlowUseCase
+import com.lotusreichhart.domain.repository.UserRepository
+import com.lotusreichhart.domain.use_case.user.ClaimAdRewardUseCase
+import com.lotusreichhart.domain.use_case.user.FetchUserProfileUseCase
+import com.lotusreichhart.domain.use_case.user.GetUserProfileFlowUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object UserUseCaseModule {
 
     @Provides
-    @Singleton
     fun provideGetUserProfileFlowUseCase(
         userRepository: UserRepository
     ): GetUserProfileFlowUseCase {
@@ -25,7 +23,6 @@ object UserUseCaseModule {
     }
 
     @Provides
-    @Singleton
     fun provideFetchUserProfileUseCase(
         userRepository: UserRepository
     ): FetchUserProfileUseCase {
@@ -35,7 +32,6 @@ object UserUseCaseModule {
     }
 
     @Provides
-    @Singleton
     fun provideClaimAdRewardUseCase(
         userRepository: UserRepository
     ): ClaimAdRewardUseCase {

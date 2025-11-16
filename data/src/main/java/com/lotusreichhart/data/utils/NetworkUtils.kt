@@ -1,7 +1,7 @@
 package com.lotusreichhart.data.utils
 
 import com.lotusreichhart.data.remote.dto.ResponseWrapper
-import com.lotusreichhart.domain.exceptions.ServerException
+import com.lotusreichhart.domain.exception.ServerException
 
 suspend fun <T> safeApiCallData(
     apiCall: suspend () -> ResponseWrapper<T>

@@ -1,6 +1,6 @@
-package com.lotusreichhart.domain.repositories
+package com.lotusreichhart.domain.repository
 
-import com.lotusreichhart.domain.entities.BannerEntity
+import com.lotusreichhart.domain.entity.BannerEntity
 import kotlinx.coroutines.flow.Flow
 
 interface BannerRepository {

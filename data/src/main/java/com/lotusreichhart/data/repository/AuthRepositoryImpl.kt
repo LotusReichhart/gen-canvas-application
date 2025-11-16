@@ -1,4 +1,4 @@
-package com.lotusreichhart.data.repositories
+package com.lotusreichhart.data.repository
 
 import com.lotusreichhart.data.local.TokenLocalDataSource
 import com.lotusreichhart.data.remote.dto.auth.EmailRequest
@@ -7,10 +7,10 @@ import com.lotusreichhart.data.remote.dto.auth.GoogleSignInRequest
 import com.lotusreichhart.data.remote.dto.auth.ResetPasswordRequest
 import com.lotusreichhart.data.remote.dto.auth.SignUpRequest
 import com.lotusreichhart.data.remote.dto.auth.VerifyOtpRequest
-import com.lotusreichhart.data.remote.services.AuthApiService
+import com.lotusreichhart.data.remote.service.AuthApiService
 import com.lotusreichhart.data.utils.safeApiCallData
 import com.lotusreichhart.data.utils.safeApiCallUnit
-import com.lotusreichhart.domain.repositories.AuthRepository
+import com.lotusreichhart.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(

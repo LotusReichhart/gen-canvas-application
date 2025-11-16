@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lotusreichhart.core.ui.event.GlobalUiEventManager
 import com.lotusreichhart.core.ui.event.UiEvent
-import com.lotusreichhart.domain.entities.BannerEntity
+import com.lotusreichhart.domain.entity.BannerEntity
 import com.lotusreichhart.domain.monitor.NetworkMonitor
-import com.lotusreichhart.domain.use_cases.banner.GetListBannerUseCase
+import com.lotusreichhart.domain.use_case.banner.GetListBannerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

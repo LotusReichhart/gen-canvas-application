@@ -1,7 +1,7 @@
-package com.lotusreichhart.domain.use_cases.banner
+package com.lotusreichhart.domain.use_case.banner
 
-import com.lotusreichhart.domain.entities.BannerEntity
-import com.lotusreichhart.domain.repositories.BannerRepository
+import com.lotusreichhart.domain.entity.BannerEntity
+import com.lotusreichhart.domain.repository.BannerRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetListBannerUseCase(

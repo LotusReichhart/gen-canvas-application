@@ -11,13 +11,11 @@ plugins {
 
 val properties = Properties()
 val localPropertiesFile = rootProject.file("local.properties")
-
 if (localPropertiesFile.exists()) {
-    localPropertiesFile.inputStream().use { input ->
-        properties.load(input)
-    }
+    properties.load(localPropertiesFile.inputStream())
 }
 
+val admobAppIdDev = properties.getProperty("ADMOB_APP_ID_DEV") ?: ""
 val admobAppIdProd = properties.getProperty("ADMOB_APP_ID_PROD") ?: ""
 
 android {
@@ -40,17 +38,27 @@ android {
         buildConfig = true
     }
 
-    buildTypes {
-        debug {
-            manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            manifestPlaceholders["admobAppId"] = admobAppIdDev
         }
+
+        create("prod") {
+            dimension = "environment"
+            manifestPlaceholders["admobAppId"] = admobAppIdProd
+        }
+    }
+
+    buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            manifestPlaceholders["admobAppId"] = admobAppIdProd
         }
     }
     compileOptions {
