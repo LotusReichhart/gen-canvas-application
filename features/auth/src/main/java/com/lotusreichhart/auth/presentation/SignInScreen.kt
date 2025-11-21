@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +32,7 @@ import com.lotusreichhart.auth.presentation.components.GoogleButton
 import com.lotusreichhart.auth.presentation.utils.rememberGoogleSignInLauncher
 import com.lotusreichhart.core.R
 import com.lotusreichhart.core.ui.components.AppGradientButton
+import com.lotusreichhart.core.ui.components.AppIconButton
 import com.lotusreichhart.core.ui.components.AppTextButton
 import com.lotusreichhart.core.ui.constant.Dimension
 import com.lotusreichhart.core.ui.theme.tertiaryGradient
@@ -39,7 +43,8 @@ fun SignInScreen(
     viewModel: AuthViewModel,
     onNavigateToSignUp: () -> Unit,
     onNavigateToForgotPassword: () -> Unit,
-    onNavigateToMain: () -> Unit
+    onNavigateToMain: () -> Unit,
+    onBackClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -71,6 +76,14 @@ fun SignInScreen(
     AuthBackground(
         backgroundImageRes = R.drawable.future_city
     ) {
+
+        AppIconButton(
+            modifier = Modifier.padding(bottom = Dimension.PaddingLarge),
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            onClick = onBackClick,
+            tint = MaterialTheme.colorScheme.onBackground
+        )
+
         Text(
             text = "Đăng nhập tài khoản",
             color = MaterialTheme.colorScheme.onBackground,
