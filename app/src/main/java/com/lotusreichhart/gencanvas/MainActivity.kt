@@ -86,7 +86,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         splashScreen.setKeepOnScreenCondition {
-            viewModel.isLoading.value
+            viewModel.uiState.value.isLoading
         }
 
         enableEdgeToEdge() // bật tràn viền
@@ -145,20 +145,19 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-                val startDestination by viewModel.startDestination.collectAsStateWithLifecycle()
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
                 Box(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    if (!isLoading) {
+                    if (!uiState.isLoading) {
                         Surface(
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
                             MainNavHost(
                                 navController = navController,
-                                startDestination = startDestination
+                                startDestination = uiState.startDestination
                             )
                         }
                     }
