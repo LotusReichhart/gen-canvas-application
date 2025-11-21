@@ -1,5 +1,6 @@
 package com.lotusreichhart.data.repository
 
+import com.lotusreichhart.data.local.database.dao.UserDao
 import com.lotusreichhart.data.local.datastore.TokenDataStore
 import com.lotusreichhart.data.remote.dto.auth.EmailRequest
 import com.lotusreichhart.data.remote.dto.auth.EmailSignInRequest
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authApiService: AuthApiService,
+    private val userDao: UserDao,
     private val tokenDataSource: TokenDataStore
 ) : AuthRepository {
 
@@ -129,6 +131,7 @@ class AuthRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        userDao.deleteUser()
         tokenDataSource.clearTokens()
         return Result.success(Unit)
     }

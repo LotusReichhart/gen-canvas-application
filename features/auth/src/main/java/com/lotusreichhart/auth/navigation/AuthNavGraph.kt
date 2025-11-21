@@ -41,7 +41,10 @@ fun NavGraphBuilder.authGraph(
                 onNavigateToForgotPassword = {
                     navController.navigate(Route.FORGOT_PASSWORD_SCREEN)
                 },
-                onNavigateToMain = onNavigateToMain
+                onNavigateToMain = onNavigateToMain,
+                onBackClick = {
+                    navController.popBackStack()
+                }
             )
         }
 
@@ -59,10 +62,20 @@ fun NavGraphBuilder.authGraph(
                 },
                 onNavigateToMain = onNavigateToMain,
                 onNavigateToTerms = { encodedUrl ->
-                    navController.navigate(Route.createWebViewRoute(encodedUrl, "Điều khoản dịch vụ"))
+                    navController.navigate(
+                        Route.createWebViewRoute(
+                            encodedUrl,
+                            "Điều khoản dịch vụ"
+                        )
+                    )
                 },
                 onNavigateToPrivacy = { encodedUrl ->
-                    navController.navigate(Route.createWebViewRoute(encodedUrl, "Chính sách bảo mật"))
+                    navController.navigate(
+                        Route.createWebViewRoute(
+                            encodedUrl,
+                            "Chính sách bảo mật"
+                        )
+                    )
                 }
             )
         }

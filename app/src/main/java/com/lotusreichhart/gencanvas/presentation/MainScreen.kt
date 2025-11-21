@@ -62,7 +62,9 @@ val bottomNavItems = listOf(
 )
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    onNavigateToAuth: () -> Unit
+) {
     val mainContentNavController = rememberNavController()
 
     Scaffold(
@@ -146,7 +148,10 @@ fun MainScreen() {
                 .fillMaxSize()
                 .padding(bottom = innerPadding.calculateBottomPadding())
         ) {
-            homeGraph(navController = mainContentNavController)
+            homeGraph(
+                navController = mainContentNavController,
+                onNavigateToAuth = onNavigateToAuth
+            )
 
             composable(bottomNavItems[1].route) {
                 FakeScreen(bottomNavItems[1].title)

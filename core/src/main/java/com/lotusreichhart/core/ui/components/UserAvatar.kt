@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
@@ -25,7 +26,6 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import coil3.compose.AsyncImagePainter
 import com.lotusreichhart.core.ui.theme.primaryGradient
 import com.lotusreichhart.core.utils.toInitials
 import com.lotusreichhart.domain.entity.UserEntity
@@ -36,9 +36,14 @@ import com.lotusreichhart.core.R
 @Composable
 fun UserAvatar(
     modifier: Modifier = Modifier,
-    userEntity: UserEntity? = null
+    userEntity: UserEntity? = null,
+    onClick: () -> Unit
 ) {
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier
+            .clip(CircleShape)
+            .clickable(onClick = onClick)
+    ) {
         val avatarTextContent: @Composable () -> Unit = {
             Box(
                 modifier = Modifier

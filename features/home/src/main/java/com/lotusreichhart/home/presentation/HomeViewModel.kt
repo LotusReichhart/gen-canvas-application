@@ -33,10 +33,14 @@ class HomeViewModel @Inject constructor(
     getListBannerUseCase: GetListBannerUseCase,
     networkMonitor: NetworkMonitor,
     globalUiEventManager: GlobalUiEventManager,
+    getProfileStreamUseCase: GetProfileStreamUseCase,
     private val getCachedBannersUseCase: GetCachedBannersUseCase,
     private val refreshBannersUseCase: RefreshBannersUseCase,
-    private val getProfileStreamUseCase: GetProfileStreamUseCase
-) : BaseViewModel(networkMonitor, globalUiEventManager) {
+) : BaseViewModel(
+    networkMonitor = networkMonitor,
+    globalUiEventManager = globalUiEventManager,
+    getProfileStreamUseCase = getProfileStreamUseCase
+) {
 
     private val defaultBanners = listOf(
         BannerEntity(
@@ -88,15 +92,11 @@ class HomeViewModel @Inject constructor(
     init {
         logD("Chạy vào init")
 
-        getProfileStreamUseCase()
-            .onEach { userEntity ->
-                logD("Nhận được User Profile: $userEntity")
-                _uiState.update { it.copy(userEntity = userEntity) }
+        viewModelScope.launch {
+            currentUser.collect { user ->
+                _uiState.update { it.copy(userEntity = user) }
             }
-            .catch { e ->
-                logE("Lỗi khi lấy User Profile", e)
-            }
-            .launchIn(viewModelScope)
+        }
 
         networkMonitor.isOnline
             .flatMapLatest { isOnline ->

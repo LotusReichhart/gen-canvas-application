@@ -17,6 +17,7 @@ import com.lotusreichhart.domain.usecase.auth.SignInWithGoogleUseCase
 import com.lotusreichhart.domain.usecase.auth.VerifyForgotPasswordUseCase
 import com.lotusreichhart.domain.usecase.auth.VerifySignUpUseCase
 import com.lotusreichhart.domain.usecase.legal.GetLegalInfoUseCase
+import com.lotusreichhart.domain.usecase.user.GetProfileStreamUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +31,7 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     networkMonitor: NetworkMonitor,
     globalUiEventManager: GlobalUiEventManager,
+    getProfileStreamUseCase: GetProfileStreamUseCase,
     private val signInWithEmailUseCase: SignInWithEmailUseCase,
     private val signInWithGoogleUseCase: SignInWithGoogleUseCase,
     private val requestSignUpUseCase: RequestSignUpUseCase,
@@ -38,8 +40,12 @@ class AuthViewModel @Inject constructor(
     private val verifyForgotPasswordUseCase: VerifyForgotPasswordUseCase,
     private val resetPasswordUseCase: ResetPasswordUseCase,
     private val resendOtpUseCase: ResendOtpUseCase,
-    private val getLegalInfoUseCase: GetLegalInfoUseCase,
-) : BaseViewModel(networkMonitor, globalUiEventManager) {
+    private val getLegalInfoUseCase: GetLegalInfoUseCase
+) : BaseViewModel(
+    networkMonitor = networkMonitor,
+    globalUiEventManager = globalUiEventManager,
+    getProfileStreamUseCase = getProfileStreamUseCase
+) {
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 

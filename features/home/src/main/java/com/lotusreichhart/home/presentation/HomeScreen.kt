@@ -98,7 +98,8 @@ import kotlin.math.abs
 )
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToAuth: () -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     val density = LocalDensity.current
@@ -249,7 +250,12 @@ fun HomeScreen(
             progress = progress,
             dynamicHeight = dynamicHeight,
             userEntity = uiState.userEntity,
-            banners = uiState.banners
+            banners = uiState.banners,
+            onAvatarClick = {
+                if (uiState.userEntity == null) {
+                    onNavigateToAuth()
+                }
+            }
         )
 
         PullToRefreshDefaults.Indicator(
@@ -270,7 +276,8 @@ private fun HomeHeader(
     progress: Float,
     dynamicHeight: Dp,
     userEntity: UserEntity? = null,
-    banners: List<BannerEntity>
+    banners: List<BannerEntity>,
+    onAvatarClick: () -> Unit
 ) {
     MotionLayout(
         motionScene = motionScene,
@@ -321,7 +328,8 @@ private fun HomeHeader(
         // Avatar UI
         UserAvatar(
             userEntity = userEntity,
-            modifier = Modifier.layoutId("avatar")
+            modifier = Modifier.layoutId("avatar"),
+            onClick = onAvatarClick
         )
     }
 }

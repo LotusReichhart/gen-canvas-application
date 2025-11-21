@@ -8,7 +8,8 @@ import com.lotusreichhart.core.navigation.Route
 import com.lotusreichhart.home.presentation.HomeScreen
 
 fun NavGraphBuilder.homeGraph(
-    navController: NavController
+    navController: NavController,
+    onNavigateToAuth: () -> Unit
 ) {
 
     navigation(
@@ -16,7 +17,7 @@ fun NavGraphBuilder.homeGraph(
         route = Route.HOME_TAB_ROUTE
     ) {
         composable(Route.HOME_SCREEN) {
-            HomeScreen()
+            HomeScreen(onNavigateToAuth = onNavigateToAuth)
         }
     }
 }

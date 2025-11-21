@@ -1,5 +1,8 @@
 package com.lotusreichhart.data.remote.interceptor
 
+import com.lotusreichhart.core.ui.event.GlobalUiEventManager
+import com.lotusreichhart.core.ui.event.UiEvent
+import com.lotusreichhart.data.local.database.dao.UserDao
 import com.lotusreichhart.data.local.datastore.TokenDataStore
 import com.lotusreichhart.data.remote.dto.auth.RefreshTokenRequest
 import com.lotusreichhart.data.remote.service.AuthApiService
@@ -12,6 +15,8 @@ import okhttp3.Route
 
 class TokenAuthenticator(
     private val tokenDataStore: TokenDataStore,
+    private val userDao: UserDao,
+    private val globalUiEventManager: GlobalUiEventManager,
     private val authApiService: Lazy<AuthApiService>
 ) : Authenticator {
 
@@ -19,7 +24,7 @@ class TokenAuthenticator(
         val currentRefreshToken = tokenDataStore.getRefreshTokenValue()
 
         if (currentRefreshToken == null) {
-            runBlocking { tokenDataStore.clearTokens() }
+            performLogout(showNotification = false)
             return null
         }
 
@@ -57,8 +62,22 @@ class TokenAuthenticator(
             } else {
                 // Refresh token thất bại
                 // Đăng xuất người dùng
-                runBlocking { tokenDataStore.clearTokens() }
+                performLogout(showNotification = true)
                 return null // Hủy request
+            }
+        }
+    }
+
+    private fun performLogout(showNotification: Boolean) {
+        runBlocking {
+            tokenDataStore.clearTokens()
+            userDao.deleteUser()
+
+            if (showNotification) {
+                globalUiEventManager.showSnackBar(
+                    message = "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+                    type = UiEvent.SnackBarType.ERROR
+                )
             }
         }
     }

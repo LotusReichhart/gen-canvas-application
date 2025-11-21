@@ -11,11 +11,13 @@ import com.lotusreichhart.domain.usecase.legal.CheckLegalUpdateUseCase
 import com.lotusreichhart.domain.usecase.legal.GetLegalInfoUseCase
 import com.lotusreichhart.domain.usecase.settings.ReadOnboardingStateUseCase
 import com.lotusreichhart.domain.usecase.user.FetchProfileUseCase
+import com.lotusreichhart.domain.usecase.user.GetProfileStreamUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -26,29 +28,35 @@ class MainViewModel @Inject constructor(
     readOnboardingStateUseCase: ReadOnboardingStateUseCase,
     networkMonitor: NetworkMonitor,
     globalUiEventManager: GlobalUiEventManager,
+    getProfileStreamUseCase: GetProfileStreamUseCase,
     private val checkLegalUpdateUseCase: CheckLegalUpdateUseCase,
     private val getLegalInfoUseCase: GetLegalInfoUseCase,
     private val fetchProfileUseCase: FetchProfileUseCase
-) : BaseViewModel(networkMonitor, globalUiEventManager) {
+) : BaseViewModel(
+    networkMonitor = networkMonitor,
+    globalUiEventManager = globalUiEventManager,
+    getProfileStreamUseCase = getProfileStreamUseCase
+) {
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
-
-    private val _startDestination = MutableStateFlow(Route.ONBOARDING_FLOW_ROUTE)
-    val startDestination: StateFlow<String> = _startDestination.asStateFlow()
+    private val _uiState = MutableStateFlow(MainUiState())
+    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
             val hasCompletedOnboarding = readOnboardingStateUseCase().first()
             logD("hasCompletedOnboarding - $hasCompletedOnboarding")
-            if (hasCompletedOnboarding) {
-                _startDestination.value = Route.MAIN_FLOW_ROUTE
+            val destination = if (hasCompletedOnboarding) {
+                Route.MAIN_FLOW_ROUTE
             } else {
-                _startDestination.value = Route.ONBOARDING_FLOW_ROUTE
+                Route.ONBOARDING_FLOW_ROUTE
             }
+
+            _uiState.update { it.copy(startDestination = destination) }
+
             fetchUserInfo()
             checkLegalUpdates()
-            _isLoading.value = false
+
+            _uiState.update { it.copy(isLoading = false) }
         }
     }
 

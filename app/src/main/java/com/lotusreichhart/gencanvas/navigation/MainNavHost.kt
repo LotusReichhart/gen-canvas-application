@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.lotusreichhart.auth.navigation.authGraph
 import com.lotusreichhart.core.navigation.Route
@@ -40,7 +39,7 @@ fun MainNavHost(
             navController = navController,
             onNavigateToMain = {
                 navController.navigate(Route.MAIN_FLOW_ROUTE) {
-                    popUpTo(Route.MAIN_FLOW_ROUTE) {
+                    popUpTo(Route.AUTH_FLOW_ROUTE) {
                         inclusive = true
                     }
                 }
@@ -48,7 +47,11 @@ fun MainNavHost(
         )
 
         appComposable(route = Route.MAIN_FLOW_ROUTE) {
-            MainScreen()
+            MainScreen(
+                onNavigateToAuth = {
+                    navController.navigate(Route.AUTH_FLOW_ROUTE)
+                }
+            )
         }
 
         appComposable(

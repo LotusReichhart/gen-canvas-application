@@ -1,6 +1,8 @@
 package com.lotusreichhart.data.di
 
+import com.lotusreichhart.core.ui.event.GlobalUiEventManager
 import com.lotusreichhart.data.BuildConfig
+import com.lotusreichhart.data.local.database.dao.UserDao
 import com.lotusreichhart.data.local.datastore.TokenDataStore
 import com.lotusreichhart.data.remote.interceptor.AuthInterceptor
 import com.lotusreichhart.data.remote.interceptor.TokenAuthenticator
@@ -86,11 +88,15 @@ object NetworkModule {
     @Singleton
     fun provideTokenAuthenticator(
         tokenDataStore: TokenDataStore,
-        authApiService: Lazy<AuthApiService>
+        authApiService: Lazy<AuthApiService>,
+        userDao: UserDao,
+        globalUiEventManager: GlobalUiEventManager
     ): TokenAuthenticator {
         return TokenAuthenticator(
             tokenDataStore = tokenDataStore,
-            authApiService = authApiService
+            authApiService = authApiService,
+            userDao = userDao,
+            globalUiEventManager = globalUiEventManager
         )
     }
 
