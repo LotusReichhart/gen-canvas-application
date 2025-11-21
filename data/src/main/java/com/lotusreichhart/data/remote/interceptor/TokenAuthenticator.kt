@@ -21,7 +21,7 @@ class TokenAuthenticator(
         val currentRefreshToken = tokenDataStore.getRefreshTokenValue()
 
         if (currentRefreshToken == null) {
-            runBlocking { tokenDataStore.clearTokens() }
+            performLogout()
             return null
         }
 
@@ -59,12 +59,16 @@ class TokenAuthenticator(
             } else {
                 // Refresh token thất bại
                 // Đăng xuất người dùng
-                runBlocking {
-                    tokenDataStore.clearTokens()
-                    userDao.deleteUser()
-                }
+                performLogout()
                 return null // Hủy request
             }
+        }
+    }
+
+    private fun performLogout() {
+        runBlocking {
+            tokenDataStore.clearTokens()
+            userDao.deleteUser()
         }
     }
 }
