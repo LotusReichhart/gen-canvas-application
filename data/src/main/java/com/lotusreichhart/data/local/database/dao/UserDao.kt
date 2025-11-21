@@ -15,6 +15,12 @@ interface UserDao {
     @Query("SELECT * FROM user_profile LIMIT 1")
     fun getUserWithCreditFlow(): Flow<UserWithCreditLocal?>
 
+    @Query("SELECT * FROM user_profile WHERE id = :id")
+    suspend fun getUserById(id: Int): UserLocal?
+
+    @Query("SELECT * FROM user_credit WHERE userId = :userId")
+    suspend fun getCreditByUserId(userId: Int): CreditLocal?
+
     @Upsert
     suspend fun saveUser(user: UserLocal)
 

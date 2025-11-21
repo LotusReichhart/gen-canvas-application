@@ -5,14 +5,30 @@ import androidx.lifecycle.viewModelScope
 import com.lotusreichhart.core.ui.event.GlobalUiEventManager
 import com.lotusreichhart.core.ui.event.UiEvent
 import com.lotusreichhart.core.utils.logD
+import com.lotusreichhart.domain.entity.UserEntity
 import com.lotusreichhart.domain.monitor.NetworkMonitor
+import com.lotusreichhart.domain.usecase.user.GetProfileStreamUseCase
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 open class BaseViewModel @Inject constructor(
     private val networkMonitor: NetworkMonitor,
-    private val globalUiEventManager: GlobalUiEventManager
+    private val globalUiEventManager: GlobalUiEventManager,
+    getProfileStreamUseCase: GetProfileStreamUseCase
 ) : ViewModel() {
+
+    val currentUser: StateFlow<UserEntity?> = getProfileStreamUseCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = null
+        )
+
+    val isLoggedIn: Boolean
+        get() = currentUser.value != null
 
     init {
         setupNetworkMonitoring()
