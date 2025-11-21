@@ -1,5 +1,6 @@
 package com.lotusreichhart.data.remote.interceptor
 
+import com.lotusreichhart.data.local.database.dao.UserDao
 import com.lotusreichhart.data.local.datastore.TokenDataStore
 import com.lotusreichhart.data.remote.dto.auth.RefreshTokenRequest
 import com.lotusreichhart.data.remote.service.AuthApiService
@@ -12,6 +13,7 @@ import okhttp3.Route
 
 class TokenAuthenticator(
     private val tokenDataStore: TokenDataStore,
+    private val userDao: UserDao,
     private val authApiService: Lazy<AuthApiService>
 ) : Authenticator {
 
@@ -57,7 +59,10 @@ class TokenAuthenticator(
             } else {
                 // Refresh token thất bại
                 // Đăng xuất người dùng
-                runBlocking { tokenDataStore.clearTokens() }
+                runBlocking {
+                    tokenDataStore.clearTokens()
+                    userDao.deleteUser()
+                }
                 return null // Hủy request
             }
         }
