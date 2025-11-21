@@ -75,6 +75,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Module
+    implementation(project(":core"))
     implementation(project(":domain"))
 
     // Networking (Retrofit, OkHttp)
@@ -91,4 +92,12 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:2.57.1")
     ksp("com.google.dagger:hilt-android-compiler:2.57.1")
+
+    // RoomDB
+    val room_version = "2.7.2"
+    implementation("androidx.room:room-runtime:$room_version")
+    // Hỗ trợ Coroutines (cho Flow, suspend fun)
+    implementation("androidx.room:room-ktx:$room_version")
+    // Annotation processor (ksp)
+    ksp("androidx.room:room-compiler:$room_version")
 }

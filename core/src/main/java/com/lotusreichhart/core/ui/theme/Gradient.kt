@@ -23,7 +23,7 @@ fun primaryGradient(): Brush {
 }
 
 @Composable
-fun errorGradient(): Brush {
+fun tertiaryGradient(): Brush {
     val tertiary = MaterialTheme.colorScheme.tertiary
     val errorContainer = MaterialTheme.colorScheme.errorContainer
     val error = MaterialTheme.colorScheme.error

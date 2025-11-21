@@ -1,6 +1,6 @@
 package com.lotusreichhart.data.repository
 
-import com.lotusreichhart.data.local.TokenLocalDataSource
+import com.lotusreichhart.data.local.datastore.TokenDataStore
 import com.lotusreichhart.data.remote.dto.auth.EmailRequest
 import com.lotusreichhart.data.remote.dto.auth.EmailSignInRequest
 import com.lotusreichhart.data.remote.dto.auth.GoogleSignInRequest
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authApiService: AuthApiService,
-    private val tokenDataSource: TokenLocalDataSource
+    private val tokenDataSource: TokenDataStore
 ) : AuthRepository {
 
     override suspend fun signInWithEmail(
@@ -23,7 +23,7 @@ class AuthRepositoryImpl @Inject constructor(
         password: String
     ): Result<Unit> {
         val result = safeApiCallData {
-            authApiService.signInWithEmail(EmailSignInRequest(email, password))
+            authApiService.signInWithEmail(EmailSignInRequest(email = email, password = password))
         }
         result.onSuccess { authResponse ->
             tokenDataSource.saveTokens(
@@ -55,7 +55,13 @@ class AuthRepositoryImpl @Inject constructor(
         password: String
     ): Result<Unit> {
         return safeApiCallUnit {
-            authApiService.requestSignUp(SignUpRequest(name, email, password))
+            authApiService.requestSignUp(
+                SignUpRequest(
+                    name = name,
+                    email = email,
+                    password = password
+                )
+            )
         }
     }
 
@@ -64,7 +70,7 @@ class AuthRepositoryImpl @Inject constructor(
         email: String
     ): Result<Unit> {
         val result = safeApiCallData {
-            authApiService.verifySignUp(VerifyOtpRequest(otp, email))
+            authApiService.verifySignUp(VerifyOtpRequest(email = email, otp = otp))
         }
 
         result.onSuccess { authResponse ->
@@ -86,9 +92,12 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun verifyForgotPassword(
         otp: String,
         email: String
-    ): Result<Unit> {
-        return safeApiCallUnit {
-            authApiService.verifyForgotPassword(VerifyOtpRequest(otp, email))
+    ): Result<String> {
+        val result = safeApiCallData {
+            authApiService.verifyForgotPassword(VerifyOtpRequest(otp = otp, email = email))
+        }
+        return result.map { response ->
+            response.resetToken
         }
     }
 
@@ -99,7 +108,11 @@ class AuthRepositoryImpl @Inject constructor(
     ): Result<Unit> {
         return safeApiCallUnit {
             authApiService.resetPassword(
-                ResetPasswordRequest(resetToken, newPassword, confirmPassword)
+                ResetPasswordRequest(
+                    resetToken = resetToken,
+                    newPassword = newPassword,
+                    confirmPassword = confirmPassword
+                )
             )
         }
     }

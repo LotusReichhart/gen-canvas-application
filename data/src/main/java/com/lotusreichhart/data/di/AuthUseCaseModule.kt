@@ -2,15 +2,15 @@ package com.lotusreichhart.data.di
 
 import com.lotusreichhart.domain.repository.AuthRepository
 import com.lotusreichhart.domain.repository.UserRepository
-import com.lotusreichhart.domain.use_case.auth.RequestForgotPasswordUseCase
-import com.lotusreichhart.domain.use_case.auth.RequestSignUpUseCase
-import com.lotusreichhart.domain.use_case.auth.ResendOtpUseCase
-import com.lotusreichhart.domain.use_case.auth.ResetPasswordUseCase
-import com.lotusreichhart.domain.use_case.auth.SignInWithEmailUseCase
-import com.lotusreichhart.domain.use_case.auth.SignInWithGoogleUseCase
-import com.lotusreichhart.domain.use_case.auth.SignOutUseCase
-import com.lotusreichhart.domain.use_case.auth.VerifyForgotPasswordUseCase
-import com.lotusreichhart.domain.use_case.auth.VerifySignUpUseCase
+import com.lotusreichhart.domain.usecase.auth.RequestForgotPasswordUseCase
+import com.lotusreichhart.domain.usecase.auth.RequestSignUpUseCase
+import com.lotusreichhart.domain.usecase.auth.ResendOtpUseCase
+import com.lotusreichhart.domain.usecase.auth.ResetPasswordUseCase
+import com.lotusreichhart.domain.usecase.auth.SignInWithEmailUseCase
+import com.lotusreichhart.domain.usecase.auth.SignInWithGoogleUseCase
+import com.lotusreichhart.domain.usecase.auth.SignOutUseCase
+import com.lotusreichhart.domain.usecase.auth.VerifyForgotPasswordUseCase
+import com.lotusreichhart.domain.usecase.auth.VerifySignUpUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

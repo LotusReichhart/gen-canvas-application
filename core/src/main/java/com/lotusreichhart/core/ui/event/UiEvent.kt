@@ -18,7 +18,13 @@ sealed class UiEvent {
     data class ShowDialog(
         val title: String,
         val message: String,
+
         val positiveButtonText: String = "OK",
-        val onConfirm: () -> Unit = {}
+        val onPositiveClick: () -> Unit = {},
+
+        val negativeButtonText: String? = null,
+        val onNegativeClick: (() -> Unit)? = null
     ) : UiEvent()
+
+    data class Navigate(val route: String) : UiEvent()
 }

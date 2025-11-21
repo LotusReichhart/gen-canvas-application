@@ -1,7 +1,7 @@
 package com.lotusreichhart.onboarding.presentation
 
 import androidx.lifecycle.ViewModel
-import com.lotusreichhart.domain.use_case.settings.SetOnboardingCompletedUseCase
+import com.lotusreichhart.domain.usecase.settings.SetOnboardingCompletedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

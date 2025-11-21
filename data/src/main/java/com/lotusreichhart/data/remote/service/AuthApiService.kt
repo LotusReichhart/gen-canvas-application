@@ -7,6 +7,7 @@ import com.lotusreichhart.data.remote.dto.auth.EmailSignInRequest
 import com.lotusreichhart.data.remote.dto.auth.GoogleSignInRequest
 import com.lotusreichhart.data.remote.dto.auth.RefreshTokenRequest
 import com.lotusreichhart.data.remote.dto.auth.ResetPasswordRequest
+import com.lotusreichhart.data.remote.dto.auth.ResetTokenResponse
 import com.lotusreichhart.data.remote.dto.auth.SignUpRequest
 import com.lotusreichhart.data.remote.dto.auth.VerifyOtpRequest
 import retrofit2.Call
@@ -24,7 +25,7 @@ interface AuthApiService {
     @POST("auth/signup")
     suspend fun requestSignUp(@Body request: SignUpRequest): ResponseWrapper<Unit>
 
-    @POST("auth/verify")
+    @POST("auth/signup/verify")
     suspend fun verifySignUp(@Body request: VerifyOtpRequest): ResponseWrapper<AuthResponse>
 
     @POST("auth/otp/resend")
@@ -34,7 +35,7 @@ interface AuthApiService {
     suspend fun requestForgotPassword(@Body request: EmailRequest): ResponseWrapper<Unit>
 
     @POST("auth/password/verify")
-    suspend fun verifyForgotPassword(@Body request: VerifyOtpRequest): ResponseWrapper<Unit>
+    suspend fun verifyForgotPassword(@Body request: VerifyOtpRequest): ResponseWrapper<ResetTokenResponse>
 
     @POST("auth/password/reset")
     suspend fun resetPassword(@Body request: ResetPasswordRequest): ResponseWrapper<Unit>

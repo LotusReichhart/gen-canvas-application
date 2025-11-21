@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,18 +18,18 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.lotusreichhart.core.ui.constant.Dimension
 
 @Composable
 fun CutoutBottomAppBar(
     modifier: Modifier = Modifier,
     fabSize: Dp = 56.dp,
     fabMargin: Dp = 16.dp,
-    color: Color = MaterialTheme.colorScheme.surface,
+    color: Color = MaterialTheme.colorScheme.surfaceContainer,
     content: @Composable RowScope. () -> Unit
 ) {
     val fabDiameterPx = with(LocalDensity.current) { fabSize.toPx() }
@@ -54,16 +54,6 @@ fun CutoutBottomAppBar(
         )
     }
 }
-
-//@Preview
-//@Composable
-//private fun PreviewCutoutBottomAppBar() {
-//    CutoutBottomAppBar {
-//        repeat(2) {
-//            Text("a")
-//        }
-//    }
-//}
 
 private class BottomAppBarCutoutShape(
     private val fabDiameter: Float,

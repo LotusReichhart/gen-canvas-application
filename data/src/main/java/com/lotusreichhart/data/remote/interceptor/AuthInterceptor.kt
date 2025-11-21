@@ -1,13 +1,13 @@
 package com.lotusreichhart.data.remote.interceptor
 
-import com.lotusreichhart.data.local.TokenLocalDataSource
+import com.lotusreichhart.data.local.datastore.TokenDataStore
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
 
 class AuthInterceptor(
-    private val tokenDataSource: TokenLocalDataSource
+    private val tokenDataStore: TokenDataStore
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -16,7 +16,7 @@ class AuthInterceptor(
             return chain.proceed(request)
         }
 
-        val token = tokenDataSource.getAccessTokenValue()
+        val token = tokenDataStore.getAccessTokenValue()
 
         val newRequest = if (token != null) {
             request.newBuilder()

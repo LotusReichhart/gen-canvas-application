@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -8,15 +6,6 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
 }
-
-val properties = Properties()
-val localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-    properties.load(localPropertiesFile.inputStream())
-}
-
-val rewardedAdUnitIdDev = properties.getProperty("REWARDED_AD_UNIT_ID_DEV") ?: ""
-val rewardedAdUnitIdProd = properties.getProperty("REWARDED_AD_UNIT_ID_PROD") ?: ""
 
 android {
     namespace = "com.lotusreichhart.home"
@@ -33,29 +22,6 @@ android {
 
     buildFeatures {
         compose = true
-        buildConfig = true
-    }
-
-    flavorDimensions += "environment"
-
-    productFlavors {
-        create("dev") {
-            dimension = "environment"
-            buildConfigField(
-                "String",
-                "REWARDED_AD_UNIT_ID",
-                "\"$rewardedAdUnitIdDev\""
-            )
-        }
-
-        create("prod") {
-            dimension = "environment"
-            buildConfigField(
-                "String",
-                "REWARDED_AD_UNIT_ID",
-                "\"$rewardedAdUnitIdProd\""
-            )
-        }
     }
 
     buildTypes {
@@ -94,6 +60,9 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
 
+    // Navigation
+    implementation("androidx.navigation:navigation-compose:2.8.9")
+
     implementation("androidx.compose.foundation:foundation:1.9.4")
 
     // Hilt (Dependency Injection)
@@ -109,8 +78,4 @@ dependencies {
 
     // Icon extended
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
-
-    // Coil
-    implementation("io.coil-kt.coil3:coil-compose:3.1.0")
-    implementation("io.coil-kt.coil3:coil-network-okhttp:3.1.0")
 }

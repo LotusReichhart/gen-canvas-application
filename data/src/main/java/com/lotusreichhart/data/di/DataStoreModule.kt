@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.lotusreichhart.data.local.TokenLocalDataSource
+import com.lotusreichhart.data.local.datastore.TokenDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +25,7 @@ object DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideTokenLocalDataSource(dataStore: DataStore<Preferences>): TokenLocalDataSource {
-        return TokenLocalDataSource(dataStore)
+    fun provideTokenDataStore(dataStore: DataStore<Preferences>): TokenDataStore {
+        return TokenDataStore(dataStore)
     }
 }

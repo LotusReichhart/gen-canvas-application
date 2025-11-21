@@ -4,5 +4,6 @@ import com.lotusreichhart.domain.entity.BannerEntity
 import kotlinx.coroutines.flow.Flow
 
 interface BannerRepository {
-    fun getAllBanners(): Flow<List<BannerEntity>>
+    fun getBannersStream(): Flow<List<BannerEntity>>
+    suspend fun fetchBanners(): Result<Unit>
 }

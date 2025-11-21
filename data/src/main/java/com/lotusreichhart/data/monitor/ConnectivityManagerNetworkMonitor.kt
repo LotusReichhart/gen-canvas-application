@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import androidx.annotation.RequiresPermission
 import androidx.core.content.getSystemService
 import com.lotusreichhart.domain.monitor.NetworkMonitor
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -13,11 +14,9 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 import javax.inject.Singleton
-
-import androidx.annotation.RequiresPermission
-import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Singleton
 class ConnectivityManagerNetworkMonitor @Inject constructor(

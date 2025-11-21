@@ -91,12 +91,14 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // Module
+    implementation(project(":ads"))
     implementation(project(":core"))
     implementation(project(":data"))
     implementation(project(":domain"))
 
     implementation(project(":features:onboarding"))
     implementation(project(":features:home"))
+    implementation(project(":features:auth"))
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:34.5.0"))
@@ -105,9 +107,6 @@ dependencies {
     // Hilt (Dependency Injection)
     implementation("com.google.dagger:hilt-android:2.57.1")
     ksp("com.google.dagger:hilt-android-compiler:2.57.1")
-
-    // Google AdMob (Ads)
-    implementation("com.google.android.gms:play-services-ads:24.7.0")
 
     // Core & Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")

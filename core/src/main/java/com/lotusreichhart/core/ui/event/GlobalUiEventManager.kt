@@ -26,8 +26,23 @@ class GlobalUiEventManager @Inject constructor() {
         title: String,
         message: String,
         positiveButtonText: String = "OK",
-        onConfirm: () -> Unit = {}
+        onPositiveClick: () -> Unit = {},
+        negativeButtonText: String? = null,
+        onNegativeClick: (() -> Unit)? = null
     ) {
-        _events.emit(UiEvent.ShowDialog(title, message, positiveButtonText, onConfirm))
+        _events.emit(
+            UiEvent.ShowDialog(
+                title = title,
+                message = message,
+                positiveButtonText = positiveButtonText,
+                onPositiveClick = onPositiveClick,
+                negativeButtonText = negativeButtonText,
+                onNegativeClick = onNegativeClick
+            )
+        )
+    }
+
+    suspend fun navigate(route: String) {
+        _events.emit(UiEvent.Navigate(route))
     }
 }
