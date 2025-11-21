@@ -1,0 +1,18 @@
+package com.lotusreichhart.core.utils
+
+fun String?.toInitials(): String? {
+    if (this.isNullOrBlank()) return null
+
+    val trimmed = this.trim()
+    val parts = trimmed.split(Regex("\\s+"))
+
+    val firstInitial = parts.getOrNull(0)?.firstOrNull()?.uppercase() ?: ""
+
+    val secondInitial = parts.getOrNull(1)?.firstOrNull()?.uppercase() ?: ""
+
+    return if (firstInitial.isNotEmpty()) {
+        "$firstInitial$secondInitial"
+    } else {
+        null
+    }
+}

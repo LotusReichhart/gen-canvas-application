@@ -60,6 +60,9 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
 
+    // Navigation
+    implementation("androidx.navigation:navigation-compose:2.8.9")
+
     implementation("androidx.compose.foundation:foundation:1.9.4")
 
     // Hilt (Dependency Injection)

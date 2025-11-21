@@ -1,27 +1,19 @@
 package com.lotusreichhart.domain.entity
 
-enum class UserStatus {
-    ACTIVE,
-    INACTIVE,
-    BANNED
-}
+enum class UserStatus { ACTIVE, INACTIVE, BANNED }
 
-enum class UserTier {
-    FREE,
-    PRO
-}
+enum class UserTier { FREE, PRO }
 
-enum class AuthProvider {
-    EMAIL,
-    GOOGLE
-}
+enum class AuthProvider { EMAIL, GOOGLE }
 
 data class UserEntity(
     val id: Int? = null,
     val name: String,
     val email: String,
-    val avatar: String?,
+    val avatarUrl: String?,
     val status: UserStatus,
     val tier: UserTier,
-    val authProvider: AuthProvider
+    val authProvider: AuthProvider,
+    val balance: Int,
+    val lastRefillDate: String?
 )

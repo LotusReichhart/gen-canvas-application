@@ -4,7 +4,20 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
@@ -19,9 +32,23 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,23 +69,27 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.*
 import androidx.constraintlayout.compose.Dimension.Companion.fillToConstraints
+import androidx.constraintlayout.compose.ExperimentalMotionApi
+import androidx.constraintlayout.compose.MotionLayout
+import androidx.constraintlayout.compose.MotionScene
+import androidx.constraintlayout.compose.layoutId
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import kotlinx.coroutines.delay
-import kotlin.math.abs
-
+import com.lotusreichhart.core.ui.components.UserAvatar
+import com.lotusreichhart.core.ui.constant.Dimension
+import com.lotusreichhart.core.ui.theme.primaryGradient
+import com.lotusreichhart.core.utils.toInitials
 import com.lotusreichhart.domain.entity.BannerEntity
+import com.lotusreichhart.domain.entity.UserEntity
+import com.lotusreichhart.home.R
 import com.lotusreichhart.home.utils.EndHeight
 import com.lotusreichhart.home.utils.StartHeight
-
-import com.lotusreichhart.home.R
-
-import com.lotusreichhart.core.ui.theme.primaryGradient
+import kotlinx.coroutines.delay
+import kotlin.math.abs
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -72,7 +103,7 @@ fun HomeScreen(
     val lazyListState = rememberLazyListState()
     val density = LocalDensity.current
 
-    val searchBg = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f)
+    val searchBg = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)
 
     val maxOffsetPx = remember(StartHeight, EndHeight, density) {
         with(density) { (StartHeight - EndHeight).toPx() }
@@ -130,7 +161,7 @@ fun HomeScreen(
                 // Search (Icon)
                 constrain(searchRef) {
                     top.linkTo(parent.top, 6.dp + statusBarHeight)
-                    start.linkTo(parent.start, 16.dp)
+                    start.linkTo(parent.start, 18.dp)
                     height = 40.dp.asDimension()
                     width = 40.dp.asDimension()
                     customColor("background", searchBg)
@@ -138,7 +169,7 @@ fun HomeScreen(
                 // Avatar (Ghim)
                 constrain(avatarRef) {
                     top.linkTo(parent.top, 6.dp + statusBarHeight)
-                    end.linkTo(parent.end, 16.dp)
+                    end.linkTo(parent.end, 18.dp)
                     height = 40.dp.asDimension()
                     width = 40.dp.asDimension()
                 }
@@ -159,7 +190,7 @@ fun HomeScreen(
                 // Search (Searchbar)
                 constrain(searchRef) {
                     top.linkTo(parent.top, 6.dp + statusBarHeight)
-                    start.linkTo(parent.start, 8.dp)
+                    start.linkTo(parent.start, Dimension.HorizontalPadding)
                     end.linkTo(avatarRef.start, 8.dp)
                     height = 40.dp.asDimension()
                     width = fillToConstraints
@@ -168,7 +199,7 @@ fun HomeScreen(
                 // Avatar
                 constrain(avatarRef) {
                     top.linkTo(parent.top, 6.dp + statusBarHeight)
-                    end.linkTo(parent.end, 8.dp)
+                    end.linkTo(parent.end, Dimension.HorizontalPadding)
                     height = 40.dp.asDimension()
                     width = 40.dp.asDimension()
                 }
@@ -190,11 +221,19 @@ fun HomeScreen(
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val pullToRefreshState = rememberPullToRefreshState()
+    val pullToRefreshEnabled = (progress == 0f)
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(nestedScrollConnection)
+            .pullToRefresh(
+                state = pullToRefreshState,
+                isRefreshing = uiState.isRefreshing,
+                onRefresh = { viewModel.onPullToRefresh() },
+                enabled = pullToRefreshEnabled
+            )
     ) {
 
         HomeContentList(
@@ -209,7 +248,17 @@ fun HomeScreen(
             motionScene = motionScene,
             progress = progress,
             dynamicHeight = dynamicHeight,
+            userEntity = uiState.userEntity,
             banners = uiState.banners
+        )
+
+        PullToRefreshDefaults.Indicator(
+            state = pullToRefreshState,
+            isRefreshing = uiState.isRefreshing,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = statusBarHeight),
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -220,6 +269,7 @@ private fun HomeHeader(
     motionScene: MotionScene,
     progress: Float,
     dynamicHeight: Dp,
+    userEntity: UserEntity? = null,
     banners: List<BannerEntity>
 ) {
     MotionLayout(
@@ -256,11 +306,11 @@ private fun HomeHeader(
                 Icon(
                     Icons.Default.Search,
                     contentDescription = "Search",
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "Search...",
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    text = "Tìm kiếm...",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier
                         .padding(start = 8.dp)
                         .graphicsLayer(alpha = progress)
@@ -269,17 +319,10 @@ private fun HomeHeader(
         }
 
         // Avatar UI
-        Box(
-            modifier = Modifier
-                .layoutId("avatar")
-                .clip(CircleShape)
-                .background(
-                    brush = primaryGradient()
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("LR", color = Color.White, fontWeight = FontWeight.Bold)
-        }
+        UserAvatar(
+            userEntity = userEntity,
+            modifier = Modifier.layoutId("avatar")
+        )
     }
 }
 
@@ -308,7 +351,7 @@ private fun HomeContentList(
                 if (isCollapsed) {
                     MyHorizontalListComponent(
                         items = uiState.horizontalListItems,
-                        statusBarHeight = statusBarHeight // Truyền padding
+                        statusBarHeight = statusBarHeight
                     )
                 } else {
                     MyGridComponent(
@@ -319,7 +362,7 @@ private fun HomeContentList(
         }
 
         items(uiState.mainListItems) { item ->
-            Text("Nội dung khác ${item.id}", modifier = Modifier.padding(16.dp))
+            Text("Nội dung khác ${item.id}", modifier = Modifier.padding(12.dp))
         }
     }
 }
@@ -424,17 +467,16 @@ private fun AutoScrollingCarousel(
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             repeat(actualPageCount) { iteration ->
                 val actualCurrentPage = pagerState.currentPage % actualPageCount
 
                 val isSelected = (actualCurrentPage == iteration)
                 val color =
-                    if (isSelected) MaterialTheme.colorScheme.onPrimary
-                    else MaterialTheme.colorScheme.onSurface.copy(
-                        alpha = 0.4f
-                    )
+                    if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
+                    else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)
                 val size = if (isSelected) 10.dp else 8.dp
 
                 Box(
@@ -513,7 +555,7 @@ private fun MyHorizontalListComponent(
             .padding(top = statusBarHeight + 56.dp)
     ) {
         LazyRow(
-            contentPadding = PaddingValues(horizontal = 16.dp),
+            contentPadding = PaddingValues(horizontal = Dimension.HorizontalPadding),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(items) { item ->

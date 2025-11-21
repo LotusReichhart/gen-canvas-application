@@ -1,6 +1,6 @@
 package com.lotusreichhart.data.remote.interceptor
 
-import com.lotusreichhart.data.local.TokenLocalDataSource
+import com.lotusreichhart.data.local.datastore.TokenDataStore
 import com.lotusreichhart.data.remote.dto.auth.RefreshTokenRequest
 import com.lotusreichhart.data.remote.service.AuthApiService
 import dagger.Lazy
@@ -11,23 +11,23 @@ import okhttp3.Response
 import okhttp3.Route
 
 class TokenAuthenticator(
-    private val tokenDataSource: TokenLocalDataSource,
+    private val tokenDataStore: TokenDataStore,
     private val authApiService: Lazy<AuthApiService>
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        val currentRefreshToken = tokenDataSource.getRefreshTokenValue()
+        val currentRefreshToken = tokenDataStore.getRefreshTokenValue()
 
         if (currentRefreshToken == null) {
-            runBlocking { tokenDataSource.clearTokens() }
+            runBlocking { tokenDataStore.clearTokens() }
             return null
         }
 
         synchronized(this) {
-            val newRefreshToken = tokenDataSource.getRefreshTokenValue()
+            val newRefreshToken = tokenDataStore.getRefreshTokenValue()
 
             if (currentRefreshToken != newRefreshToken) {
-                val newAccessToken = tokenDataSource.getAccessTokenValue()
+                val newAccessToken = tokenDataStore.getAccessTokenValue()
                 if (newAccessToken != null) {
                     return response.request.newBuilder()
                         .header("Authorization", "Bearer $newAccessToken")
@@ -44,7 +44,7 @@ class TokenAuthenticator(
                 // Lưu token mới
                 runBlocking {
                     newTokens.data?.let {
-                        tokenDataSource.saveTokens(
+                        tokenDataStore.saveTokens(
                             access = it.accessToken,
                             refresh = it.refreshToken
                         )
@@ -57,7 +57,7 @@ class TokenAuthenticator(
             } else {
                 // Refresh token thất bại
                 // Đăng xuất người dùng
-                runBlocking { tokenDataSource.clearTokens() }
+                runBlocking { tokenDataStore.clearTokens() }
                 return null // Hủy request
             }
         }

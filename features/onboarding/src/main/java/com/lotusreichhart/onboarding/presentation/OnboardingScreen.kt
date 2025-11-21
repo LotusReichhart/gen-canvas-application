@@ -1,7 +1,5 @@
 package com.lotusreichhart.onboarding.presentation
 
-import com.lotusreichhart.core.R
-
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
@@ -35,9 +34,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.lotusreichhart.core.ui.components.GradientButton
-import com.lotusreichhart.core.ui.theme.errorGradient
+import com.lotusreichhart.core.R
+import com.lotusreichhart.core.ui.components.AppGradientButton
+import com.lotusreichhart.core.ui.constant.Dimension
 import com.lotusreichhart.core.ui.theme.primaryGradient
+import com.lotusreichhart.core.ui.theme.tertiaryGradient
 import kotlinx.coroutines.launch
 
 private data class OnboardingPage(
@@ -50,17 +51,17 @@ private val onboardingPages = listOf(
     OnboardingPage(
         title = "Chào mừng đến GenCanvas",
         description = "Giải phóng sức sáng tạo của bạn với sức mạnh của AI. Tạo, chỉnh sửa và nâng tầm ảnh của bạn.",
-        imageRes = R.drawable.first_onboarding
+        imageRes = R.drawable.color_blocks
     ),
     OnboardingPage(
         title = "Chỉnh sửa Thông minh",
         description = "Dễ dàng xóa phông, tạo ảnh thẻ chuyên nghiệp, và ghép ảnh chỉ với vài cú chạm.",
-        imageRes = R.drawable.second_onboarding
+        imageRes = R.drawable.digital_gate
     ),
     OnboardingPage(
         title = "Sẵn sàng Khám phá",
         description = "Bắt đầu hành trình sáng tạo của bạn ngay bây giờ và biến ý tưởng thành hiện thực.",
-        imageRes = R.drawable.last_onboarding
+        imageRes = R.drawable.digital_hand
     )
 )
 
@@ -91,8 +92,9 @@ fun OnboardingScreen(
         }
 
         if (pagerState.currentPage < pageCount - 1) {
-            GradientButton(
+            AppGradientButton(
                 text = "Tiếp tục",
+                modifier = Modifier.width(250.dp),
                 gradient = primaryGradient(),
                 onClick = {
                     scope.launch {
@@ -101,9 +103,10 @@ fun OnboardingScreen(
                 }
             )
         } else {
-            GradientButton(
+            AppGradientButton(
                 text = "Bắt đầu ngay",
-                gradient = errorGradient(),
+                modifier = Modifier.width(250.dp),
+                gradient = tertiaryGradient(),
                 onClick = {
                     scope.launch {
                         viewModel.onGetStartedClick()
@@ -124,10 +127,10 @@ fun OnboardingScreen(
         ) {
             repeat(pageCount) { iteration ->
                 val color =
-                    if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.onPrimary
-                    else MaterialTheme.colorScheme.onSurface.copy(
-                        alpha = 0.3f
+                    if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.primary.copy(
+                        alpha = 0.8f
                     )
+                    else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)
                 Box(
                     modifier = Modifier
                         .padding(4.dp)
@@ -180,7 +183,7 @@ private fun OnboardingPageItem(page: OnboardingPage) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = Dimension.HorizontalPadding)
         ) {
             Text(
                 text = page.title,

@@ -1,14 +1,24 @@
 package com.lotusreichhart.gencanvas
 
 import android.app.Application
-import com.google.android.gms.ads.MobileAds
+import com.lotusreichhart.ads.AdsInitializer
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
 class GenCanvasApplication : Application() {
+
+    @Inject
+    lateinit var adsInitializer: AdsInitializer
+
     override fun onCreate() {
         super.onCreate()
-        // Khởi tạo AdMob
-        MobileAds.initialize(this) {}
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+
+        adsInitializer.initialize()
     }
 }

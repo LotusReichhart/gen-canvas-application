@@ -37,6 +37,7 @@ private val PurpleGradientTheme = darkColorScheme(
     onSurface = Color.White,
     surfaceVariant = Color(0xFF49454F),
     onSurfaceVariant = Color(0xFFCAC4D0),
+    surfaceContainer = Color(0xFF2C2C4A),
 
     error = Color(0xFFCF6679),
     onError = Color.Black,

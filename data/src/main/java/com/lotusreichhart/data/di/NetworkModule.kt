@@ -1,25 +1,25 @@
 package com.lotusreichhart.data.di
 
+import com.lotusreichhart.data.BuildConfig
+import com.lotusreichhart.data.local.datastore.TokenDataStore
+import com.lotusreichhart.data.remote.interceptor.AuthInterceptor
+import com.lotusreichhart.data.remote.interceptor.TokenAuthenticator
+import com.lotusreichhart.data.remote.service.AuthApiService
+import com.lotusreichhart.data.remote.service.BannerApiService
+import com.lotusreichhart.data.remote.service.LegalApiService
+import com.lotusreichhart.data.remote.service.UserApiService
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dagger.Lazy
+import jakarta.inject.Named
 import jakarta.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import jakarta.inject.Named
-
-import com.lotusreichhart.data.remote.interceptor.AuthInterceptor
-import com.lotusreichhart.data.remote.interceptor.TokenAuthenticator
-import com.lotusreichhart.data.remote.service.AuthApiService
-
-import com.lotusreichhart.data.BuildConfig
-import com.lotusreichhart.data.local.TokenLocalDataSource
-import com.lotusreichhart.data.remote.service.BannerApiService
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -27,7 +27,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideBaseUrl(): String {
-        return "${BuildConfig.BASE_URL}/api/v1/"
+        return "${BuildConfig.BASE_URL}/v1/"
     }
 
     @Provides
@@ -41,9 +41,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideAuthInterceptor(
-        tokenDataSource: TokenLocalDataSource
+        tokenDataStore: TokenDataStore
     ): AuthInterceptor {
-        return AuthInterceptor(tokenDataSource)
+        return AuthInterceptor(tokenDataStore)
     }
 
     @Provides
@@ -85,11 +85,11 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideTokenAuthenticator(
-        tokenDataSource: TokenLocalDataSource,
+        tokenDataStore: TokenDataStore,
         authApiService: Lazy<AuthApiService>
     ): TokenAuthenticator {
         return TokenAuthenticator(
-            tokenDataSource = tokenDataSource,
+            tokenDataStore = tokenDataStore,
             authApiService = authApiService
         )
     }
@@ -132,5 +132,21 @@ object NetworkModule {
         @Named("MainRetrofit") retrofit: Retrofit
     ): BannerApiService {
         return retrofit.create(BannerApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserApiService(
+        @Named("MainRetrofit") retrofit: Retrofit
+    ): UserApiService {
+        return retrofit.create(UserApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLegalApiService(
+        @Named("MainRetrofit") retrofit: Retrofit
+    ): LegalApiService {
+        return retrofit.create(LegalApiService::class.java)
     }
 }

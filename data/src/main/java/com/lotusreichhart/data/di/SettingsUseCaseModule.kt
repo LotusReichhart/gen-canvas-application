@@ -1,8 +1,8 @@
 package com.lotusreichhart.data.di
 
 import com.lotusreichhart.domain.repository.SettingsRepository
-import com.lotusreichhart.domain.use_case.settings.ReadOnboardingStateUseCase
-import com.lotusreichhart.domain.use_case.settings.SetOnboardingCompletedUseCase
+import com.lotusreichhart.domain.usecase.settings.ReadOnboardingStateUseCase
+import com.lotusreichhart.domain.usecase.settings.SetOnboardingCompletedUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
