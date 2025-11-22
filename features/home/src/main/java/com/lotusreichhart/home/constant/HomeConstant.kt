@@ -1,4 +1,4 @@
-package com.lotusreichhart.home.utils
+package com.lotusreichhart.home.constant
 
 import androidx.compose.ui.unit.dp
 
