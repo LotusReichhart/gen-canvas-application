@@ -22,20 +22,25 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.lotusreichhart.core.ui.constant.Dimension
 
 @Composable
 fun CutoutBottomAppBar(
     modifier: Modifier = Modifier,
     fabSize: Dp = 56.dp,
     fabMargin: Dp = 16.dp,
+    notchDepth: Dp = 28.dp,
     color: Color = MaterialTheme.colorScheme.surfaceContainer,
     content: @Composable RowScope. () -> Unit
 ) {
+    val density = LocalDensity.current
+
     val fabDiameterPx = with(LocalDensity.current) { fabSize.toPx() }
+    val notchDepthPx = with(density) { notchDepth.toPx() }
+
     val cutoutShape = BottomAppBarCutoutShape(
         fabDiameter = fabDiameterPx,
-        fabMargin = fabMargin
+        fabMargin = fabMargin,
+        notchDepthPx = notchDepthPx
     )
 
     Surface(
@@ -57,7 +62,8 @@ fun CutoutBottomAppBar(
 
 private class BottomAppBarCutoutShape(
     private val fabDiameter: Float,
-    private val fabMargin: Dp
+    private val fabMargin: Dp,
+    private val notchDepthPx: Float
 ) : Shape {
     override fun createOutline(
         size: Size,
@@ -65,9 +71,11 @@ private class BottomAppBarCutoutShape(
         density: Density
     ): Outline {
         val fabMarginPx = with(density) { fabMargin.toPx() }
+
         val notchRadius = fabDiameter / 2 + fabMarginPx
         val centerX = size.width / 2
-        val notchDepth = 100f
+
+        val notchDepth = notchDepthPx
 
         val path = Path().apply {
             moveTo(0f, 0f)
