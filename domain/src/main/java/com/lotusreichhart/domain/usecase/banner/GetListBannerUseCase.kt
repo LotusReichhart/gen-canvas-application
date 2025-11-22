@@ -18,9 +18,13 @@ class GetListBannerUseCase(
                 val lastRefreshTime = settingsRepository.getLastBannerRefreshTime()
                 val currentTime = System.currentTimeMillis()
 
-                if (currentTime - lastRefreshTime > CACHE_STALE_TIME_MS) {
-                    bannerRepository.fetchBanners()
-                    settingsRepository.saveLastBannerRefreshTime(currentTime)
+                val isCacheStale = (currentTime - lastRefreshTime > CACHE_STALE_TIME_MS)
+
+                if (isCacheStale) {
+                    val result = bannerRepository.fetchBanners()
+                    if (result.isSuccess) {
+                        settingsRepository.saveLastBannerRefreshTime(currentTime)
+                    }
                 }
             }
     }

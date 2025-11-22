@@ -8,20 +8,20 @@ import com.lotusreichhart.core.utils.logE
 import com.lotusreichhart.core.viewmodel.BaseViewModel
 import com.lotusreichhart.domain.entity.BannerEntity
 import com.lotusreichhart.domain.monitor.NetworkMonitor
-import com.lotusreichhart.domain.usecase.banner.GetCachedBannersUseCase
 import com.lotusreichhart.domain.usecase.banner.GetListBannerUseCase
 import com.lotusreichhart.domain.usecase.banner.RefreshBannersUseCase
 import com.lotusreichhart.domain.usecase.user.GetProfileStreamUseCase
 import com.lotusreichhart.home.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -30,11 +30,10 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    getListBannerUseCase: GetListBannerUseCase,
     networkMonitor: NetworkMonitor,
     globalUiEventManager: GlobalUiEventManager,
-    getProfileStreamUseCase: GetProfileStreamUseCase,
-    private val getCachedBannersUseCase: GetCachedBannersUseCase,
+    private val getProfileStreamUseCase: GetProfileStreamUseCase,
+    private val getListBannerUseCase: GetListBannerUseCase,
     private val refreshBannersUseCase: RefreshBannersUseCase,
 ) : BaseViewModel(
     networkMonitor = networkMonitor,
@@ -77,9 +76,11 @@ class HomeViewModel @Inject constructor(
     private val fakeHorizontalListItems = (1..10).map { HorizontalItemData(it) }
     private val fakeMainListItems = (1..20).map { MainListItemData(it) }
 
+    val initialUser = currentUser.value
     private val _uiState = MutableStateFlow(
         HomeUiState(
             isLoading = true,
+            userEntity = initialUser,
             banners = defaultBanners,
             gridItems = fakeGridItems,
             horizontalListItems = fakeHorizontalListItems,
@@ -92,49 +93,44 @@ class HomeViewModel @Inject constructor(
     init {
         logD("Chạy vào init")
 
-        viewModelScope.launch {
-            currentUser.collect { user ->
-                _uiState.update { it.copy(userEntity = user) }
-            }
-        }
-
         networkMonitor.isOnline
-            .flatMapLatest { isOnline ->
-                if (!isOnline) {
-                    logD("Không có mạng, dùng data dự phòng (từ Room)")
-                    getCachedBannersUseCase()
-                        .map { banners ->
-                            Triple(banners, true, null as String?)
-                        }
-                } else {
-                    getListBannerUseCase()
-                        .map { banners ->
-                            Triple(banners, false, null as String?)
-                        }
-                        .catch { e ->
-                            logE("Lỗi stream", e)
-                            emit(Triple(emptyList<BannerEntity>(), false, e.localizedMessage))
-                        }
-                }
+            .onEach { isOnline ->
+                _uiState.update { it.copy(isOffline = !isOnline) }
             }
-            .onEach { (bannersFromStream, isOffline, error) ->
-                val bannersToDisplay = bannersFromStream.ifEmpty {
-                    defaultBanners
-                }
+            .launchIn(viewModelScope)
 
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        isLoading = false,
-                        isOffline = isOffline,
-                        error = error,
-                        banners = bannersToDisplay,
-                        gridItems = currentState.gridItems.ifEmpty { fakeGridItems },
-                        horizontalListItems = currentState.horizontalListItems.ifEmpty { fakeHorizontalListItems },
-                        mainListItems = currentState.mainListItems.ifEmpty { fakeMainListItems }
-                    )
+        currentUser
+            .onEach { user ->
+                if (_uiState.value.userEntity != user) {
+                    _uiState.update { it.copy(userEntity = user) }
                 }
             }
             .launchIn(viewModelScope)
+
+        startBannerStreamListening()
+
+        viewModelScope.launch {
+            val bannerJob = async {
+                try {
+                    getListBannerUseCase().first()
+                } catch (e: Exception) {
+                    emptyList()
+                }
+            }
+            val userJob = async { getProfileStreamUseCase().first() }
+
+            delay(1000)
+            val banners = bannerJob.await()
+            val user = userJob.await()
+
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    userEntity = user,
+                    banners = banners.ifEmpty { defaultBanners }
+                )
+            }
+        }
     }
 
     fun onPullToRefresh() {
@@ -154,5 +150,28 @@ class HomeViewModel @Inject constructor(
             }
             _uiState.update { it.copy(isRefreshing = false) }
         }
+    }
+
+    private fun startBannerStreamListening() {
+        getListBannerUseCase()
+            .onEach { bannersFromStream ->
+                val bannersToDisplay = bannersFromStream.ifEmpty {
+                    defaultBanners
+                }
+
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        error = null,
+                        banners = bannersToDisplay,
+                        gridItems = currentState.gridItems.ifEmpty { fakeGridItems },
+                        horizontalListItems = currentState.horizontalListItems.ifEmpty { fakeHorizontalListItems },
+                        mainListItems = currentState.mainListItems.ifEmpty { fakeMainListItems }
+                    )
+                }
+            }
+            .catch { e ->
+                logE("Lỗi stream banner nghiêm trọng", e)
+            }
+            .launchIn(viewModelScope)
     }
 }

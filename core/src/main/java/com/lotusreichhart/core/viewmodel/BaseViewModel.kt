@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 open class BaseViewModel @Inject constructor(
-    private val networkMonitor: NetworkMonitor,
+    val networkMonitor: NetworkMonitor,
     private val globalUiEventManager: GlobalUiEventManager,
     getProfileStreamUseCase: GetProfileStreamUseCase
 ) : ViewModel() {
