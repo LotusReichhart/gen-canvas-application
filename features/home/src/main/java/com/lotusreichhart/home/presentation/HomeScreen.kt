@@ -81,13 +81,12 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.lotusreichhart.core.ui.components.UserAvatar
 import com.lotusreichhart.core.ui.constant.Dimension
-import com.lotusreichhart.core.ui.theme.primaryGradient
-import com.lotusreichhart.core.utils.toInitials
 import com.lotusreichhart.domain.entity.BannerEntity
 import com.lotusreichhart.domain.entity.UserEntity
 import com.lotusreichhart.home.R
-import com.lotusreichhart.home.utils.EndHeight
-import com.lotusreichhart.home.utils.StartHeight
+import com.lotusreichhart.home.constant.EndHeight
+import com.lotusreichhart.home.constant.StartHeight
+import com.lotusreichhart.home.presentation.components.HomeScreenShimmer
 import kotlinx.coroutines.delay
 import kotlin.math.abs
 
@@ -225,47 +224,51 @@ fun HomeScreen(
     val pullToRefreshState = rememberPullToRefreshState()
     val pullToRefreshEnabled = (progress == 0f)
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(nestedScrollConnection)
-            .pullToRefresh(
+    if (uiState.isLoading) {
+        HomeScreenShimmer()
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .nestedScroll(nestedScrollConnection)
+                .pullToRefresh(
+                    state = pullToRefreshState,
+                    isRefreshing = uiState.isRefreshing,
+                    onRefresh = { viewModel.onPullToRefresh() },
+                    enabled = pullToRefreshEnabled
+                )
+        ) {
+
+            HomeContentList(
+                lazyListState = lazyListState,
+                dynamicHeight = dynamicHeight,
+                progress = progress,
+                statusBarHeight = statusBarHeight,
+                uiState = uiState
+            )
+
+            HomeHeader(
+                motionScene = motionScene,
+                progress = progress,
+                dynamicHeight = dynamicHeight,
+                userEntity = uiState.userEntity,
+                banners = uiState.banners,
+                onAvatarClick = {
+                    if (uiState.userEntity == null) {
+                        onNavigateToAuth()
+                    }
+                }
+            )
+
+            PullToRefreshDefaults.Indicator(
                 state = pullToRefreshState,
                 isRefreshing = uiState.isRefreshing,
-                onRefresh = { viewModel.onPullToRefresh() },
-                enabled = pullToRefreshEnabled
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = statusBarHeight),
+                color = MaterialTheme.colorScheme.primary
             )
-    ) {
-
-        HomeContentList(
-            lazyListState = lazyListState,
-            dynamicHeight = dynamicHeight,
-            progress = progress,
-            statusBarHeight = statusBarHeight,
-            uiState = uiState
-        )
-
-        HomeHeader(
-            motionScene = motionScene,
-            progress = progress,
-            dynamicHeight = dynamicHeight,
-            userEntity = uiState.userEntity,
-            banners = uiState.banners,
-            onAvatarClick = {
-                if (uiState.userEntity == null) {
-                    onNavigateToAuth()
-                }
-            }
-        )
-
-        PullToRefreshDefaults.Indicator(
-            state = pullToRefreshState,
-            isRefreshing = uiState.isRefreshing,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = statusBarHeight),
-            color = MaterialTheme.colorScheme.primary
-        )
+        }
     }
 }
 
@@ -521,7 +524,10 @@ private fun MyGridComponent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(150.dp)
-                        .background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(12.dp)),
+                        .background(
+                            MaterialTheme.colorScheme.secondary,
+                            RoundedCornerShape(Dimension.CornerRadius)
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     Text("Grid ${item.id} (To)")
@@ -541,7 +547,10 @@ private fun MyGridComponent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(100.dp)
-                        .background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(12.dp)),
+                        .background(
+                            MaterialTheme.colorScheme.secondary,
+                            RoundedCornerShape(Dimension.CornerRadius)
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     Text("Grid ${item.id}")
