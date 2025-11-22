@@ -46,16 +46,13 @@ class TokenAuthenticator(
 
             if (refreshTokenResponse.isSuccessful && refreshTokenResponse.body() != null) {
                 val newTokens = refreshTokenResponse.body()!!
-                // Lưu token mới
                 runBlocking {
                     newTokens.data?.let {
-                        tokenDataStore.saveTokens(
-                            access = it.accessToken,
-                            refresh = it.refreshToken
+                        tokenDataStore.updateAccessToken(
+                            access = it.accessToken
                         )
                     }
                 }
-                // Trả về request mới với token mới
                 return response.request.newBuilder()
                     .header("Authorization", "Bearer ${newTokens.data?.accessToken}")
                     .build()
