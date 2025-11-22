@@ -28,13 +28,20 @@ class BannerRepositoryImpl @Inject constructor(
             bannerApiService.getAllBanners()
         }
 
-        logD("result $result")
-
         result.onSuccess { bannerListResponse ->
             logD("bannerListResponse $bannerListResponse")
+
             val bannerDtoList = bannerListResponse.banners
 
-            bannerDao.saveBanners(bannerDtoList.toLocal())
+            val newBannersLocal = bannerDtoList.toLocal()
+            val currentBannersLocal = bannerDao.getBanners()
+
+            if (newBannersLocal != currentBannersLocal) {
+                logD("Banner data thay đổi (hoặc cache rỗng) -> Cập nhật RoomDB")
+                bannerDao.replaceBanners(newBannersLocal)
+            } else {
+                logD("Banner data KHÔNG đổi -> Bỏ qua ghi RoomDB")
+            }
         }
         return result.map { }
     }
