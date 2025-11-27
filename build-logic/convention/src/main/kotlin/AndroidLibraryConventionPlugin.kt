@@ -11,8 +11,8 @@ import org.gradle.kotlin.dsl.dependencies
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            apply("com.android.library")
-            apply("org.jetbrains.kotlin.android")
+            apply(plugin = "com.android.library")
+            apply(plugin = "org.jetbrains.kotlin.android")
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
@@ -29,6 +29,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
+                "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
                 "testImplementation"(libs.findLibrary("kotlin.test").get())
                 "androidTestImplementation"(libs.findLibrary("kotlin.test").get())
             }
