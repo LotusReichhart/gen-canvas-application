@@ -30,6 +30,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             dependencies {
                 "implementation"(libs.findLibrary("kotlinx.coroutines.android").get())
+                "implementation"(libs.findLibrary("timber").get())
                 "testImplementation"(libs.findLibrary("kotlin.test").get())
                 "androidTestImplementation"(libs.findLibrary("kotlin.test").get())
             }
