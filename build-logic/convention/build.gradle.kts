@@ -68,5 +68,10 @@ gradlePlugin {
             id = libs.plugins.gencanvas.android.room.get().pluginId
             implementationClass = "AndroidRoomConventionPlugin"
         }
+        // Android Feature ( Sử dụng cho các Feature Module như Home, Auth, ... )
+        register("androidFeature") {
+            id = libs.plugins.gencanvas.android.feature.get().pluginId
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
     }
 }
