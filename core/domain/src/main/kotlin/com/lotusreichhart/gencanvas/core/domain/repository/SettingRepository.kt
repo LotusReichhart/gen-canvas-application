@@ -2,7 +2,7 @@ package com.lotusreichhart.gencanvas.core.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 
-interface SettingsRepository {
+interface SettingRepository {
     suspend fun saveOnboardingState(completed: Boolean)
     fun readOnboardingState(): Flow<Boolean>
 
