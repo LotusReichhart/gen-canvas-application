@@ -7,7 +7,7 @@ android {
 }
 
 dependencies {
-    api(projects.core.model)
+    implementation(projects.core.model)
 
     implementation(libs.javax.inject)
 

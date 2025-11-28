@@ -40,12 +40,19 @@ androidComponents {
 }
 
 dependencies {
-    api(projects.core.model)
-    api(projects.core.domain)
+    implementation(projects.core.common)
+    implementation(projects.core.model)
+    implementation(projects.core.domain)
 
-    api(libs.androidx.dataStore)
-
+    implementation(libs.androidx.dataStore)
     implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.gson)
+
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
