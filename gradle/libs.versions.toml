@@ -9,6 +9,9 @@ androidxDataStore = "1.1.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 androidxEspresso = "3.6.1"
+androidxHiltNavigationCompose = "1.2.0"
+androidxLifecycle = "2.8.7"
+androidxNavigation = "2.8.5"
 lifecycleRuntimeKtx = "2.8.7"
 androidxActivity = "1.9.3"
 androidxComposeBom = "2025.08.01"
@@ -51,6 +54,12 @@ androidx-compose-animation = { module = "androidx.compose.animation:animation", 
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-dataStore = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
+androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-runtimeTesting = { group = "androidx.lifecycle", name = "lifecycle-runtime-testing", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxNavigation" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
@@ -105,3 +114,4 @@ gencanvas-android-library = { id = "gencanvas.android.library" }
 gencanvas-android-library-compose = { id = "gencanvas.android.library.compose" }
 gencanvas-hilt = { id = "gencanvas.hilt" }
 gencanvas-android-room = { id = "gencanvas.android.room" }
+gencanvas-android-feature = { id = "gencanvas.android.feature" }
