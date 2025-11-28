@@ -1,4 +1,4 @@
-package com.lotusreichhart.gencanvas.ui.theme
+package com.lotusreichhart.gencanvas.core.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
