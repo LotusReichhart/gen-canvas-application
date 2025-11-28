@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.gencanvas.android.library)
-    alias(libs.plugins.ksp)
 }
 
 android {
