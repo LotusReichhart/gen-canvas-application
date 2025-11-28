@@ -1,6 +1,6 @@
 package com.lotusreichhart.gencanvas.core.model.user
 
-import com.lotusreichhart.gencanvas.core.model.user.enums.UserAuthProvider
+import com.lotusreichhart.gencanvas.core.model.user.enums.AuthProvider
 import com.lotusreichhart.gencanvas.core.model.user.enums.UserStatus
 import com.lotusreichhart.gencanvas.core.model.user.enums.UserTier
 
@@ -11,7 +11,7 @@ data class User(
     val avatarUrl: String?,
     val status: UserStatus,
     val tier: UserTier,
-    val authProvider: UserAuthProvider,
+    val authProvider: AuthProvider,
     val balance: Int,
     val lastRefillDate: String?
 )
