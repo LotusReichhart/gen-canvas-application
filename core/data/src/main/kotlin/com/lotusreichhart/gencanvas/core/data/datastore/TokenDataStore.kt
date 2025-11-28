@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class TokenDataStore @Inject constructor(
     private val dataStore: DataStore<Preferences>,
@@ -33,6 +34,7 @@ class TokenDataStore @Inject constructor(
                 _accessToken.value = dataStore.data.map { it[ACCESS_TOKEN_KEY] }.first()
                 _refreshToken.value = dataStore.data.map { it[REFRESH_TOKEN_KEY] }.first()
             } catch (e: Exception) {
+                Timber.e(e, "Error loading tokens from DataStore")
             }
         }
     }
