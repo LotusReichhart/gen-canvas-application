@@ -11,7 +11,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply(plugin = "gencanvas.android.library")
-            apply(plugin = "gencanvas.android.hilt")
+            apply(plugin = "gencanvas.hilt")
+            apply(plugin = "org.jetbrains.kotlin.plugin.compose")
 
             extensions.configure<LibraryExtension> {
                 testOptions.animationsDisabled = true
