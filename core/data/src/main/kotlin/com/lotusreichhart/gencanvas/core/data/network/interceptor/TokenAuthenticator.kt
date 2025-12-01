@@ -1,7 +1,7 @@
 package com.lotusreichhart.gencanvas.core.data.network.interceptor
 
-import com.lotusreichhart.gencanvas.core.common.GlobalUiEventManager
-import com.lotusreichhart.gencanvas.core.common.UiEvent
+import com.lotusreichhart.gencanvas.core.common.event.GlobalUiEventManager
+import com.lotusreichhart.gencanvas.core.common.event.UiEvent
 import com.lotusreichhart.gencanvas.core.data.database.dao.UserDao
 import com.lotusreichhart.gencanvas.core.data.datastore.TokenDataStore
 import com.lotusreichhart.gencanvas.core.data.network.model.auth.RefreshTokenRequest

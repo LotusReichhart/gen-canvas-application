@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_title_1">Chào mừng đến GenCanvas</string>
+    <string name="onboarding_desc_1">Giải phóng sức sáng tạo của bạn với sức mạnh của AI. Tạo, chỉnh sửa và nâng tầm ảnh của bạn.</string>
+
+    <string name="onboarding_title_2">Chỉnh sửa Thông minh</string>
+    <string name="onboarding_desc_2">Dễ dàng xóa phông, tạo ảnh thẻ chuyên nghiệp, và ghép ảnh chỉ với vài cú chạm.</string>
+
+    <string name="onboarding_title_3">Sẵn sàng Khám phá</string>
+    <string name="onboarding_desc_3">Bắt đầu hành trình sáng tạo của bạn ngay bây giờ và biến ý tưởng thành hiện thực.</string>
+
+    <string name="btn_next">Tiếp tục</string>
+    <string name="btn_start">Bắt đầu ngay</string>
+</resources>
