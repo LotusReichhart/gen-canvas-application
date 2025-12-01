@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.lotusreichhart.gencanvas.core.ui.constant.Dimension
 
 @Composable
-fun AppGradientButton(
+fun GradientButton(
     text: String,
     gradient: Brush,
     modifier: Modifier = Modifier,

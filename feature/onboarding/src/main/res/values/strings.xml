@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_title_1">Welcome to GenCanvas</string>
+    <string name="onboarding_desc_1">Unleash your creativity with the power of AI. Create, edit, and elevate your photos.</string>
+
+    <string name="onboarding_title_2">Smart Editing</string>
+    <string name="onboarding_desc_2">Easily remove backgrounds, create professional ID photos, and collage images with just a few taps.</string>
+
+    <string name="onboarding_title_3">Ready to Explore</string>
+    <string name="onboarding_desc_3">Start your creative journey now and turn your ideas into reality.</string>
+
+    <string name="btn_next">Next</string>
+    <string name="btn_start">Get Started</string>
+</resources>

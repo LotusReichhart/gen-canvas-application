@@ -30,5 +30,6 @@ include(":core:model")
 include(":core:common")
 include(":core:domain")
 include(":core:data")
-
 include(":core:ui")
+
+include(":feature:onboarding")

@@ -1,10 +1,11 @@
 package com.lotusreichhart.gencanvas.core.data.network.di
 
-import com.lotusreichhart.gencanvas.core.common.GlobalUiEventManager
+import com.lotusreichhart.gencanvas.core.common.event.GlobalUiEventManager
 import com.lotusreichhart.gencanvas.core.data.BuildConfig
 import com.lotusreichhart.gencanvas.core.data.database.dao.UserDao
 import com.lotusreichhart.gencanvas.core.data.datastore.TokenDataStore
 import com.lotusreichhart.gencanvas.core.data.network.interceptor.AuthInterceptor
+import com.lotusreichhart.gencanvas.core.data.network.interceptor.LanguageInterceptor
 import com.lotusreichhart.gencanvas.core.data.network.interceptor.TokenAuthenticator
 import com.lotusreichhart.gencanvas.core.data.network.service.AuthApiService
 import com.lotusreichhart.gencanvas.core.data.network.service.BannerApiService
@@ -46,6 +47,12 @@ object NetworkModule {
         tokenDataStore: TokenDataStore
     ): AuthInterceptor {
         return AuthInterceptor(tokenDataStore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLanguageInterceptor(): LanguageInterceptor {
+        return LanguageInterceptor()
     }
 
     @Provides
@@ -106,9 +113,11 @@ object NetworkModule {
     fun provideOkHttpClient(
         authInterceptor: AuthInterceptor,
         tokenAuthenticator: TokenAuthenticator,
-        loggingInterceptor: HttpLoggingInterceptor
+        loggingInterceptor: HttpLoggingInterceptor,
+        languageInterceptor: LanguageInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(languageInterceptor)
             .addInterceptor(authInterceptor)
             .authenticator(tokenAuthenticator)
             .addNetworkInterceptor(loggingInterceptor)

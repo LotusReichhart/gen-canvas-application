@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.gencanvas.android.library)
+    alias(libs.plugins.gencanvas.android.library.compose)
 }
 
 android {
@@ -8,4 +9,7 @@ android {
 
 dependencies {
     implementation(libs.javax.inject)
+
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
 }
