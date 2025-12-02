@@ -39,7 +39,7 @@ import com.lotusreichhart.gencanvas.core.ui.constant.Dimension
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GenCanvasDialog(
+internal fun GenCanvasDialog(
     title: String,
     message: String,
     positiveButtonText: String,

@@ -41,6 +41,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.lotusreichhart.gencanvas.core.ui.util.primaryGradient
+import com.lotusreichhart.gencanvas.feature.account.navigation.accountTabGraph
 import com.lotusreichhart.gencanvas.feature.home.navigation.homeTabGraph
 import com.lotusreichhart.gencanvas.presentation.components.CutoutBottomAppBar
 import com.lotusreichhart.gencanvas.presentation.model.BottomNavItem
@@ -146,9 +147,10 @@ fun MainScreen(
                 DefaultScreen(bottomNavItems[2].title.toString())
             }
 
-            composable(bottomNavItems[3].route) {
-                DefaultScreen(bottomNavItems[3].title.toString())
-            }
+            accountTabGraph(
+                onNavigateToAuth = onNavigateToAuth,
+                onNavigateToProfile = onNavigateToProfile
+            )
         }
     }
 }

@@ -4,4 +4,12 @@
     <string name="core_success_internet_restored">Internet đã được khôi phục.</string>
     <string name="core_unknow_error">Lỗi không xác định.</string>
     <string name="core_search">Tìm kiếm...</string>
+    <string name="core_action_sign_in">Đăng nhập</string>
+    <string name="core_action_sign_out">Đăng xuất</string>
+    <string name="core_label_terms_of_service">Điều khoản Dịch vụ</string>
+
+    <string name="core_error_not_found">Không tìm thấy tài nguyên.</string>
+    <string name="core_error_too_many_requests">Thao tác quá nhanh. Vui lòng thử lại sau.</string>
+    <string name="core_error_server">Lỗi máy chủ. Vui lòng thử lại sau.</string>
+    <string name="core_error_request_failed">Yêu cầu không thành công.</string>
 </resources>

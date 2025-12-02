@@ -4,6 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.lotusreichhart.gencanvas.core.common.event.GlobalUiEventManager
 import com.lotusreichhart.gencanvas.core.common.event.UiEvent
 import com.lotusreichhart.gencanvas.core.common.util.TextResource
+import com.lotusreichhart.gencanvas.core.data.network.util.ServerException
+import com.lotusreichhart.gencanvas.core.data.network.util.asUiText
 import com.lotusreichhart.gencanvas.core.domain.usecase.banner.GetListBannerUseCase
 import com.lotusreichhart.gencanvas.core.domain.usecase.banner.RefreshBannersUseCase
 import com.lotusreichhart.gencanvas.core.domain.usecase.user.GetProfileStreamUseCase
@@ -126,9 +128,8 @@ class HomeTabViewModel @Inject constructor(
                 val exception = result.exceptionOrNull()
                 Timber.e("result.isFailure: $exception")
                 sendUiEvent(
-                    event = UiEvent.ShowSnackBar(
-                        message = exception?.message?.let { TextResource.Raw(it) }
-                            ?: TextResource.Id(resId = CoreR.string.core_unknow_error),
+                    UiEvent.ShowSnackBar(
+                        message = exception?.asUiText() ?: TextResource.Id(CoreR.string.core_unknow_error),
                         type = UiEvent.SnackBarType.ERROR
                     )
                 )
@@ -156,7 +157,6 @@ class HomeTabViewModel @Inject constructor(
             }
             .catch { e ->
                 Timber.e("Lỗi stream banner: $e")
-
             }
             .launchIn(viewModelScope)
     }

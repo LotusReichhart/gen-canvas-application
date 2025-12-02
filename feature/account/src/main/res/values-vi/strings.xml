@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_account_security">Tài khoản và bảo mật</string>
+    <string name="menu_personalization">Cá nhân hóa</string>
+    <string name="menu_personalization_desc">Chủ đề, định dạng ảnh và cài đặt cá nhân hóa</string>
+    <string name="menu_help_feedback">Trợ giúp và phản hồi</string>
+    <string name="menu_about_app">Giới thiệu về GenCanvas</string>
+    <string name="menu_network_diagnostics">Chuẩn đoán mạng</string>
+</resources>

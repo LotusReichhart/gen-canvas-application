@@ -14,7 +14,7 @@ fun NavGraphBuilder.homeTabGraph(
 
     navigation(
         startDestination = HomeRoute.HOME_TAB,
-        route = MainTabRoute.HOME_TAB
+        route = MainTabRoute.HOME_TAB_ROUTE
     ) {
         genCanvasComposable(route = HomeRoute.HOME_TAB) {
             HomeTab(
