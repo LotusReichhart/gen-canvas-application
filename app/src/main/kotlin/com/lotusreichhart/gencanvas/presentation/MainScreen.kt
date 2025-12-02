@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -139,14 +140,14 @@ fun MainScreen(
             )
 
             composable(bottomNavItems[1].route) {
-                DefaultScreen(bottomNavItems[1].title)
+                DefaultScreen(bottomNavItems[1].title.toString())
             }
             composable(bottomNavItems[2].route) {
-                DefaultScreen(bottomNavItems[2].title)
+                DefaultScreen(bottomNavItems[2].title.toString())
             }
 
             composable(bottomNavItems[3].route) {
-                DefaultScreen(bottomNavItems[3].title)
+                DefaultScreen(bottomNavItems[3].title.toString())
             }
         }
     }
@@ -171,6 +172,8 @@ private fun BottomBarTabItem(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
+    val title = stringResource(id = item.title)
+
     val color =
         if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(
             alpha = 0.5f
@@ -187,10 +190,10 @@ private fun BottomBarTabItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Icon(item.icon, contentDescription = item.title, tint = color)
+        Icon(imageVector = item.icon, contentDescription = title, tint = color)
         Spacer(Modifier.height(4.dp))
         Text(
-            text = item.title,
+            text = title,
             color = color,
             fontSize = 11.sp,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,

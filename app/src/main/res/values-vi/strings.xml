@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GenCanvas</string>
+
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_ai_gen">Tạo Ảnh</string>
+    <string name="nav_canvas">Canvas</string>
+    <string name="nav_account">Tài khoản</string>
+</resources>

@@ -3,4 +3,5 @@
     <string name="core_error_no_internet">No internet connection.</string>
     <string name="core_success_internet_restored">Internet connection restored.</string>
     <string name="core_unknow_error">Unknown error.</string>
+    <string name="core_search">Search...</string>
 </resources>

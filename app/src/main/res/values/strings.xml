@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GenCanvas</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_ai_gen">AI Gen</string>
+    <string name="nav_canvas">Canvas</string>
+    <string name="nav_account">Account</string>
 </resources>
