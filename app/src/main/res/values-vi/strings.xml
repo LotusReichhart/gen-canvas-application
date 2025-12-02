@@ -6,4 +6,9 @@
     <string name="nav_ai_gen">Tạo Ảnh</string>
     <string name="nav_canvas">Canvas</string>
     <string name="nav_account">Tài khoản</string>
+
+    <string name="dialog_title_legal_update">Cập nhật chính sách</string>
+    <string name="dialog_message_legal_update">Chúng tôi đã cập nhật Điều khoản Dịch vụ và Chính sách Quyền riêng tư. Vui lòng xem các thay đổi mới nhất.</string>
+    <string name="action_view_now">Xem ngay</string>
+    <string name="action_got_it">Đã hiểu</string>
 </resources>

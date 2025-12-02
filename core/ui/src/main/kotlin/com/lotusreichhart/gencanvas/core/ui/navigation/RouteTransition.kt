@@ -1,10 +1,12 @@
 package com.lotusreichhart.gencanvas.core.ui.navigation
 
+import com.lotusreichhart.gencanvas.core.ui.navigation.routes.AuthRoute
+import com.lotusreichhart.gencanvas.core.ui.navigation.routes.GenCanvasRoute
+
 object RouteTransition {
     // -------------------------Zoom List------------------------ //
     val ZOOM_TRANSITION_ROUTES = listOf(
-        ""
-//        AppRoute.IMAGE_VIEWER_SCREEN,
+        GenCanvasRoute.IMAGE_VIEWER_VIEW
     )
 
     fun isZoomRoute(route: String?): Boolean {
@@ -15,8 +17,7 @@ object RouteTransition {
 
     // -------------------------Slide vertical List------------------------ //
     val SLIDE_VERTICAL_TRANSITION_ROUTES = listOf(
-        ""
-//        AuthRoute.SIGN_IN_SCREEN,
+        AuthRoute.SIGN_IN_SCREEN
 //        AccountRoute.EDIT_PROFILE_SCREEN
     )
 

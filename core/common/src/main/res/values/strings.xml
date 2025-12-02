@@ -6,10 +6,22 @@
     <string name="core_search">Search...</string>
     <string name="core_action_sign_in">Sign In</string>
     <string name="core_action_sign_out">Sign Out</string>
+    <string name="core_and">and</string>
+    <string name="core_or">or</string>
     <string name="core_label_terms_of_service">Terms of Service</string>
+    <string name="core_label_privacy_policy">Privacy Policy</string>
 
     <string name="core_error_not_found">Resource not found.</string>
     <string name="core_error_too_many_requests">Too many requests. Please try again later.</string>
     <string name="core_error_server">Server error. Please try again later.</string>
     <string name="core_error_request_failed">Request failed.</string>
+    <string name="core_validation_error">Invalid input data.</string>
+
+    <string name="core_email">Email</string>
+    <string name="core_password">Password</string>
+    <string name="core_name">Your name</string>
+    <string name="core_confirm_password">Confirm Password</string>
+    <string name="core_action_continue">Continue</string>
+    <string name="core_action_verify">Verify</string>
+    <string name="core_action_back">Back</string>
 </resources>

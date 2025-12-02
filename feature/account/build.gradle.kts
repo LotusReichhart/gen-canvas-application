@@ -5,7 +5,3 @@ plugins {
 android {
     namespace = "com.lotusreichhart.gencanvas.feature.account"
 }
-
-dependencies {
-    implementation(projects.core.data)
-}
