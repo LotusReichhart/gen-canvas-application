@@ -1,7 +1,7 @@
 package com.lotusreichhart.gencanvas.core.common.util
 
-fun String?.toInitials(): String {
-    if (this.isNullOrBlank()) return ""
+fun String?.toInitials(): String? {
+    if (this.isNullOrBlank()) return null
 
     val trimmed = this.trim()
     val parts = trimmed.split(Regex("\\s+"))
@@ -13,6 +13,6 @@ fun String?.toInitials(): String {
     return if (firstInitial.isNotEmpty()) {
         "$firstInitial$secondInitial"
     } else {
-        ""
+        null
     }
 }
