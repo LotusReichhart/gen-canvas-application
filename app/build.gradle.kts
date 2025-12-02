@@ -49,6 +49,7 @@ dependencies {
     implementation(projects.feature.onboarding)
     implementation(projects.feature.home)
     implementation(projects.feature.account)
+    implementation(projects.feature.auth)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)

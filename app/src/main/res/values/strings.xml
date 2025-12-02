@@ -5,4 +5,9 @@
     <string name="nav_ai_gen">AI Gen</string>
     <string name="nav_canvas">Canvas</string>
     <string name="nav_account">Account</string>
+
+    <string name="dialog_title_legal_update">Policy Update</string>
+    <string name="dialog_message_legal_update">We have updated our Terms of Service and Privacy Policy. Please review the latest changes.</string>
+    <string name="action_view_now">View Now</string>
+    <string name="action_got_it">Got it</string>
 </resources>

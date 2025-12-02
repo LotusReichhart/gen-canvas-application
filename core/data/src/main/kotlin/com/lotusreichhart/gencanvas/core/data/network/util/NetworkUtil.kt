@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lotusreichhart.gencanvas.core.common.R
 import com.lotusreichhart.gencanvas.core.common.util.TextResource
+import com.lotusreichhart.gencanvas.core.data.network.model.ErrorResponseWrapper
 import com.lotusreichhart.gencanvas.core.data.network.model.ResponseWrapper
 import retrofit2.HttpException
 import timber.log.Timber
@@ -21,7 +22,7 @@ suspend fun <T> safeApiCallData(
         } else {
             val errorResource = wrapper.message?.let { TextResource.Raw(it) }
                 ?: TextResource.Id(R.string.core_unknow_error)
-            Result.failure(ServerException(errorResource, wrapper.errors))
+            Result.failure(ServerException(errorResource))
         }
     } catch (e: Exception) {
         Timber.e(e, "safeApiCallData exception")
@@ -41,8 +42,7 @@ suspend fun safeApiCallUnit(
         } else {
             val errorResource = wrapper.message?.let { TextResource.Raw(it) }
                 ?: TextResource.Id(R.string.core_error_request_failed)
-
-            Result.failure(ServerException(errorResource, wrapper.errors))
+            Result.failure(ServerException(errorResource))
         }
     } catch (e: Exception) {
         Timber.e(e, "safeApiCallUnit exception")
@@ -64,23 +64,24 @@ private fun <T> handleException(e: Exception): Result<T> {
             if (!errorBody.isNullOrBlank()) {
                 try {
                     val gson = Gson()
-                    val type = object : TypeToken<ResponseWrapper<Any>>() {}.type
-                    val errorResponse: ResponseWrapper<Any> = gson.fromJson(errorBody, type)
+                    val errorResponse = gson.fromJson(errorBody, ErrorResponseWrapper::class.java)
 
-                    val serverMessage = errorResponse.errors?.get("message")
-                        ?: errorResponse.message
+                    val serverMessage = errorResponse.message
+                    val fieldErrors = errorResponse.data?.error
+
+                    Timber.d("Parsed Error: message=$serverMessage, fields=$fieldErrors")
 
                     if (serverMessage != null) {
                         return Result.failure(
                             ServerException(
                                 textResource = TextResource.Raw(serverMessage),
-                                fieldErrors = errorResponse.errors
+                                fieldErrors = fieldErrors
                             )
                         )
                     }
 
                     return Result.failure(
-                        ServerException(TextResource.Id(R.string.core_error_server))
+                        ServerException(TextResource.Id(R.string.core_error_server), fieldErrors)
                     )
                 } catch (parseException: Exception) {
                     Timber.e(parseException, "parseException")
@@ -89,6 +90,7 @@ private fun <T> handleException(e: Exception): Result<T> {
 
             val errorResource = when (e.code()) {
                 404 -> TextResource.Id(R.string.core_error_not_found)
+                422 -> TextResource.Id(R.string.core_validation_error)
                 429 -> TextResource.Id(R.string.core_error_too_many_requests)
                 in 500..599 -> TextResource.Id(R.string.core_error_server)
                 else -> TextResource.Id(R.string.core_unknow_error)

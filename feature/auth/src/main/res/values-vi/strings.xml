@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signup_terms_prefix">Bằng việc tiếp tục, bạn đồng ý với </string>
+    <string name="signup_terms_suffix"> của chúng tôi.</string>
+    <string name="sign_in_terms_prefix">Bằng việc đăng nhập, bạn đã đồng ý </string>
+    <string name="sign_in_successful">Đăng nhập thành côngl!</string>
+    <string name="signup_successful">Đăng ký thành côngl!</string>
+    <string name="resend_otp_successful">Hệ thống đã gửi lại mã OTP tới email của bạn!</string>
+    <string name="reset_password_successful">Thay đổi mật khẩu thành công!</string>
+    <string name="error_google_sign_in_failed">Đã xảy ra lỗi khi đăng nhập bằng tài khoản Google.</string>
+
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="sign_in_google">Đăng nhập bằng Google</string>
+    <string name="no_account">Chưa có tài khoản?</string>
+    <string name="register_now">Đăng ký ngay</string>
+    <string name="already_have_account">Bạn đã có tài khoản?</string>
+
+    <string name="sign_in_title">Đăng nhập tài khoản</string>
+    <string name="sign_in_subtitle">Bắt đầu hành trình sáng tạo bất tận của bạn.</string>
+    <string name="sign_up_title">Đăng ký tài khoản</string>
+    <string name="sign_up_subtitle">Tạo tài khoản miễn phí để khởi đầu ngay.</string>
+    <string name="action_resend_otp">Gửi lại mã xác thực</string>
+    <string name="verify_account_title">Xác thực tài khoản</string>
+    <string name="reset_password_title">Khôi phục mật khẩu</string>
+    <string name="otp_sent_description">Chúng tôi đã gửi mã xác thực gồm 6 chữ số đến email: %s</string>
+    <string name="resend_timer">Gửi lại mã sau %ds</string>
+    <string name="action_back_to_sign_in">Trở về đăng nhập</string>
+    <string name="forgot_password_title">Quên mật khẩu</string>
+    <string name="forgot_password_subtitle">Nhập email tài khoản của bạn để tìm lại mật khẩu.</string>
+    <string name="set_new_password_title">Đặt lại mật khẩu</string>
+    <string name="set_new_password_subtitle">Tạo lại mật khẩu mới cho tài khoản của bạn.</string>
+    <string name="action_save_password">Lưu mật khẩu</string>
+</resources>

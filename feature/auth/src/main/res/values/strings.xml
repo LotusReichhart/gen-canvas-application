@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signup_terms_prefix">By continuing, you agree to our </string>
+    <string name="signup_terms_suffix">.</string>
+    <string name="sign_in_terms_prefix">By signing in, you agree to our </string>
+    <string name="sign_in_successful">Sign In Successful!</string>
+    <string name="signup_successful">Sign Up Successful!</string>
+    <string name="resend_otp_successful">Resend OTP Successful!</string>
+    <string name="reset_password_successful">Reset Password Successful!</string>
+    <string name="error_google_sign_in_failed">Google sign-in failed. Please try again.</string>
+
+    <string name="forgot_password">Forgot password?</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="register_now">Register now</string>
+    <string name="already_have_account">Already have an account?</string>
+
+    <string name="sign_in_title">Sign In</string>
+    <string name="sign_in_subtitle">Start your endless creative journey.</string>
+    <string name="sign_up_title">Sign Up</string>
+    <string name="sign_up_subtitle">Create a free account to get started immediately.</string>
+    <string name="action_resend_otp">Resend OTP</string>
+    <string name="verify_account_title">Verify Account</string>
+    <string name="reset_password_title">Reset Password</string>
+    <string name="otp_sent_description">We have sent a 6-digit verification code to email: %s</string>
+    <string name="resend_timer">Resend code in %ds</string>
+    <string name="action_back_to_sign_in">Back to Sign In</string>
+    <string name="forgot_password_title">Forgot Password</string>
+    <string name="forgot_password_subtitle">Enter your account email to recover your password.</string>
+    <string name="set_new_password_title">Set New Password</string>
+    <string name="set_new_password_subtitle">Create a new password for your account.</string>
+    <string name="action_save_password">Save Password</string>
+</resources>
