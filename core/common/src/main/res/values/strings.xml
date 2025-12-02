@@ -4,4 +4,12 @@
     <string name="core_success_internet_restored">Internet connection restored.</string>
     <string name="core_unknow_error">Unknown error.</string>
     <string name="core_search">Search...</string>
+    <string name="core_action_sign_in">Sign In</string>
+    <string name="core_action_sign_out">Sign Out</string>
+    <string name="core_label_terms_of_service">Terms of Service</string>
+
+    <string name="core_error_not_found">Resource not found.</string>
+    <string name="core_error_too_many_requests">Too many requests. Please try again later.</string>
+    <string name="core_error_server">Server error. Please try again later.</string>
+    <string name="core_error_request_failed">Request failed.</string>
 </resources>

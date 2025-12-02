@@ -1,5 +1,6 @@
 package com.lotusreichhart.gencanvas.core.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -85,7 +86,14 @@ fun UserAvatar(
                     modifier = Modifier
                         .matchParentSize()
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)),
+                        .border(
+                            border = BorderStroke(
+                                width = 0.1.dp,
+                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f)
+                            ),
+                            shape = CircleShape
+                        )
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
                     val textToShow = if (user == null) {

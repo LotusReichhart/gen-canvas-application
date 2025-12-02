@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CutoutBottomAppBar(
+internal fun CutoutBottomAppBar(
     modifier: Modifier = Modifier,
     fabSize: Dp = 56.dp,
     fabMargin: Dp = 16.dp,

@@ -29,7 +29,7 @@ import com.lotusreichhart.gencanvas.core.ui.theme.Success
 import com.lotusreichhart.gencanvas.core.ui.theme.Warning
 
 @Composable
-fun GenCanvasSnackBar(
+internal fun GenCanvasSnackBar(
     message: String,
     type: UiEvent.SnackBarType,
     modifier: Modifier = Modifier

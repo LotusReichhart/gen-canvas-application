@@ -144,8 +144,8 @@ fun AutoScrollingCarousel(
 
                 val isSelected = (actualCurrentPage == iteration)
                 val color =
-                    if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
-                    else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)
+                    if (isSelected) MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f)
+                    else MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
                 val size = if (isSelected) 10.dp else 8.dp
 
                 Box(

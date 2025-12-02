@@ -8,9 +8,9 @@ android {
 }
 
 dependencies {
-    api(projects.core.model)
-    api(projects.core.common)
-    api(projects.core.domain)
+    implementation(projects.core.model)
+    implementation(projects.core.common)
+    implementation(projects.core.domain)
 
     api(libs.coil.compose)
     api(libs.coil.network.okhttp)

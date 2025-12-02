@@ -2,8 +2,9 @@ package com.lotusreichhart.gencanvas.core.data.network.util
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.lotusreichhart.gencanvas.core.common.R
+import com.lotusreichhart.gencanvas.core.common.util.TextResource
 import com.lotusreichhart.gencanvas.core.data.network.model.ResponseWrapper
-import com.lotusreichhart.gencanvas.core.model.exception.ServerException
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -18,8 +19,9 @@ suspend fun <T> safeApiCallData(
         if (wrapper.status in 200..299 && wrapper.data != null) {
             Result.success(wrapper.data)
         } else {
-            val errorMessage = wrapper.message ?: "Lỗi không xác định."
-            Result.failure(ServerException(errorMessage, wrapper.errors))
+            val errorResource = wrapper.message?.let { TextResource.Raw(it) }
+                ?: TextResource.Id(R.string.core_unknow_error)
+            Result.failure(ServerException(errorResource, wrapper.errors))
         }
     } catch (e: Exception) {
         Timber.e(e, "safeApiCallData exception")
@@ -37,8 +39,10 @@ suspend fun safeApiCallUnit(
         if (wrapper.status in 200..299) {
             Result.success(Unit)
         } else {
-            val errorMessage = wrapper.message ?: "Yêu cầu thất bại."
-            Result.failure(ServerException(errorMessage, wrapper.errors))
+            val errorResource = wrapper.message?.let { TextResource.Raw(it) }
+                ?: TextResource.Id(R.string.core_error_request_failed)
+
+            Result.failure(ServerException(errorResource, wrapper.errors))
         }
     } catch (e: Exception) {
         Timber.e(e, "safeApiCallUnit exception")
@@ -65,36 +69,41 @@ private fun <T> handleException(e: Exception): Result<T> {
 
                     val serverMessage = errorResponse.errors?.get("message")
                         ?: errorResponse.message
-                        ?: "Lỗi máy chủ. Vui lòng thử lại sau."
+
+                    if (serverMessage != null) {
+                        return Result.failure(
+                            ServerException(
+                                textResource = TextResource.Raw(serverMessage),
+                                fieldErrors = errorResponse.errors
+                            )
+                        )
+                    }
 
                     return Result.failure(
-                        ServerException(
-                            message = serverMessage,
-                            fieldErrors = errorResponse.errors
-                        )
+                        ServerException(TextResource.Id(R.string.core_error_server))
                     )
                 } catch (parseException: Exception) {
                     Timber.e(parseException, "parseException")
                 }
             }
 
-            val message = when (e.code()) {
-                404 -> "Không tìm thấy tài nguyên."
-                429 -> "Quá nhiều yêu cầu. Vui lòng thử lại sau."
-                in 500..599 -> "Lỗi máy chủ. Vui lòng thử lại sau."
-                else -> "Đã xảy ra sự cố không xác định"
+            val errorResource = when (e.code()) {
+                404 -> TextResource.Id(R.string.core_error_not_found)
+                429 -> TextResource.Id(R.string.core_error_too_many_requests)
+                in 500..599 -> TextResource.Id(R.string.core_error_server)
+                else -> TextResource.Id(R.string.core_unknow_error)
             }
-            Result.failure(Exception(message, e))
+            Result.failure(ServerException(errorResource))
         }
 
         is IOException -> {
             Timber.e(e, "exception is IOException")
-            Result.failure(Exception("Không thể kết nối máy chủ.", e))
+            Result.failure(ServerException(TextResource.Id(R.string.core_error_server)))
         }
 
         else -> {
             Timber.e(e, "exception is Exception")
-            Result.failure(Exception("Đã xảy ra lỗi không xác định", e))
+            Result.failure(ServerException(TextResource.Id(R.string.core_unknow_error)))
         }
     }
 }

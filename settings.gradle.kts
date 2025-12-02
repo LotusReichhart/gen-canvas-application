@@ -34,3 +34,4 @@ include(":core:ui")
 
 include(":feature:onboarding")
 include(":feature:home")
+include(":feature:account")
