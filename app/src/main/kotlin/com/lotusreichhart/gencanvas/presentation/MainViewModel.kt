@@ -33,8 +33,11 @@ class MainViewModel @Inject constructor(
             val hasCompletedOnboarding = readOnboardingStateUseCase().first()
             Timber.d("hasCompletedOnboarding - $hasCompletedOnboarding")
 
-            val destination = GenCanvasRoute.ONBOARDING_FLOW_ROUTE
-
+            val destination = if (hasCompletedOnboarding) {
+                GenCanvasRoute.MAIN_FLOW_ROUTE
+            } else {
+                GenCanvasRoute.ONBOARDING_FLOW_ROUTE
+            }
 
             _uiState.update { it.copy(startDestination = destination) }
 

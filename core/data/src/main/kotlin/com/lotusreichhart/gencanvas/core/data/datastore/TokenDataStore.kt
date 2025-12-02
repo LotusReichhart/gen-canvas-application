@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -14,8 +15,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class TokenDataStore @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
-    private val externalScope: CoroutineScope
+    private val dataStore: DataStore<Preferences>
 ) {
     private val _accessToken = MutableStateFlow<String?>(null)
     private val _refreshToken = MutableStateFlow<String?>(null)
@@ -29,7 +29,7 @@ class TokenDataStore @Inject constructor(
     }
 
     init {
-        externalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             try {
                 _accessToken.value = dataStore.data.map { it[ACCESS_TOKEN_KEY] }.first()
                 _refreshToken.value = dataStore.data.map { it[REFRESH_TOKEN_KEY] }.first()

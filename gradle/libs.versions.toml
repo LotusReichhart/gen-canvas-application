@@ -2,6 +2,8 @@
 androidGradlePlugin = "8.13.1"
 androidTools = "31.13.1"
 androidDesugarJdkLibs = "2.1.4"
+constraintlayoutCompose = "1.1.1"
+coreSplashscreen = "1.2.0"
 datastorePreferences = "1.1.7"
 kotlin = "2.2.21"
 androidxCore = "1.15.0"
@@ -34,8 +36,10 @@ coil = "3.1.0"
 composeSparkleBorder = "1.0.1"
 
 [libraries]
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

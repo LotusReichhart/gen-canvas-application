@@ -2,4 +2,5 @@
 <resources>
     <string name="core_error_no_internet">Không có kết nối internet.</string>
     <string name="core_success_internet_restored">Internet đã được khôi phục.</string>
+    <string name="core_unknow_error">Lỗi không xác định.</string>
 </resources>
