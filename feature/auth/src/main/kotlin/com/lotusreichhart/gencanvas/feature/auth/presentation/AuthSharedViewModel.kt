@@ -13,7 +13,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthSharedViewModel @Inject constructor(
+internal class AuthSharedViewModel @Inject constructor(
     private val getLegalInfoUseCase: GetLegalInfoUseCase
 ) : ViewModel() {
 
