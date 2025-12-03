@@ -52,7 +52,6 @@ class UserRepositoryImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 Timber.e(e, "Lưu RoomDB thất bại")
-                return Result.failure(e)
             }
         }
 
