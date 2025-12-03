@@ -4,6 +4,7 @@ import com.lotusreichhart.gencanvas.core.data.datastore.TokenDataStore
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import timber.log.Timber
 
 class AuthInterceptor(
     private val tokenDataStore: TokenDataStore
@@ -16,6 +17,7 @@ class AuthInterceptor(
         }
 
         val token = tokenDataStore.getAccessTokenValue()
+        Timber.d("AuthInterceptor token: $token")
 
         val newRequest = if (token != null) {
             request.newBuilder()

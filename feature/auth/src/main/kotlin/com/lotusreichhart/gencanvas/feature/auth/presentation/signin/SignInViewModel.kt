@@ -117,4 +117,13 @@ internal class SignInViewModel @Inject constructor(
             }
         }
     }
+
+    fun onGoogleSignInError(error: TextResource) {
+        viewModelScope.launch {
+            sendUiEvent(UiEvent.ShowSnackBar(
+                message = error,
+                type = UiEvent.SnackBarType.ERROR
+            ))
+        }
+    }
 }

@@ -5,7 +5,7 @@ import com.lotusreichhart.gencanvas.core.data.network.model.user.UserProfileResp
 import retrofit2.http.GET
 
 interface UserApiService {
-    @GET("users")
+    @GET("users/me")
     suspend fun getProfile(): ResponseWrapper<UserProfileResponse>
 
     @GET("auth/sign-out")
