@@ -10,4 +10,12 @@
     <string name="dialog_sign_out_title">Sign Out</string>
     <string name="dialog_sign_out_message">Are you sure you want to sign out?</string>
     <string name="success_signed_out">Signed out successfully!</string>
+
+    <string name="profile_info_title">Account Information</string>
+    <string name="profile_label_account_type">Account Type</string>
+    <string name="profile_label_login_method">Login Method</string>
+
+    <string name="profile_label_current_balance">Current Balance</string>
+    <string name="profile_action_get_credits">Get Credits</string>
+    <string name="profile_title">Profile</string>
 </resources>

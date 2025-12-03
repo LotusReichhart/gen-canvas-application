@@ -42,7 +42,7 @@ import com.lotusreichhart.gencanvas.core.common.R as CoreR
 import com.lotusreichhart.gencanvas.feature.account.R
 
 @Composable
-fun AccountTab(
+internal fun AccountTab(
     viewModel: AccountTabViewModel = hiltViewModel(),
     onNavigateToAuth: () -> Unit,
     onNavigateToProfile: () -> Unit,
@@ -151,7 +151,7 @@ private fun UserHeader(
         )
         Spacer(modifier = Modifier.width(Dimension.mediumPadding))
         Text(
-            text = user?.name ?: "Đăng nhập",
+            text = user?.name ?: stringResource(CoreR.string.core_action_sign_in),
             style = MaterialTheme.typography.titleMedium,
             fontSize = Dimension.largeButtonFontSize,
             color = MaterialTheme.colorScheme.onSurfaceVariant

@@ -26,7 +26,7 @@ private val PurpleGradientTheme = darkColorScheme(
     onPrimaryContainer = Color(0xFF2E004F),
 
     secondary = Color(0xFF00C8FF),
-    onSecondary = Color.Black,
+    onSecondary = Color.White,
     secondaryContainer = Color(0xFF80E7FF),
     onSecondaryContainer = Color(0xFF00303F),
 

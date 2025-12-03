@@ -20,7 +20,7 @@ object GenCanvasRoute {
     const val IMAGE_VIEWER_VIEW = "image_viewer/{$ARG_URL}"
 
     fun createImageViewerRoute(url: String): String {
-        return IMAGE_VIEWER_VIEW.replace("{$ARG_URL}", url)
+        return "image_viewer/$url"
     }
     // --------------------------------------------------------- //
 }
