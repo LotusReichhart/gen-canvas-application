@@ -19,7 +19,7 @@ import com.lotusreichhart.gencanvas.feature.home.presentation.HomeTabUiState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainContentList(
+internal fun MainContentList(
     lazyListState: LazyListState,
     dynamicHeight: Dp,
     progress: Float,

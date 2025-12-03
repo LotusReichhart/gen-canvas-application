@@ -22,7 +22,7 @@ import com.lotusreichhart.gencanvas.core.ui.constant.Dimension
 import com.lotusreichhart.gencanvas.feature.home.presentation.model.GridItemData
 
 @Composable
-fun GridComponent(
+internal fun GridComponent(
     items: List<GridItemData>
 ) {
     Column(

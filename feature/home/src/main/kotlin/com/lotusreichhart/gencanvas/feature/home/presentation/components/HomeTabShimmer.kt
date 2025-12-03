@@ -29,7 +29,7 @@ import com.lotusreichhart.gencanvas.core.ui.util.shimmerEffect
 import com.lotusreichhart.gencanvas.feature.home.presentation.HomeConstant.StartHeight
 
 @Composable
-fun HomeTabShimmer() {
+internal fun HomeTabShimmer() {
     val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
 
     Box(modifier = Modifier.fillMaxSize()) {
