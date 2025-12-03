@@ -110,7 +110,11 @@ fun AccountTab(
             isSignIn = viewModel.isSignIn,
             enabled = isOnline || !viewModel.isSignIn,
             onClick = {
-
+                if (viewModel.isSignIn) {
+                    viewModel.onSignOutClick()
+                } else {
+                    onNavigateToAuth()
+                }
             }
         )
 

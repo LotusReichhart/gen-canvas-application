@@ -24,4 +24,7 @@
     <string name="core_action_continue">Tiếp tục</string>
     <string name="core_action_verify">Xác thực</string>
     <string name="core_action_back">Quay lại</string>
+    <string name="core_action_confirm">Xác nhận</string>
+    <string name="core_action_cancel">Hủy bỏ</string>
+    <string name="core_action_close">Đóng</string>
 </resources>

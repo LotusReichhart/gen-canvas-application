@@ -6,4 +6,8 @@
     <string name="menu_help_feedback">Help &amp; Feedback</string>
     <string name="menu_about_app">About GenCanvas</string>
     <string name="menu_network_diagnostics">Network Diagnostics</string>
+
+    <string name="dialog_sign_out_title">Sign Out</string>
+    <string name="dialog_sign_out_message">Are you sure you want to sign out?</string>
+    <string name="success_signed_out">Signed out successfully!</string>
 </resources>

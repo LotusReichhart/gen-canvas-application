@@ -17,7 +17,9 @@ object RouteTransition {
 
     // -------------------------Slide vertical List------------------------ //
     val SLIDE_VERTICAL_TRANSITION_ROUTES = listOf(
-        AuthRoute.SIGN_IN_SCREEN
+        AuthRoute.SIGN_IN_SCREEN,
+        AuthRoute.VERIFY_OTP_SCREEN,
+        AuthRoute.RESET_PASSWORD_SCREEN
 //        AccountRoute.EDIT_PROFILE_SCREEN
     )
 

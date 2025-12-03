@@ -24,4 +24,8 @@
     <string name="core_action_continue">Continue</string>
     <string name="core_action_verify">Verify</string>
     <string name="core_action_back">Back</string>
+    <string name="core_action_confirm">Confirm</string>
+    <string name="core_action_cancel">Cancel</string>
+    <string name="core_action_close">Close</string>
+
 </resources>
