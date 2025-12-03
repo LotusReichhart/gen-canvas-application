@@ -63,37 +63,29 @@ fun UserAvatar(
         Box(
             modifier = Modifier
                 .matchParentSize()
+                .clip(CircleShape)
                 .then(
                     if (isPro) {
                         Modifier
                             .sparkleBorder(
                                 brush = primaryGradient(),
-                                backgroundColor = Color.Transparent,
+                                backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
                                 shape = CircleShape,
                                 borderWidth = 2.dp,
                                 animationDurationInMillis = 5000
                             )
                             .padding(2.dp)
                     } else {
-                        Modifier
+                        Modifier.background(brush = primaryGradient())
                     }
                 )
-                .clip(CircleShape)
                 .indication(interactionSource, LocalIndication.current)
         ) {
             val avatarTextContent: @Composable () -> Unit = {
                 BoxWithConstraints(
                     modifier = Modifier
                         .matchParentSize()
-                        .clip(CircleShape)
-                        .border(
-                            border = BorderStroke(
-                                width = 0.1.dp,
-                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f)
-                            ),
-                            shape = CircleShape
-                        )
-                        .background(MaterialTheme.colorScheme.surfaceVariant),
+                        .clip(CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     val textToShow = if (user == null) {
