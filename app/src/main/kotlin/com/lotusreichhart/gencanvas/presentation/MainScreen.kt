@@ -40,6 +40,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.lotusreichhart.gencanvas.core.common.util.TextResource
+import com.lotusreichhart.gencanvas.core.ui.components.DoubleBackToExitHandler
 import com.lotusreichhart.gencanvas.core.ui.util.primaryGradient
 import com.lotusreichhart.gencanvas.feature.account.navigation.accountTabGraph
 import com.lotusreichhart.gencanvas.feature.home.navigation.homeTabGraph
@@ -47,12 +49,18 @@ import com.lotusreichhart.gencanvas.presentation.components.CutoutBottomAppBar
 import com.lotusreichhart.gencanvas.presentation.model.BottomNavItem
 import com.lotusreichhart.gencanvas.presentation.model.bottomNavItems
 
+import com.lotusreichhart.gencanvas.core.common.R as CoreR
 @Composable
 fun MainScreen(
     onNavigateToAuth: () -> Unit,
     onNavigateToProfile: () -> Unit,
+    onShowExitSnackBar: (TextResource) -> Unit
 ) {
     val mainContentNavController = rememberNavController()
+
+    DoubleBackToExitHandler {
+        onShowExitSnackBar(TextResource.Id(CoreR.string.core_msg_press_back_again_to_exit))
+    }
 
     Scaffold(
         floatingActionButton = {
