@@ -5,7 +5,7 @@ import com.lotusreichhart.gencanvas.feature.home.presentation.model.GridItemData
 import com.lotusreichhart.gencanvas.feature.home.presentation.model.HorizontalItemData
 import com.lotusreichhart.gencanvas.feature.home.presentation.model.MainListItemData
 
-data class HomeTabUiState(
+internal data class HomeTabUiState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val banners: List<Banner> = emptyList(),

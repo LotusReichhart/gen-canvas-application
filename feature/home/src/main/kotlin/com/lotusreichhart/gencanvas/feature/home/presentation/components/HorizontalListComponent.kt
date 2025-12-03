@@ -22,7 +22,7 @@ import com.lotusreichhart.gencanvas.core.ui.constant.Dimension
 import com.lotusreichhart.gencanvas.feature.home.presentation.model.HorizontalItemData
 
 @Composable
-fun HorizontalListComponent(
+internal fun HorizontalListComponent(
     items: List<HorizontalItemData>,
     statusBarHeight: Dp
 ) {

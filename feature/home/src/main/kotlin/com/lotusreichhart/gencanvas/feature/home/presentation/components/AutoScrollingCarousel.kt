@@ -38,7 +38,7 @@ import kotlinx.coroutines.delay
 import kotlin.math.abs
 
 @Composable
-fun AutoScrollingCarousel(
+internal fun AutoScrollingCarousel(
     banners: List<Banner>,
     modifier: Modifier = Modifier
 ){

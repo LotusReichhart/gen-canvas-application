@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.lotusreichhart.gencanvas.core.common.event.GlobalUiEventManager
 import com.lotusreichhart.gencanvas.core.common.event.UiEvent
 import com.lotusreichhart.gencanvas.core.common.util.TextResource
-import com.lotusreichhart.gencanvas.core.data.network.util.ServerException
 import com.lotusreichhart.gencanvas.core.data.network.util.asUiText
 import com.lotusreichhart.gencanvas.core.domain.usecase.banner.GetListBannerUseCase
 import com.lotusreichhart.gencanvas.core.domain.usecase.banner.RefreshBannersUseCase
@@ -33,7 +32,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
-class HomeTabViewModel @Inject constructor(
+internal class HomeTabViewModel @Inject constructor(
     networkMonitor: NetworkMonitor,
     globalUiEventManager: GlobalUiEventManager,
     getProfileStreamUseCase: GetProfileStreamUseCase,

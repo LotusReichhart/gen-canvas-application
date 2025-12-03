@@ -1,12 +1,8 @@
 package com.lotusreichhart.gencanvas.feature.home.presentation
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -15,9 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -71,7 +64,7 @@ import com.lotusreichhart.gencanvas.feature.home.presentation.components.MainCon
 
 @OptIn(ExperimentalMotionApi::class)
 @Composable
-fun HomeTab(
+internal fun HomeTab(
     viewModel: HomeTabViewModel = hiltViewModel(),
     onNavigateToAuth: () -> Unit,
     onNavigateToProfile: () -> Unit
