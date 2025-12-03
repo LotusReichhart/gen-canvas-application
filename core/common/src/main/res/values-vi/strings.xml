@@ -27,6 +27,16 @@
     <string name="core_action_confirm">Xác nhận</string>
     <string name="core_action_cancel">Hủy bỏ</string>
     <string name="core_action_close">Đóng</string>
+    <string name="core_loading">Đang tải...</string>
+    <string name="core_status_label">Trạng thái</string>
+    <string name="core_status_active">Hoạt động</string>
+    <string name="core_status_inactive">Tạm dừng</string>
+    <string name="core_status_banned">Bị cấm</string>
+    <string name="core_tier_free">Miễn phí</string>
+    <string name="core_tier_pro">Pro</string>
+    <string name="core_google">Google</string>
+    <string name="core_unit_coins">Xu</string>
+    <string name="core_action_edit">Chỉnh sửa</string>
 
     <string name="core_msg_press_back_again_to_exit">Nhấn lần nữa để thoát</string>
 </resources>

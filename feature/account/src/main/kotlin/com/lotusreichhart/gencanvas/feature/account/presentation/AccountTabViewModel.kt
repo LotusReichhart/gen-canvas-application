@@ -16,7 +16,7 @@ import com.lotusreichhart.gencanvas.core.common.R as CoreR
 import com.lotusreichhart.gencanvas.feature.account.R
 
 @HiltViewModel
-class AccountTabViewModel @Inject constructor(
+internal class AccountTabViewModel @Inject constructor(
     networkMonitor: NetworkMonitor,
     globalUiEventManager: GlobalUiEventManager,
     getProfileStreamUseCase: GetProfileStreamUseCase,

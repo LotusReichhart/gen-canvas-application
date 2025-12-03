@@ -1,5 +1,6 @@
 package com.lotusreichhart.gencanvas.core.ui.navigation
 
+import com.lotusreichhart.gencanvas.core.ui.navigation.routes.AccountRoute
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.AuthRoute
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.GenCanvasRoute
 
@@ -19,8 +20,8 @@ object RouteTransition {
     val SLIDE_VERTICAL_TRANSITION_ROUTES = listOf(
         AuthRoute.SIGN_IN_SCREEN,
         AuthRoute.VERIFY_OTP_SCREEN,
-        AuthRoute.RESET_PASSWORD_SCREEN
-//        AccountRoute.EDIT_PROFILE_SCREEN
+        AuthRoute.RESET_PASSWORD_SCREEN,
+        AccountRoute.EDIT_PROFILE_SCREEN
     )
 
     fun isSlideVerticalRoute(route: String?): Boolean {

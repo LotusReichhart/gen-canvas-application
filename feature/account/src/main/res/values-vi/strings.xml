@@ -10,4 +10,12 @@
     <string name="dialog_sign_out_title">Đăng xuất tài khoản</string>
     <string name="dialog_sign_out_message">Bạn có muốn đăng xuất tài khoản không?</string>
     <string name="success_signed_out">Đã đăng xuất tài khoản!</string>
+
+    <string name="profile_info_title">Thông tin tài khoản</string>
+    <string name="profile_label_account_type">Loại tài khoản</string>
+    <string name="profile_label_login_method">Hình thức đăng nhập</string>
+
+    <string name="profile_label_current_balance">Số dư hiện tại</string>
+    <string name="profile_action_get_credits">Nhận xu</string>
+    <string name="profile_title">Hồ sơ</string>
 </resources>

@@ -15,6 +15,9 @@ import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 import com.lotusreichhart.gencanvas.core.common.R
 import com.lotusreichhart.gencanvas.core.common.util.TextResource
+import com.lotusreichhart.gencanvas.core.ui.navigation.routes.AccountRoute
+import com.lotusreichhart.gencanvas.core.ui.view.ImageViewerView
+import com.lotusreichhart.gencanvas.feature.account.navigation.accountGraph
 
 @Composable
 fun MainNavHost(
@@ -43,7 +46,7 @@ fun MainNavHost(
                     navController.navigate(GenCanvasRoute.AUTH_FLOW_ROUTE)
                 },
                 onNavigateToProfile = {
-
+                    navController.navigate(AccountRoute.PROFILE_SCREEN)
                 },
                 onShowExitSnackBar = onShowExitSnackBar
             )
@@ -54,6 +57,10 @@ fun MainNavHost(
             isAuthSuccessful = {
                 navController.popBackStack(GenCanvasRoute.AUTH_FLOW_ROUTE, inclusive = true)
             }
+        )
+
+        accountGraph(
+            navController = navController
         )
 
         genCanvasComposable(
@@ -76,6 +83,24 @@ fun MainNavHost(
             GenCanvasWebView(
                 url = decodedUrl,
                 titleResId = titleResId,
+                onDismiss = { navController.popBackStack() }
+            )
+        }
+
+        genCanvasComposable(
+            route = GenCanvasRoute.IMAGE_VIEWER_VIEW,
+            arguments = listOf(navArgument(GenCanvasRoute.ARG_URL) { type = NavType.StringType })
+        ) { backStackEntry ->
+            val encodedUrl = backStackEntry.arguments?.getString(GenCanvasRoute.ARG_URL) ?: ""
+
+            val decodedUrl = try {
+                URLDecoder.decode(encodedUrl, StandardCharsets.UTF_8.toString())
+            } catch (e: Exception) {
+                encodedUrl
+            }
+
+            ImageViewerView(
+                imageUrl = decodedUrl,
                 onDismiss = { navController.popBackStack() }
             )
         }
