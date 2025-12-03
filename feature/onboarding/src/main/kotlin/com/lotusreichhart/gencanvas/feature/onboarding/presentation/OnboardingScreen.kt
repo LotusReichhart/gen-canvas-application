@@ -46,7 +46,7 @@ import com.lotusreichhart.gencanvas.feature.onboarding.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnboardingScreen(
+internal fun OnboardingScreen(
     viewModel: OnboardingViewModel = hiltViewModel(),
     onNavigateToMain: () -> Unit
 ) {
