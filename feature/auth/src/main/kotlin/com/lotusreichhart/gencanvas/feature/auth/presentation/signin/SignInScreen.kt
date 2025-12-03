@@ -36,7 +36,7 @@ import com.lotusreichhart.gencanvas.feature.auth.presentation.components.Divider
 import com.lotusreichhart.gencanvas.feature.auth.presentation.components.GoogleButton
 import com.lotusreichhart.gencanvas.feature.auth.presentation.components.TermsAndPrivacyText
 import com.lotusreichhart.gencanvas.feature.auth.presentation.util.rememberGoogleSignInLauncher
-import timber.log.Timber
+
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 

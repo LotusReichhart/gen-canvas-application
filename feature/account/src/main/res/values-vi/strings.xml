@@ -6,4 +6,8 @@
     <string name="menu_help_feedback">Trợ giúp và phản hồi</string>
     <string name="menu_about_app">Giới thiệu về GenCanvas</string>
     <string name="menu_network_diagnostics">Chuẩn đoán mạng</string>
+
+    <string name="dialog_sign_out_title">Đăng xuất tài khoản</string>
+    <string name="dialog_sign_out_message">Bạn có muốn đăng xuất tài khoản không?</string>
+    <string name="success_signed_out">Đã đăng xuất tài khoản!</string>
 </resources>

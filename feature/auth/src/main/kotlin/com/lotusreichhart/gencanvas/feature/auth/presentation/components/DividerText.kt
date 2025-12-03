@@ -11,14 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.lotusreichhart.gencanvas.core.common.R
 
 
 @Composable
 internal fun DividerText(
     modifier: Modifier = Modifier,
-    text: String = "hoặc",
     color: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
 ) {
     Row(
@@ -32,7 +33,7 @@ internal fun DividerText(
         )
 
         Text(
-            text = text,
+            text = stringResource(R.string.core_or),
             color = color,
             fontSize = 16.sp,
             modifier = Modifier.padding(horizontal = 12.dp)

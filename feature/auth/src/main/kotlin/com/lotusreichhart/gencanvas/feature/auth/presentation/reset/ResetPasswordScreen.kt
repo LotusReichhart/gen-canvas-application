@@ -109,7 +109,7 @@ internal fun ResetPasswordScreen(
 
         GenCanvasTextButton(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = stringResource(id = R.string.action_back_to_sign_in),
+            text = stringResource(id = CoreR.string.core_action_close),
             textStyle = TextStyle(
                 color = MaterialTheme.colorScheme.onBackground,
                 fontSize = Dimension.mediumButtonFontSize,

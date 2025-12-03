@@ -49,7 +49,7 @@ fun MainNavHost(
         authGraph(
             navController = navController,
             isAuthSuccessful = {
-                navController.popBackStack()
+                navController.popBackStack(GenCanvasRoute.AUTH_FLOW_ROUTE, inclusive = true)
             }
         )
 
