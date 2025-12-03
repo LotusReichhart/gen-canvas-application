@@ -13,6 +13,7 @@ import com.lotusreichhart.gencanvas.core.data.network.service.UserApiService
 import com.lotusreichhart.gencanvas.core.data.network.util.safeApiCallData
 import com.lotusreichhart.gencanvas.core.data.network.util.safeApiCallUnit
 import com.lotusreichhart.gencanvas.core.domain.repository.AuthRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -29,6 +30,7 @@ class AuthRepositoryImpl @Inject constructor(
             authApiService.signInWithEmail(EmailSignInRequest(email = email, password = password))
         }
         result.onSuccess { authResponse ->
+            Timber.d("signInWithEmail authResponse: $authResponse")
             tokenDataSource.saveTokens(
                 access = authResponse.accessToken,
                 refresh = authResponse.refreshToken
@@ -43,6 +45,8 @@ class AuthRepositoryImpl @Inject constructor(
         }
 
         result.onSuccess { authResponse ->
+            Timber.d("signInWithGoogle authResponse: $authResponse")
+
             tokenDataSource.saveTokens(
                 access = authResponse.accessToken,
                 refresh = authResponse.refreshToken
@@ -77,6 +81,8 @@ class AuthRepositoryImpl @Inject constructor(
         }
 
         result.onSuccess { authResponse ->
+            Timber.d("verifySignUp authResponse: $authResponse")
+
             tokenDataSource.saveTokens(
                 access = authResponse.accessToken,
                 refresh = authResponse.refreshToken

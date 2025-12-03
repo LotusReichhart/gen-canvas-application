@@ -4,13 +4,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
+import com.lotusreichhart.gencanvas.core.common.util.TextResource
+import com.lotusreichhart.gencanvas.core.data.network.util.ServerException
 import kotlinx.coroutines.launch
 import timber.log.Timber
+
+import com.lotusreichhart.gencanvas.feature.auth.R
+import com.lotusreichhart.gencanvas.core.common.R as CoreR
 
 @Composable
 internal fun rememberGoogleSignInLauncher(
     onSignInSuccess: (String) -> Unit,
-    onSignInError: (String) -> Unit
+    onSignInError: (TextResource) -> Unit
 ): () -> Unit {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -27,12 +32,18 @@ internal fun rememberGoogleSignInLauncher(
                 if (idToken != null) {
                     onSignInSuccess(idToken)
                 } else {
-                    onSignInError("Không tìm thấy ID Token")
+                    onSignInError(TextResource.Id(R.string.error_google_sign_in_failed))
                 }
             } else {
                 val error = result.exceptionOrNull()
                 Timber.e(error,"rememberGoogleSignInLauncher error: ")
-                onSignInError(error?.message ?: "Đăng nhập thất bại")
+                val errorText = if (error is ServerException) {
+                    error.textResource
+                } else {
+                    TextResource.Id(CoreR.string.core_unknow_error)
+                }
+
+                onSignInError(errorText)
             }
         }
     }

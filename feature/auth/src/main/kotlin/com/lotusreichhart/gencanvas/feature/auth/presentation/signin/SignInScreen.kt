@@ -74,8 +74,8 @@ internal fun SignInScreen(
         onSignInSuccess = { idToken ->
             viewModel.onSignInWithGoogleClick(idToken)
         },
-        onSignInError = { errorMessage ->
-            Timber.e(errorMessage, "Google sign in error")
+        onSignInError = { errorResource ->
+            viewModel.onGoogleSignInError(errorResource)
         }
     )
 
