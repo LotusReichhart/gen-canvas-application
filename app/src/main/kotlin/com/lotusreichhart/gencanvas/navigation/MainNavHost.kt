@@ -14,11 +14,13 @@ import com.lotusreichhart.gencanvas.presentation.MainScreen
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 import com.lotusreichhart.gencanvas.core.common.R
+import com.lotusreichhart.gencanvas.core.common.util.TextResource
 
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    startDestination: String
+    startDestination: String,
+    onShowExitSnackBar: (TextResource) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -42,7 +44,8 @@ fun MainNavHost(
                 },
                 onNavigateToProfile = {
 
-                }
+                },
+                onShowExitSnackBar = onShowExitSnackBar
             )
         }
 

@@ -27,4 +27,6 @@
     <string name="core_action_confirm">Xác nhận</string>
     <string name="core_action_cancel">Hủy bỏ</string>
     <string name="core_action_close">Đóng</string>
+
+    <string name="core_msg_press_back_again_to_exit">Nhấn lần nữa để thoát</string>
 </resources>

@@ -71,7 +71,13 @@ fun AccountTab(
         AccountOptionItem(
             title = stringResource(id = R.string.menu_account_security),
             showBottomBorder = true,
-            onClick = {}
+            onClick = {
+                if (viewModel.isSignIn) {
+                    Unit
+                } else {
+                    onNavigateToAuth()
+                }
+            }
         )
 
         AccountOptionItem(

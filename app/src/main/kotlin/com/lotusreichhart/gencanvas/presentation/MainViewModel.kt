@@ -100,4 +100,14 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+    fun showExitConfirmation(message: TextResource) {
+        viewModelScope.launch {
+            sendUiEvent(
+                event = UiEvent.ShowToast(
+                    message = message
+                )
+            )
+        }
+    }
 }

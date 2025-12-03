@@ -1,6 +1,7 @@
 package com.lotusreichhart.gencanvas
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -88,7 +89,11 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             is UiEvent.ShowToast -> {
-                                Timber.d("UiEvent là ShowToast, bắt đầu hiển thị....")
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    event.message.asString(this@MainActivity),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
 
                             is UiEvent.ShowDialog -> {
@@ -116,7 +121,10 @@ class MainActivity : AppCompatActivity() {
                         ) {
                             MainNavHost(
                                 navController = navController,
-                                startDestination = uiState.startDestination
+                                startDestination = uiState.startDestination,
+                                onShowExitSnackBar = { messageResource ->
+                                    viewModel.showExitConfirmation(messageResource)
+                                }
                             )
                         }
                     }
