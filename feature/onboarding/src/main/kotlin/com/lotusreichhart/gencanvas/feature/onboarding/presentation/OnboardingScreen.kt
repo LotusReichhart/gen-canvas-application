@@ -72,7 +72,7 @@ internal fun OnboardingScreen(
 
         if (pagerState.currentPage < pageCount - 1) {
             GradientButton(
-                text = "Tiếp tục",
+                text = stringResource(id = R.string.btn_next),
                 modifier = Modifier.width(250.dp),
                 gradient = primaryGradient(),
                 onClick = {
@@ -83,7 +83,7 @@ internal fun OnboardingScreen(
             )
         } else {
             GradientButton(
-                text = "Bắt đầu ngay",
+                text = stringResource(id = R.string.btn_start),
                 modifier = Modifier.width(250.dp),
                 gradient = tertiaryGradient(),
                 onClick = {
