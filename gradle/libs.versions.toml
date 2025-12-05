@@ -1,5 +1,6 @@
 [versions]
 androidGradlePlugin = "8.13.1"
+androidImageCropper = "4.7.0"
 androidTools = "31.13.1"
 androidDesugarJdkLibs = "2.1.4"
 constraintlayoutCompose = "1.1.1"
@@ -39,6 +40,7 @@ coil = "3.1.0"
 composeSparkleBorder = "1.0.1"
 
 [libraries]
+android-image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "androidImageCropper" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }

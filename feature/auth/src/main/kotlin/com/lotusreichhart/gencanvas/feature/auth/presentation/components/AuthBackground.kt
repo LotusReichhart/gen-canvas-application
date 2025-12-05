@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -46,8 +47,6 @@ internal fun AuthBackground(
     backgroundImageRes: Int,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
-
     val animScale = remember { Animatable(1.1f) }
     val animTranslationX = remember { Animatable(0f) }
     val animTranslationY = remember { Animatable(0f) }
@@ -128,7 +127,7 @@ internal fun AuthBackground(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = statusBarHeight)
+                .statusBarsPadding()
                 .padding(horizontal = Dimension.horizontalPadding)
                 .imePadding()
                 .verticalScroll(scrollState),

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Feature Names -->
+    <string name="editing_feature_edit">Edit</string>
+    <string name="editing_feature_adjust">Adjust</string>
+    <string name="editing_feature_filter">Filter</string>
+
+    <!-- Tool Names -->
+    <string name="editing_tool_crop">Crop</string>
+    <string name="editing_tool_rotate">Rotate</string>
+
+    <!-- Actions -->
+    <string name="editing_action_save">Save</string>
+    <string name="editing_action_apply">Apply</string>
+    <string name="editing_action_cancel">Cancel</string>
+</resources>

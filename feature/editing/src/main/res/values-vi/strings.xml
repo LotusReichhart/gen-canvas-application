@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Feature Names -->
+    <string name="editing_feature_edit">Chỉnh sửa</string>
+    <string name="editing_feature_adjust">Điều chỉnh</string>
+    <string name="editing_feature_filter">Bộ lọc</string>
+
+    <!-- Tool Names -->
+    <string name="editing_tool_crop">Cắt</string>
+    <string name="editing_tool_rotate">Xoay</string>
+
+    <!-- Actions -->
+    <string name="editing_action_save">Lưu</string>
+    <string name="editing_action_apply">Áp dụng</string>
+    <string name="editing_action_cancel">Hủy</string>
+</resources>

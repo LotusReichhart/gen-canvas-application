@@ -11,6 +11,6 @@ object AuthRoute {
     const val VERIFY_OTP_SCREEN = "verify_otp_screen/{$ARG_FLOW_TYPE}"
 
     fun createVerifyOtpRoute(flowType: String): String {
-        return VERIFY_OTP_SCREEN.replace("{$ARG_FLOW_TYPE}", flowType)
+        return "verify_otp_screen/$flowType"
     }
 }
