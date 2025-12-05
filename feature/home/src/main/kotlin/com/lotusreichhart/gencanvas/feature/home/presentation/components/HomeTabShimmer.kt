@@ -48,13 +48,13 @@ internal fun HomeTabShimmer() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 6.dp + statusBarHeight)
-                    .padding(horizontal = Dimension.horizontalPadding),
+                    .padding(horizontal = Dimension.Spacing.m),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
                     modifier = Modifier
-                        .size(Dimension.quickAccessItemSize)
+                        .size(Dimension.Icon.xl)
                         .clip(CircleShape)
                         .shimmerEffect(
                             baseColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
@@ -66,7 +66,7 @@ internal fun HomeTabShimmer() {
 
                 Box(
                     modifier = Modifier
-                        .size(Dimension.quickAccessItemSize)
+                        .size(Dimension.Icon.xl)
                         .clip(CircleShape)
                         .shimmerEffect(
                             baseColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
@@ -85,7 +85,7 @@ internal fun HomeTabShimmer() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Dimension.horizontalPadding),
+                    .padding(horizontal = Dimension.Spacing.m),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 repeat(2) {
@@ -93,7 +93,7 @@ internal fun HomeTabShimmer() {
                         modifier = Modifier
                             .weight(1f)
                             .height(150.dp)
-                            .clip(RoundedCornerShape(Dimension.cornerRadius))
+                            .clip(RoundedCornerShape(Dimension.Radius.m))
                             .shimmerEffect()
                     )
                 }
@@ -105,7 +105,7 @@ internal fun HomeTabShimmer() {
                 columns = GridCells.Fixed(4),
                 modifier = Modifier
                     .height(100.dp)
-                    .padding(horizontal = Dimension.horizontalPadding),
+                    .padding(horizontal = Dimension.Spacing.m),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 userScrollEnabled = false
@@ -115,7 +115,7 @@ internal fun HomeTabShimmer() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(100.dp)
-                            .clip(RoundedCornerShape(Dimension.cornerRadius))
+                            .clip(RoundedCornerShape(Dimension.Radius.m))
                             .shimmerEffect()
                     )
                 }

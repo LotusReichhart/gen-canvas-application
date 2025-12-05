@@ -33,7 +33,7 @@ internal fun HorizontalListComponent(
             .padding(top = statusBarHeight + 60.dp)
     ) {
         LazyRow(
-            contentPadding = PaddingValues(horizontal = Dimension.horizontalPadding),
+            contentPadding = PaddingValues(horizontal = Dimension.Spacing.m),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(items) { item ->
@@ -42,7 +42,7 @@ internal fun HorizontalListComponent(
                         .size(120.dp)
                         .background(
                             MaterialTheme.colorScheme.secondary,
-                            RoundedCornerShape(Dimension.horizontalPadding)
+                            RoundedCornerShape(Dimension.Spacing.m)
                         ),
                     contentAlignment = Alignment.Center
                 ) {

@@ -131,16 +131,16 @@ internal fun HomeTab(
                 constrain(searchRef) {
                     top.linkTo(parent.top, 6.dp + statusBarHeight)
                     start.linkTo(parent.start, 18.dp)
-                    height = Dimension.quickAccessItemSize.asDimension()
-                    width = Dimension.quickAccessItemSize.asDimension()
+                    height = Dimension.Icon.xl.asDimension()
+                    width = Dimension.Icon.xl.asDimension()
                     customColor("background", searchBg)
                 }
                 // Avatar (Ghim)
                 constrain(avatarRef) {
                     top.linkTo(parent.top, 6.dp + statusBarHeight)
                     end.linkTo(parent.end, 18.dp)
-                    height = Dimension.quickAccessItemSize.asDimension()
-                    width = Dimension.quickAccessItemSize.asDimension()
+                    height = Dimension.Icon.xl.asDimension()
+                    width = Dimension.Icon.xl.asDimension()
                 }
                 // Carousel (Hiển thị)
                 constrain(carouselRef) {
@@ -159,18 +159,18 @@ internal fun HomeTab(
                 // Search (Searchbar)
                 constrain(searchRef) {
                     top.linkTo(parent.top, 6.dp + statusBarHeight)
-                    start.linkTo(parent.start, Dimension.horizontalPadding)
+                    start.linkTo(parent.start, Dimension.Spacing.m)
                     end.linkTo(avatarRef.start, 8.dp)
-                    height = Dimension.quickAccessItemSize.asDimension()
+                    height = Dimension.Icon.xl.asDimension()
                     width = fillToConstraints
                     customColor("background", searchBg)
                 }
                 // Avatar
                 constrain(avatarRef) {
                     top.linkTo(parent.top, 6.dp + statusBarHeight)
-                    end.linkTo(parent.end, Dimension.horizontalPadding)
-                    height = Dimension.quickAccessItemSize.asDimension()
-                    width = Dimension.quickAccessItemSize.asDimension()
+                    end.linkTo(parent.end, Dimension.Spacing.m)
+                    height = Dimension.Icon.xl.asDimension()
+                    width = Dimension.Icon.xl.asDimension()
                 }
                 // Carousel (Ẩn)
                 constrain(carouselRef) {

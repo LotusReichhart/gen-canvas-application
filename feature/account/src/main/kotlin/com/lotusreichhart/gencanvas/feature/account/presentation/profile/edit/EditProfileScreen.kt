@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -45,10 +46,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -59,13 +60,29 @@ import com.lotusreichhart.gencanvas.core.ui.components.BouncingDotsIndicator
 import com.lotusreichhart.gencanvas.core.ui.constant.Dimension
 
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
+import com.lotusreichhart.gencanvas.core.common.util.toPhysicalFile
+import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasBottomSheet
+import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasBottomSheetItem
+import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasIconButton
+import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasTextButton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
+
+import com.lotusreichhart.gencanvas.feature.account.R
+import com.lotusreichhart.gencanvas.core.common.R as CoreR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun EditProfileScreen(
     viewModel: EditProfileViewModel = hiltViewModel(),
+    editedImageResult: String?,
+    onConsumeEditedImageResult: () -> Unit,
+    onNavigateToEditor: (Uri) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isOnline by viewModel.isOnline.collectAsStateWithLifecycle()
 
@@ -79,11 +96,36 @@ internal fun EditProfileScreen(
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
+    val onSave = {
+        scope.launch {
+            val currentUri = uiState.avatarUri
+
+            val fileToSend: File? = if (currentUri != null) {
+                withContext(Dispatchers.IO) {
+                    currentUri.toPhysicalFile(context)
+                }
+            } else {
+                null
+            }
+
+            viewModel.onSaveClick(fileToSend)
+        }
+    }
+
+
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri != null) {
+            onNavigateToEditor(uri)
+        }
+    }
 
+    LaunchedEffect(editedImageResult) {
+        editedImageResult?.let { uriString ->
+            val uri = uriString.toUri()
+            viewModel.onAvatarSelected(uri)
+            onConsumeEditedImageResult()
         }
     }
 
@@ -98,37 +140,33 @@ internal fun EditProfileScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Sửa hồ sơ",
-                        style = MaterialTheme.typography.titleMedium
+                        text = stringResource(id = R.string.profile_edit_title),
+                        fontSize = Dimension.TextSize.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onDismiss) {
-                        Icon(imageVector = Icons.Default.Close, contentDescription = "Cancel")
-                    }
+                    GenCanvasIconButton(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Cancel Icon",
+                        iconSize = Dimension.Icon.m,
+                        onClick = onDismiss,
+                    )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     MaterialTheme.colorScheme.surfaceVariant
                 ),
                 actions = {
-                    TextButton(
-                        onClick = { viewModel.onSaveClick() },
+                    GenCanvasTextButton(
+                        text = stringResource(id = CoreR.string.core_action_save),
+                        textColor = if (canSubmit) MaterialTheme.colorScheme.onSurfaceVariant
+                        else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                        textStyle = MaterialTheme.typography.labelMedium.copy(
+                            fontSize = Dimension.TextSize.titleSmall
+                        ),
+                        onClick = { onSave() },
                         enabled = canSubmit
-                    ) {
-                        if (uiState.isLoading) {
-                            BouncingDotsIndicator(
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                dotSize = 4.dp
-                            )
-                        } else {
-                            Text(
-                                text = "Lưu",
-                                style = MaterialTheme.typography.labelLarge,
-                                color = if (uiState.isChanged) MaterialTheme.colorScheme.onSurfaceVariant
-                                else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-                            )
-                        }
-                    }
+                    )
                 },
             )
         }
@@ -137,12 +175,11 @@ internal fun EditProfileScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = Dimension.horizontalPadding),
+                .padding(horizontal = Dimension.Spacing.m),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(24.dp))
 
-            // 1. AVATAR VỚI ICON EDIT
             Box(
                 contentAlignment = Alignment.BottomEnd,
                 modifier = Modifier
@@ -151,15 +188,19 @@ internal fun EditProfileScreen(
                         interactionSource = interactionSource,
                         indication = null,
                         onClick = {
-                            showBottomSheet = true
+                            val currentUri = uiState.avatarUri
+                            if (currentUri != null) {
+                                onNavigateToEditor(currentUri)
+                            } else {
+                                showBottomSheet = true
+                            }
                         }
                     )
             ) {
-                // Hiển thị ảnh (Url hoặc Uri)
                 val model = uiState.displayAvatarModel
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(model) // Coil tự xử lý cả String URL và Uri
+                        .data(model)
                         .crossfade(true)
                         .build(),
                     contentDescription = "Avatar",
@@ -169,12 +210,14 @@ internal fun EditProfileScreen(
                         .clip(CircleShape)
                 )
 
-                // Icon Edit nhỏ
                 Box(
                     modifier = Modifier
                         .size(32.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.secondary),
+                        .background(MaterialTheme.colorScheme.secondary)
+                        .clickable {
+                            showBottomSheet = true
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -188,12 +231,11 @@ internal fun EditProfileScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // 2. TEXT FIELD TÊN
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = uiState.name,
                 onValueChange = { viewModel.onNameChange(it) },
-                shape = RoundedCornerShape(Dimension.cornerRadius),
+                shape = RoundedCornerShape(Dimension.Radius.m),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.7f),
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.7f),
@@ -219,54 +261,31 @@ internal fun EditProfileScreen(
             )
         }
 
-        // === BOTTOM SHEET ===
         if (showBottomSheet) {
-            ModalBottomSheet(
-                onDismissRequest = { showBottomSheet = false },
-                sheetState = sheetState
+            GenCanvasBottomSheet(
+                sheetState = sheetState,
+                onDismissRequest = { showBottomSheet = false }
             ) {
-                Column(
-                    modifier = Modifier.padding(bottom = 32.dp)
-                ) {
-                    BottomSheetItem(
-                        icon = Icons.Default.CameraAlt,
-                        text = "Chụp ảnh",
-                        onClick = {
-                            scope.launch { sheetState.hide() }.invokeOnCompletion {
-                            }
+                GenCanvasBottomSheetItem(
+                    text = stringResource(id = CoreR.string.core_action_take_photo),
+                    showDivider = true,
+                    onClick = {
+                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                            showBottomSheet = false
                         }
-                    )
-                    BottomSheetItem(
-                        icon = Icons.Default.Image,
-                        text = "Chọn từ thư viện",
-                        onClick = {
-                            scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                showBottomSheet = false
-                                galleryLauncher.launch("image/*")
-                            }
+                    }
+                )
+
+                GenCanvasBottomSheetItem(
+                    text = stringResource(id = CoreR.string.core_action_pick_from_gallery),
+                    onClick = {
+                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                            showBottomSheet = false
+                            galleryLauncher.launch("image/*")
                         }
-                    )
-                }
+                    }
+                )
             }
         }
-    }
-}
-
-@Composable
-fun BottomSheetItem(icon: ImageVector, text: String, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurface
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        Text(text = text, style = MaterialTheme.typography.bodyLarge)
     }
 }

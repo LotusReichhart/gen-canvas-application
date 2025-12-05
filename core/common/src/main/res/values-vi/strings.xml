@@ -37,6 +37,9 @@
     <string name="core_google">Google</string>
     <string name="core_unit_coins">Xu</string>
     <string name="core_action_edit">Chỉnh sửa</string>
+    <string name="core_action_save">Lưu</string>
+    <string name="core_action_take_photo">Chụp ảnh</string>
+    <string name="core_action_pick_from_gallery">Chọn từ thư viện</string>
 
     <string name="core_msg_press_back_again_to_exit">Nhấn lần nữa để thoát</string>
 </resources>

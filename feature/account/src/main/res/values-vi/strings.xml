@@ -18,4 +18,10 @@
     <string name="profile_label_current_balance">Số dư hiện tại</string>
     <string name="profile_action_get_credits">Nhận xu</string>
     <string name="profile_title">Hồ sơ</string>
+
+    <string name="profile_edit_title">Sửa hồ sơ</string>
+    <string name="profile_label_display_name">Tên hiển thị</string>
+    <string name="profile_cd_avatar">Ảnh đại diện</string>
+
+    <string name="profile_update_success">Cập nhật thành công!</string>
 </resources>

@@ -58,21 +58,21 @@ internal fun ForgotPasswordScreen(
         Text(
             text = stringResource(id = R.string.forgot_password_title),
             color = MaterialTheme.colorScheme.onBackground,
-            fontSize = Dimension.xxxlFontSize,
+            fontSize = Dimension.TextSize.headlineLarge,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = Dimension.largePadding)
+            modifier = Modifier.padding(bottom = Dimension.Spacing.l)
         )
 
         Text(
             text = stringResource(id = R.string.forgot_password_subtitle),
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-            fontSize = Dimension.largeFontSize,
+            fontSize = Dimension.TextSize.bodyLarge,
             fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(bottom = Dimension.xlPadding)
+            modifier = Modifier.padding(bottom = Dimension.Spacing.xxl)
         )
 
         AuthTextField(
-            modifier = Modifier.padding(bottom = Dimension.xlPadding),
+            modifier = Modifier.padding(bottom = Dimension.Spacing.xxl),
             value = sharedUiState.email,
             onValueChange = { newValue ->
                 sharedViewModel.onEmailChange(newEmail = newValue)
@@ -88,7 +88,7 @@ internal fun ForgotPasswordScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .padding(bottom = Dimension.mediumPadding),
+                .padding(bottom = Dimension.Spacing.l),
             text = stringResource(id = CoreR.string.core_action_continue),
             gradient = primaryGradient(),
             isLoading = isLoading,
@@ -103,7 +103,7 @@ internal fun ForgotPasswordScreen(
             text = stringResource(id = R.string.action_back_to_sign_in),
             textStyle = TextStyle(
                 color = MaterialTheme.colorScheme.onBackground,
-                fontSize = Dimension.mediumButtonFontSize,
+                fontSize = Dimension.TextSize.titleMedium,
                 fontWeight = FontWeight.SemiBold
             ),
             enabled = canClick,

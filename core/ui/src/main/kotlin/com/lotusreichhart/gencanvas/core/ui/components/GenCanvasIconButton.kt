@@ -22,7 +22,7 @@ fun GenCanvasIconButton(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     tint: Color = MaterialTheme.colorScheme.onSurface,
-    iconSize: Dp = Dimension.xxlIconSize,
+    iconSize: Dp = Dimension.Icon.l,
 ) {
     Icon(
         imageVector = imageVector,

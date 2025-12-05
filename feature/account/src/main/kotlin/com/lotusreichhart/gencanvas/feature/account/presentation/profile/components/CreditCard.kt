@@ -51,7 +51,7 @@ internal fun CreditCard(
             .sparkleBorder(
                 brush = primaryGradient(),
                 backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(Dimension.cornerRadius),
+                shape = RoundedCornerShape(Dimension.Radius.m),
                 borderWidth = 3.dp,
                 animationDurationInMillis = 2000
             )
@@ -60,12 +60,12 @@ internal fun CreditCard(
             .fillMaxWidth()
             .background(
                 MaterialTheme.colorScheme.surfaceVariant,
-                RoundedCornerShape(Dimension.cornerRadius)
+                RoundedCornerShape(Dimension.Radius.m)
             )
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outlineVariant,
-                shape = RoundedCornerShape(Dimension.cornerRadius)
+                shape = RoundedCornerShape(Dimension.Radius.m)
             )
     }
 
@@ -75,7 +75,7 @@ internal fun CreditCard(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(Dimension.mediumPadding),
+                .padding(Dimension.Spacing.l),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -90,7 +90,7 @@ internal fun CreditCard(
                     modifier = Modifier.size(40.dp)
                 )
 
-                Spacer(modifier = Modifier.width(Dimension.mediumPadding))
+                Spacer(modifier = Modifier.width(Dimension.Spacing.l))
 
                 Column(
                     verticalArrangement = Arrangement.Center
@@ -98,14 +98,14 @@ internal fun CreditCard(
                     Text(
                         text = stringResource(id = R.string.profile_label_current_balance),
                         style = MaterialTheme.typography.labelMedium.copy(
-                            fontSize = Dimension.mediumFontSize
+                            fontSize = Dimension.TextSize.bodyMedium
                         ),
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    Spacer(modifier = Modifier.height(Dimension.xsPadding))
+                    Spacer(modifier = Modifier.height(Dimension.Spacing.xs))
                     Text(
                         text = "$balance ${stringResource(id = CoreR.string.core_unit_coins)}",
-                        fontSize = Dimension.largeFontSize,
+                        fontSize = Dimension.TextSize.bodyLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -117,12 +117,12 @@ internal fun CreditCard(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 ),
-                shape = RoundedCornerShape(Dimension.cornerRadius),
+                shape = RoundedCornerShape(Dimension.Radius.m),
                 onClick = onAddCreditClick
             ) {
                 Text(
                     text = stringResource(id = R.string.profile_action_get_credits),
-                    fontSize = Dimension.smallFontSize,
+                    fontSize = Dimension.TextSize.bodySmall,
                     fontWeight = FontWeight.SemiBold,
                 )
             }

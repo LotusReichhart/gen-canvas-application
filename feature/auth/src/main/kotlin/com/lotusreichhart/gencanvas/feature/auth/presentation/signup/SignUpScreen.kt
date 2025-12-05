@@ -63,21 +63,21 @@ internal fun SignUpScreen(
         Text(
             text = stringResource(id = R.string.sign_up_title),
             color = MaterialTheme.colorScheme.onBackground,
-            fontSize = Dimension.xxxlFontSize,
+            fontSize = Dimension.TextSize.headlineLarge,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = Dimension.largePadding)
+            modifier = Modifier.padding(bottom = Dimension.Spacing.l)
         )
 
         Text(
             text = stringResource(id = R.string.sign_up_subtitle),
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-            fontSize = Dimension.largeFontSize,
+            fontSize = Dimension.TextSize.bodyLarge,
             fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(bottom = Dimension.xlPadding)
+            modifier = Modifier.padding(bottom = Dimension.Spacing.xxl)
         )
 
         AuthTextField(
-            modifier = Modifier.padding(bottom = Dimension.smallPadding),
+            modifier = Modifier.padding(bottom = Dimension.Spacing.l),
             value = uiState.name,
             onValueChange = { viewModel.onNameChange(it) },
             label = stringResource(id = CoreR.string.core_name),
@@ -87,7 +87,7 @@ internal fun SignUpScreen(
         )
 
         AuthTextField(
-            modifier = Modifier.padding(bottom = Dimension.smallPadding),
+            modifier = Modifier.padding(bottom = Dimension.Spacing.l),
             value = sharedUiState.email,
             onValueChange = { newValue ->
                 sharedViewModel.onEmailChange(newEmail = newValue)
@@ -110,7 +110,7 @@ internal fun SignUpScreen(
         )
 
         TermsAndPrivacyText(
-            modifier = Modifier.padding(vertical = Dimension.largePadding),
+            modifier = Modifier.padding(vertical = Dimension.Spacing.l),
             onTermsClick = {
                 if (sharedUiState.termsUrl != null) {
                     val encodedUrl =
@@ -134,7 +134,7 @@ internal fun SignUpScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .padding(bottom = Dimension.mediumPadding),
+                .padding(bottom = Dimension.Spacing.l),
             text = stringResource(id = CoreR.string.core_action_continue),
             gradient = primaryGradient(),
             isLoading = isLoading,
@@ -149,15 +149,15 @@ internal fun SignUpScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.already_have_account),
-                fontSize = Dimension.mediumButtonFontSize,
+                fontSize = Dimension.TextSize.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
-            Spacer(modifier = Modifier.width(Dimension.xsPadding))
+            Spacer(modifier = Modifier.width(Dimension.Spacing.xs))
             GenCanvasTextButton(
                 text = stringResource(id = CoreR.string.core_action_sign_in),
                 textStyle = TextStyle(
                     color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = Dimension.mediumButtonFontSize,
+                    fontSize = Dimension.TextSize.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 ),
                 enabled = canClick,

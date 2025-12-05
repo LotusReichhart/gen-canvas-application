@@ -1,10 +1,13 @@
 package com.lotusreichhart.gencanvas.feature.account.navigation
 
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.navigation
 import com.lotusreichhart.gencanvas.core.ui.navigation.genCanvasComposable
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.AccountRoute
+import com.lotusreichhart.gencanvas.core.ui.navigation.routes.EditingRoute
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.GenCanvasRoute
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.MainTabRoute
 import com.lotusreichhart.gencanvas.feature.account.presentation.AccountTab
@@ -51,9 +54,23 @@ fun NavGraphBuilder.accountGraph(
             )
         }
 
-        genCanvasComposable(AccountRoute.EDIT_PROFILE_SCREEN) {
+        genCanvasComposable(AccountRoute.EDIT_PROFILE_SCREEN) { backStackEntry ->
+
+            val editedResult by backStackEntry.savedStateHandle
+                .getStateFlow<String?>(EditingRoute.KEY_EDITED_IMAGE_RESULT, null)
+                .collectAsStateWithLifecycle()
+
             EditProfileScreen(
-                onDismiss = { navController.popBackStack() }
+                onDismiss = { navController.popBackStack() },
+                editedImageResult = editedResult,
+                onConsumeEditedImageResult = {
+                    backStackEntry.savedStateHandle.remove<String>(EditingRoute.KEY_EDITED_IMAGE_RESULT)
+                },
+                onNavigateToEditor = { uri ->
+                    navController.navigate(
+                        route = EditingRoute.createEditingRoute(uri)
+                    )
+                }
             )
         }
     }

@@ -44,7 +44,7 @@ internal fun GridComponent(
                         .height(150.dp)
                         .background(
                             MaterialTheme.colorScheme.secondary,
-                            RoundedCornerShape(Dimension.cornerRadius)
+                            RoundedCornerShape(Dimension.Radius.m)
                         ),
                     contentAlignment = Alignment.Center
                 ) {
@@ -67,7 +67,7 @@ internal fun GridComponent(
                         .height(100.dp)
                         .background(
                             MaterialTheme.colorScheme.secondary,
-                            RoundedCornerShape(Dimension.cornerRadius)
+                            RoundedCornerShape(Dimension.Radius.m)
                         ),
                     contentAlignment = Alignment.Center
                 ) {
