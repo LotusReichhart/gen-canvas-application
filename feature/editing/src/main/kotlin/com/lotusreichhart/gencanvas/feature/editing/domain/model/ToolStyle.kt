@@ -9,6 +9,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
  */
 internal interface ToolStyle {
     val id: String
-    val title: String
+    val titleRes: Int
     val icon: ImageVector
 }
