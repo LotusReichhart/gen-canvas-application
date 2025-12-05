@@ -13,6 +13,9 @@ import com.lotusreichhart.gencanvas.core.data.network.service.UserApiService
 import com.lotusreichhart.gencanvas.core.data.network.util.safeApiCallData
 import com.lotusreichhart.gencanvas.core.data.network.util.safeApiCallUnit
 import com.lotusreichhart.gencanvas.core.domain.repository.AuthRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -133,13 +136,20 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun signOut(): Result<Unit> {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                userApiService.signOut()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         try {
-            userApiService.signOut()
+            userDao.deleteUser()
+            tokenDataSource.clearTokens()
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        userDao.deleteUser()
-        tokenDataSource.clearTokens()
         return Result.success(Unit)
     }
 }

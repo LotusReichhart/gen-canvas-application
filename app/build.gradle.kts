@@ -50,6 +50,7 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.account)
     implementation(projects.feature.auth)
+    implementation(projects.feature.editing)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)

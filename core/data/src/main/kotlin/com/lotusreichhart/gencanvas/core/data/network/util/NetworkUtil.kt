@@ -1,7 +1,6 @@
 package com.lotusreichhart.gencanvas.core.data.network.util
 
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.lotusreichhart.gencanvas.core.common.R
 import com.lotusreichhart.gencanvas.core.common.util.TextResource
 import com.lotusreichhart.gencanvas.core.data.network.model.ErrorResponseWrapper

@@ -1,10 +1,8 @@
 package com.lotusreichhart.gencanvas.core.data.repository
 
-import android.content.Context
 import android.net.Uri
 import androidx.core.net.toUri
 import com.lotusreichhart.gencanvas.core.domain.repository.EditingRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,10 +16,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class EditingRepositoryImpl@Inject constructor(
-    @param:ApplicationContext private val context: Context
-) : EditingRepository {
-
+class EditingRepositoryImpl @Inject constructor() : EditingRepository {
     companion object {
         private const val MAX_UNDO_STACK_SIZE = 6
     }
@@ -56,15 +51,16 @@ class EditingRepositoryImpl@Inject constructor(
 
     override fun updateImage(newUri: Uri) {
         val currentUri = _currentImageUri.value
-        val currentPath = currentUri?.path
 
-        if (currentPath != null) {
+        if (currentUri != null) {
             if (undoStack.size >= MAX_UNDO_STACK_SIZE) {
-                val oldestPath = undoStack.removeAt(0)
-                deleteFile(oldestPath)
-                Timber.d("Stack limit reached -> Deleted oldest undo step: $oldestPath")
+                val oldestUriString = undoStack.removeAt(0)
+                val oldestUri = oldestUriString.toUri()
+                if (oldestUri.scheme == "file") {
+                    oldestUri.path?.let { deleteFile(it) }
+                }
             }
-            undoStack.push(currentPath)
+            undoStack.push(currentUri.toString())
         }
 
         cleanupRedoBranch()
@@ -77,29 +73,33 @@ class EditingRepositoryImpl@Inject constructor(
 
     override fun undo() {
         if (undoStack.isNotEmpty()) {
-            val currentPath = _currentImageUri.value?.path
-            if (currentPath != null) {
-                redoStack.push(currentPath)
+            val currentUri = _currentImageUri.value
+            if (currentUri != null) {
+                redoStack.push(currentUri.toString())
             }
 
-            val prevPath = undoStack.pop()
-            _currentImageUri.value = File(prevPath).toUri()
+            val prevUriString = undoStack.pop()
+            val prevUri = prevUriString.toUri()
+
+            _currentImageUri.value = prevUri
             updateFlags()
-            Timber.d("Undo performed. Current: $prevPath")
+            Timber.d("Undo performed. Current: $prevUri")
         }
     }
 
     override fun redo() {
         if (redoStack.isNotEmpty()) {
-            val currentPath = _currentImageUri.value?.path
-            if (currentPath != null) {
-                undoStack.push(currentPath)
+            val currentUri = _currentImageUri.value
+            if (currentUri != null) {
+                undoStack.push(currentUri.toString())
             }
 
-            val nextPath = redoStack.pop()
-            _currentImageUri.value = File(nextPath).toUri()
+            val nextUriString = redoStack.pop()
+            val nextUri = nextUriString.toUri()
+
+            _currentImageUri.value = nextUri
             updateFlags()
-            Timber.d("Redo performed. Current: $nextPath")
+            Timber.d("Redo performed. Current: $nextUri")
         }
     }
 
@@ -121,11 +121,11 @@ class EditingRepositoryImpl@Inject constructor(
     }
 
     private fun cleanupRedoBranch() {
-        if (redoStack.isNotEmpty()) {
-            Timber.d("Cleaning up ${redoStack.size} redo files (branch truncated)")
-            while (redoStack.isNotEmpty()) {
-                val path = redoStack.pop()
-                deleteFile(path)
+        while (redoStack.isNotEmpty()) {
+            val uriString = redoStack.pop()
+            val uri = uriString.toUri()
+            if (uri.scheme == "file") {
+                uri.path?.let { deleteFile(it) }
             }
         }
     }

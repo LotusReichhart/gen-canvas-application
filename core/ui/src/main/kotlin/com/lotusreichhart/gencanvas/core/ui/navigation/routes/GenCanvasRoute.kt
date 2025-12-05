@@ -6,6 +6,9 @@ object GenCanvasRoute {
     const val ACCOUNT_FLOW_ROUTE = "account_flow"
     const val AUTH_FLOW_ROUTE = "auth_flow"
 
+    const val EDITING_FLOW_ROUTE = "editing_flow"
+
+
     // -----------------------Web view------------------------ //
     const val ARG_URL = "url"
     const val ARG_TITLE_RES_ID = "title_res_id"
