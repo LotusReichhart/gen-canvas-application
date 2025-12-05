@@ -31,7 +31,7 @@ fun NavGraphBuilder.editingGraph(
                     onSave = { resultUri ->
                         navController.previousBackStackEntry
                             ?.savedStateHandle
-                            ?.set("edited_image_result", resultUri.toString())
+                            ?.set(EditingRoute.KEY_EDITED_IMAGE_RESULT, resultUri.toString())
 
                         navController.popBackStack()
                     }

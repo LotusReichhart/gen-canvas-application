@@ -84,7 +84,7 @@ internal fun SignInScreen(
     ) {
 
         GenCanvasIconButton(
-            modifier = Modifier.padding(bottom = Dimension.xlPadding),
+            modifier = Modifier.padding(bottom = Dimension.Spacing.xxl),
             imageVector = Icons.Default.Close,
             onClick = onDismiss,
             tint = MaterialTheme.colorScheme.onBackground
@@ -93,21 +93,21 @@ internal fun SignInScreen(
         Text(
             text = stringResource(id = R.string.sign_in_title),
             color = MaterialTheme.colorScheme.onBackground,
-            fontSize = Dimension.xxxlFontSize,
+            fontSize = Dimension.TextSize.headlineLarge,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = Dimension.largePadding)
+            modifier = Modifier.padding(bottom = Dimension.Spacing.l)
         )
 
         Text(
             text = stringResource(id = R.string.sign_in_subtitle),
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-            fontSize = Dimension.largeFontSize,
+            fontSize = Dimension.TextSize.bodyLarge,
             fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(bottom = Dimension.xlPadding)
+            modifier = Modifier.padding(bottom = Dimension.Spacing.xxl)
         )
 
         AuthTextField(
-            modifier = Modifier.padding(bottom = Dimension.smallPadding),
+            modifier = Modifier.padding(bottom = Dimension.Spacing.l),
             value = sharedUiState.email,
             onValueChange = { newValue ->
                 sharedViewModel.onEmailChange(newEmail = newValue)
@@ -120,7 +120,7 @@ internal fun SignInScreen(
         )
 
         AuthTextField(
-            modifier = Modifier.padding(bottom = Dimension.xsPadding),
+            modifier = Modifier.padding(bottom = Dimension.Spacing.xs),
             value = uiState.password,
             onValueChange = { viewModel.onPasswordChange(it) },
             label = stringResource(id = CoreR.string.core_password),
@@ -133,10 +133,10 @@ internal fun SignInScreen(
         GenCanvasTextButton(
             modifier = Modifier
                 .align(Alignment.End)
-                .padding(bottom = Dimension.smallPadding),
+                .padding(bottom = Dimension.Spacing.l),
             text = stringResource(id = R.string.forgot_password),
             textStyle = TextStyle(
-                fontSize = Dimension.mediumButtonFontSize,
+                fontSize = Dimension.TextSize.titleMedium,
                 fontStyle = FontStyle.Italic
             ),
             enabled = canClick,
@@ -154,11 +154,11 @@ internal fun SignInScreen(
             onClick = { viewModel.onSignInClick(email = sharedUiState.email) },
         )
 
-        DividerText(modifier = Modifier.padding(vertical = Dimension.largePadding))
+        DividerText(modifier = Modifier.padding(vertical = Dimension.Spacing.l))
 
         GoogleButton(
             text =stringResource(id = R.string.sign_in_google),
-            modifier = Modifier.padding(bottom = Dimension.mediumPadding),
+            modifier = Modifier.padding(bottom = Dimension.Spacing.l),
             isLoading = (uiState.loadingType == SignInLoadingType.GOOGLE_SIGN_IN),
             enabled = canSubmit,
             onClick = { launchGoogleSignIn() }
@@ -171,15 +171,15 @@ internal fun SignInScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.no_account),
-                fontSize = Dimension.mediumButtonFontSize,
+                fontSize = Dimension.TextSize.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
-            Spacer(modifier = Modifier.width(Dimension.xsPadding))
+            Spacer(modifier = Modifier.width(Dimension.Spacing.xs))
             GenCanvasTextButton(
                 text = stringResource(id = R.string.register_now),
                 textStyle = TextStyle(
                     color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = Dimension.mediumButtonFontSize,
+                    fontSize = Dimension.TextSize.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 ),
                 enabled = canClick,
@@ -188,7 +188,7 @@ internal fun SignInScreen(
         }
 
         TermsAndPrivacyText(
-            modifier = Modifier.padding(vertical = Dimension.smallPadding),
+            modifier = Modifier.padding(vertical = Dimension.Spacing.l),
             textBeforeTerms = TextResource.Id(R.string.sign_in_terms_prefix),
             onTermsClick = {
                 if (sharedUiState.termsUrl != null) {

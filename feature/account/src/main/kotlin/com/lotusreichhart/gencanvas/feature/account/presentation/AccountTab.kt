@@ -110,7 +110,7 @@ internal fun AccountTab(
             onClick = { }
         )
 
-        Spacer(modifier = Modifier.height(Dimension.xlPadding))
+        Spacer(modifier = Modifier.height(Dimension.Spacing.xxl))
 
         SignInSignOutButton(
             isSignIn = viewModel.isSignIn,
@@ -124,7 +124,7 @@ internal fun AccountTab(
             }
         )
 
-        Spacer(modifier = Modifier.height(Dimension.xxlPadding))
+        Spacer(modifier = Modifier.height(Dimension.Spacing.xxl))
     }
 }
 
@@ -139,8 +139,8 @@ private fun UserHeader(
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .clickable(onClick = onClick)
-            .padding(vertical = Dimension.xxxlPadding)
-            .padding(horizontal = Dimension.horizontalPadding),
+            .padding(vertical = Dimension.Spacing.xxxl)
+            .padding(horizontal = Dimension.Spacing.m),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {
@@ -149,11 +149,11 @@ private fun UserHeader(
             user = user,
             onClick = onClick
         )
-        Spacer(modifier = Modifier.width(Dimension.mediumPadding))
+        Spacer(modifier = Modifier.width(Dimension.Spacing.l))
         Text(
             text = user?.name ?: stringResource(CoreR.string.core_action_sign_in),
             style = MaterialTheme.typography.titleMedium,
-            fontSize = Dimension.largeButtonFontSize,
+            fontSize = Dimension.TextSize.headlineSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
@@ -189,7 +189,7 @@ private fun SignInSignOutButton(
             .width(200.dp)
             .height(50.dp),
 
-        shape = RoundedCornerShape(Dimension.cornerRadius),
+        shape = RoundedCornerShape(Dimension.Radius.m),
 
         border = BorderStroke(1.dp, borderColor),
 
@@ -202,7 +202,7 @@ private fun SignInSignOutButton(
     ) {
         Text(
             text = title,
-            fontSize = Dimension.mediumButtonFontSize,
+            fontSize = Dimension.TextSize.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
     }

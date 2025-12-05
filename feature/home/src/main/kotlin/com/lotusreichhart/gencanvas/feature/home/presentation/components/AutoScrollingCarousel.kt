@@ -118,11 +118,11 @@ internal fun AutoScrollingCarousel(
                         shadow = Shadow(Color.Black.copy(0.7f), Offset(4f, 4f), 8f),
                         brush = textGradient
                     ),
-                    fontSize = Dimension.xxlFontSize,
+                    fontSize = Dimension.TextSize.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(horizontal = Dimension.smallPadding, vertical = Dimension.xxxlPadding)
+                        .padding(horizontal = Dimension.Spacing.l, vertical = Dimension.Spacing.xxxl)
                         .graphicsLayer {
                             alpha = 1f - abs(pageOffset)
                             translationY = pageOffset * 50.dp.toPx()

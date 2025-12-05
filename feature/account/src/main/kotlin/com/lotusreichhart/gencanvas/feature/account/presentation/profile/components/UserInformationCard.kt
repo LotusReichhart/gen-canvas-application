@@ -53,39 +53,39 @@ internal fun UserInformationCard(
     val containerModifier = if (isPro) {
         Modifier
             .fillMaxWidth()
-            .padding(vertical = Dimension.cornerRadius)
+            .padding(vertical = Dimension.Radius.m)
             .sparkleBorder(
                 brush = primaryGradient(),
                 backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(Dimension.cornerRadius),
+                shape = RoundedCornerShape(Dimension.Radius.m),
                 borderWidth = 3.dp,
                 animationDurationInMillis = 2000
             )
     } else {
         Modifier
             .fillMaxWidth()
-            .padding(vertical = Dimension.mediumPadding)
+            .padding(vertical = Dimension.Spacing.l)
             .background(
                 MaterialTheme.colorScheme.surfaceVariant,
-                RoundedCornerShape(Dimension.cornerRadius)
+                RoundedCornerShape(Dimension.Radius.m)
             )
             .border(
                 1.dp,
                 MaterialTheme.colorScheme.outlineVariant,
-                RoundedCornerShape(Dimension.cornerRadius)
+                RoundedCornerShape(Dimension.Radius.m)
             )
     }
 
 
     Box(modifier = containerModifier) {
         Column(
-            modifier = Modifier.padding(Dimension.mediumPadding),
+            modifier = Modifier.padding(Dimension.Spacing.l),
             horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(Dimension.smallPadding)
+            verticalArrangement = Arrangement.spacedBy(Dimension.Spacing.l)
         ) {
             Text(
                 text = stringResource(id = R.string.profile_info_title),
-                fontSize = Dimension.largeFontSize,
+                fontSize = Dimension.TextSize.bodyLarge,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -128,13 +128,13 @@ internal fun UserInformationCard(
                 if (user?.authProvider == AuthProvider.GOOGLE) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(Dimension.xsPadding)
+                        horizontalArrangement = Arrangement.spacedBy(Dimension.Spacing.xs)
                     ) {
                         Icon(
                             painter = painterResource(id = CoreUiR.drawable.ic_google_icon),
                             contentDescription = "Google Logo",
                             tint = Color.Unspecified,
-                            modifier = Modifier.size(Dimension.xlIconSize)
+                            modifier = Modifier.size(Dimension.Icon.l)
                         )
 
                         InformationContentChip(
@@ -208,7 +208,7 @@ private fun InformationItem(
             text = title,
             style = MaterialTheme.typography.titleSmall.copy(
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-                fontSize = Dimension.mediumFontSize
+                fontSize = Dimension.TextSize.bodyMedium
             )
         )
 
@@ -224,12 +224,12 @@ private fun InformationContentChip(
 ) {
     Text(
         modifier = Modifier
-            .clip(RoundedCornerShape(Dimension.cornerRadius))
+            .clip(RoundedCornerShape(Dimension.Radius.m))
             .background(color = bgColor)
-            .padding(vertical = Dimension.xsPadding)
-            .padding(horizontal = Dimension.smallPadding),
+            .padding(vertical = Dimension.Spacing.xs)
+            .padding(horizontal = Dimension.Spacing.l),
         text = text,
-        fontSize = Dimension.smallFontSize,
+        fontSize = Dimension.TextSize.bodySmall,
         color = textColor,
     )
 }

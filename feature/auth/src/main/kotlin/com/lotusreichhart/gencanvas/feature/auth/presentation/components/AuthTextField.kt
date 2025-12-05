@@ -41,7 +41,7 @@ internal fun AuthTextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
-        shape = RoundedCornerShape(Dimension.cornerRadius),
+        shape = RoundedCornerShape(Dimension.Radius.m),
         leadingIcon = {
             Icon(
                 icon,

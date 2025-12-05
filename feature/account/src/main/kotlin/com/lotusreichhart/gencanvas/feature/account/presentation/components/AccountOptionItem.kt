@@ -38,7 +38,7 @@ internal fun AccountOptionItem(
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surfaceVariant)
                 .heightIn(min = 64.dp)
-                .padding(horizontal = Dimension.horizontalPadding),
+                .padding(horizontal = Dimension.Spacing.m),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -52,14 +52,14 @@ internal fun AccountOptionItem(
                     style = MaterialTheme.typography.titleSmall.copy(
                         fontWeight = FontWeight.SemiBold
                     ),
-                    fontSize = Dimension.largeFontSize,
+                    fontSize = Dimension.TextSize.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 if (description != null) {
                     Text(
                         text = description,
-                        fontSize = Dimension.smallFontSize,
+                        fontSize = Dimension.TextSize.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                     )
                 }

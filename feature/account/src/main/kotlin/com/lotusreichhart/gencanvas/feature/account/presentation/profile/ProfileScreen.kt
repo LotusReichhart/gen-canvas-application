@@ -60,16 +60,15 @@ internal fun ProfileScreen(
                 title = {
                     Text(
                         text = stringResource(id = R.string.profile_title),
-                        fontSize = Dimension.xlFontSize,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        fontSize = Dimension.TextSize.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 },
                 navigationIcon = {
                     GenCanvasIconButton(
-                        modifier = Modifier.padding(start = Dimension.smallPadding),
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Profile Back Icon",
-                        iconSize = Dimension.xlIconSize,
+                        iconSize = Dimension.Icon.m,
                         onClick = onDismiss,
                     )
                 },
@@ -78,11 +77,10 @@ internal fun ProfileScreen(
                 ),
                 actions = {
                     GenCanvasTextButton(
-                        modifier = Modifier.padding(end = Dimension.smallPadding),
                         text = stringResource(id = CoreR.string.core_action_edit),
                         textColor = MaterialTheme.colorScheme.onSurface,
                         textStyle = MaterialTheme.typography.labelMedium.copy(
-                            fontSize = Dimension.smallButtonFontSize
+                            fontSize = Dimension.TextSize.titleSmall
                         ),
                         onClick = onNavigateToEditProfile
                     )
@@ -94,7 +92,7 @@ internal fun ProfileScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = Dimension.horizontalPadding)
+                .padding(horizontal = Dimension.Spacing.m)
                 .verticalScroll(scrollState)
         ) {
             ProfileHeader(
@@ -126,7 +124,7 @@ private fun ProfileHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = Dimension.largePadding),
+            .padding(vertical = Dimension.Spacing.l),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -136,7 +134,7 @@ private fun ProfileHeader(
             showAccessory = false,
             onClick = onClick
         )
-        Spacer(modifier = Modifier.height(Dimension.mediumPadding))
+        Spacer(modifier = Modifier.height(Dimension.Spacing.l))
         Text(
             text = user?.name ?: "",
             style = MaterialTheme.typography.titleLarge.copy(
@@ -146,7 +144,7 @@ private fun ProfileHeader(
         )
         Text(
             text = user?.email ?: "",
-            fontSize = Dimension.mediumFontSize,
+            fontSize = Dimension.TextSize.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground
         )
     }

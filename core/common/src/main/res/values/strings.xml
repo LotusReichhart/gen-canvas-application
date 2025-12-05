@@ -37,6 +37,9 @@
     <string name="core_google">Google</string>
     <string name="core_unit_coins">Coins</string>
     <string name="core_action_edit">Edit</string>
+    <string name="core_action_save">Save</string>
+    <string name="core_action_take_photo">Take Photo</string>
+    <string name="core_action_pick_from_gallery">Choose from Library</string>
 
     <string name="core_msg_press_back_again_to_exit">Press back again to exit</string>
 </resources>

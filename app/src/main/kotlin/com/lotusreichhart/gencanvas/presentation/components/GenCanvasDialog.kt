@@ -61,7 +61,7 @@ internal fun GenCanvasDialog(
         Column(
             modifier = Modifier
                 .width(270.dp)
-                .clip(RoundedCornerShape(Dimension.cornerRadius))
+                .clip(RoundedCornerShape(Dimension.Radius.m))
                 .background(MaterialTheme.colorScheme.surfaceContainerHigh),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -73,7 +73,7 @@ internal fun GenCanvasDialog(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleMedium.copy(
-                        fontSize = Dimension.xlFontSize,
+                        fontSize = Dimension.TextSize.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                         lineHeight = 22.sp,
                         shadow = Shadow(
@@ -87,11 +87,11 @@ internal fun GenCanvasDialog(
                 )
 
                 if (message.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(Dimension.smallPadding))
+                    Spacer(modifier = Modifier.height(Dimension.Spacing.l))
                     Text(
                         text = message,
                         style = MaterialTheme.typography.bodyMedium.copy(
-                            fontSize = Dimension.mediumFontSize,
+                            fontSize = Dimension.TextSize.bodyMedium,
                             fontWeight = FontWeight.Normal,
                             lineHeight = 18.sp
                         ),
@@ -173,7 +173,7 @@ private fun DialogButton(
         Text(
             text = text,
             color = color,
-            fontSize = Dimension.largeFontSize,
+            fontSize = Dimension.TextSize.bodyLarge,
             fontWeight = fontWeight,
             textAlign = TextAlign.Center
         )

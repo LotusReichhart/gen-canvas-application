@@ -5,7 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.lotusreichhart.gencanvas.core.common.event.GlobalUiEventManager
 import com.lotusreichhart.gencanvas.core.common.event.UiEvent
 import com.lotusreichhart.gencanvas.core.common.util.TextResource
+import com.lotusreichhart.gencanvas.core.data.network.util.ServerException
+import com.lotusreichhart.gencanvas.core.domain.repository.EditingRepository
 import com.lotusreichhart.gencanvas.core.domain.usecase.user.GetProfileStreamUseCase
+import com.lotusreichhart.gencanvas.core.domain.usecase.user.UpdateUserProfileUseCase
 import com.lotusreichhart.gencanvas.core.domain.util.NetworkMonitor
 import com.lotusreichhart.gencanvas.core.ui.viewmodel.AuthenticatedViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,14 +19,19 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import java.io.File
 import javax.inject.Inject
+
+import com.lotusreichhart.gencanvas.core.common.R as CoreR
+import com.lotusreichhart.gencanvas.feature.account.R
 
 @HiltViewModel
 internal class EditProfileViewModel @Inject constructor(
     networkMonitor: NetworkMonitor,
     globalUiEventManager: GlobalUiEventManager,
     getProfileStreamUseCase: GetProfileStreamUseCase,
+    private val updateUserProfileUseCase: UpdateUserProfileUseCase,
+    private val editingRepository: EditingRepository
 ) : AuthenticatedViewModel(
     networkMonitor = networkMonitor,
     globalUiEventManager = globalUiEventManager,
@@ -33,7 +41,6 @@ internal class EditProfileViewModel @Inject constructor(
     val uiState: StateFlow<EditProfileUiState> = _uiState.asStateFlow()
 
     init {
-        Timber.d("Chạy vào Init: $user")
         viewModelScope.launch {
             val user = user.filterNotNull().first()
             _uiState.update {
@@ -56,46 +63,45 @@ internal class EditProfileViewModel @Inject constructor(
         }
     }
 
-    fun onSaveClick() {
+    fun onSaveClick(avatarFile: File?) {
         val currentState = _uiState.value
         val name = currentState.name.trim()
-        val avatarUri = currentState.avatarUri
 
         if (!currentState.isChanged) return
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            sendUiEvent(
-                UiEvent.ShowSnackBar(
-                    TextResource.Raw("Cập nhật thành công"),
-                    type = UiEvent.SnackBarType.SUCCESS
-                )
-            )
-            _uiState.update { it.copy(isLoading = false) }
 
-//            val result = updateProfileUseCase(
-//                name = name,
-//                avatarUri = avatarUri?.toString()
-//            )
-//
-//            if (result.isSuccess) {
-//                sendUiEvent(
-//                    UiEvent.ShowSnackBar(
-//                        "Cập nhật thành công!",
-//                        type = UiEvent.SnackBarType.SUCCESS
-//                    )
-//                )
-//                _uiState.update { it.copy(isLoading = false, isSuccess = true) }
-//            } else {
-//                val errorMsg = result.exceptionOrNull()?.message ?: "Cập nhật thất bại"
-//                _uiState.update { it.copy(isLoading = false) }
-//                sendUiEvent(
-//                    UiEvent.ShowSnackBar(
-//                        errorMsg,
-//                        type = UiEvent.SnackBarType.ERROR
-//                    )
-//                )
-//            }
+            val result = updateUserProfileUseCase(name = name, avatarFile = avatarFile)
+
+            if (result.isSuccess) {
+                sendUiEvent(
+                    UiEvent.ShowSnackBar(
+                        TextResource.Id(R.string.profile_update_success),
+                        type = UiEvent.SnackBarType.SUCCESS
+                    )
+                )
+                editingRepository.clearSession()
+                _uiState.update { it.copy(isLoading = false, isSuccess = true) }
+            } else {
+                val exception = result.exceptionOrNull()
+
+                val errorResource = if (exception is ServerException) {
+                    exception.textResource
+                } else {
+                    exception?.message?.let { TextResource.Raw(it) }
+                        ?: TextResource.Id(CoreR.string.core_unknow_error)
+                }
+
+                _uiState.update { it.copy(isLoading = false) }
+
+                sendUiEvent(
+                    UiEvent.ShowSnackBar(
+                        message = errorResource,
+                        type = UiEvent.SnackBarType.ERROR
+                    )
+                )
+            }
         }
     }
 }

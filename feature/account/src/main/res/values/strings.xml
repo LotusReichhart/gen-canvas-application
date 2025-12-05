@@ -18,4 +18,11 @@
     <string name="profile_label_current_balance">Current Balance</string>
     <string name="profile_action_get_credits">Get Credits</string>
     <string name="profile_title">Profile</string>
+
+    <string name="profile_edit_title">Edit Profile</string>
+    <string name="profile_label_display_name">Display Name</string>
+    <string name="profile_cd_avatar">Avatar</string>
+
+    <string name="profile_update_success">Update profile successfully!</string>
+
 </resources>

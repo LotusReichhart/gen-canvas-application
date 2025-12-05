@@ -128,7 +128,7 @@ internal fun AuthBackground(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
-                .padding(horizontal = Dimension.horizontalPadding)
+                .padding(horizontal = Dimension.Spacing.m)
                 .imePadding()
                 .verticalScroll(scrollState),
             horizontalAlignment = Alignment.Start,

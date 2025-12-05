@@ -2,6 +2,7 @@ package com.lotusreichhart.gencanvas.core.ui.components
 
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalRippleConfiguration
@@ -26,7 +27,7 @@ fun GenCanvasTextButton(
     modifier: Modifier = Modifier,
     textColor: Color = MaterialTheme.colorScheme.secondary,
     textStyle: TextStyle = MaterialTheme.typography.labelLarge.copy(
-        fontSize = Dimension.mediumButtonFontSize,
+        fontSize = Dimension.TextSize.titleMedium,
         fontWeight = FontWeight.Medium
     ),
     enabled: Boolean = true,
@@ -42,7 +43,7 @@ fun GenCanvasTextButton(
                 keyboardController?.hide()
                 onClick()
             },
-            modifier = modifier,
+            modifier = modifier.defaultMinSize(minWidth = 1.dp, minHeight = 1.dp),
             enabled = enabled,
             colors = ButtonDefaults.textButtonColors(
                 contentColor = textColor,

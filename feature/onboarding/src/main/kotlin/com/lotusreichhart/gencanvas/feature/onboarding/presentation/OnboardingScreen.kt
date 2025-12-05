@@ -95,7 +95,7 @@ internal fun OnboardingScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(Dimension.smallPadding))
+        Spacer(modifier = Modifier.height(Dimension.Spacing.l))
 
         Row(
             Modifier
@@ -159,7 +159,7 @@ private fun OnboardingPageItem(page: OnboardingPage) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(horizontal = Dimension.horizontalPadding)
+            modifier = Modifier.padding(horizontal = Dimension.Spacing.m)
         ) {
             Text(
                 text = stringResource(id = page.title),

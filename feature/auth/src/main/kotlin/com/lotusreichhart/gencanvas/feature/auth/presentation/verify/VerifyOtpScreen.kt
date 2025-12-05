@@ -111,17 +111,17 @@ internal fun VerifyOtpScreen(
         Text(
             text = stringResource(id = titleResId),
             color = MaterialTheme.colorScheme.onBackground,
-            fontSize = Dimension.xxxlFontSize,
+            fontSize = Dimension.TextSize.headlineLarge,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = Dimension.largePadding)
+            modifier = Modifier.padding(bottom = Dimension.Spacing.l)
         )
 
         Text(
             text = description,
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-            fontSize = Dimension.largeFontSize,
+            fontSize = Dimension.TextSize.bodyLarge,
             fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(bottom = Dimension.xlPadding)
+            modifier = Modifier.padding(bottom = Dimension.Spacing.xxl)
         )
 
         OtpInputField(
@@ -136,7 +136,7 @@ internal fun VerifyOtpScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .padding(top = Dimension.xlPadding, bottom = Dimension.smallPadding),
+                .padding(top = Dimension.Spacing.xxl, bottom = Dimension.Spacing.l),
             text = stringResource(id = CoreR.string.core_action_verify),
             gradient = gradient,
             isLoading = isLoading,
@@ -158,7 +158,7 @@ internal fun VerifyOtpScreen(
             Text(
                 text = stringResource(id = R.string.resend_timer, ticks),
                 color = Color.White.copy(alpha = 0.6f),
-                fontSize = Dimension.mediumFontSize
+                fontSize = Dimension.TextSize.bodyMedium
             )
         } else {
             GenCanvasTextButton(
@@ -173,11 +173,11 @@ internal fun VerifyOtpScreen(
         GenCanvasTextButton(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = Dimension.mediumPadding),
+                .padding(top = Dimension.Spacing.l),
             text = stringResource(id = CoreR.string.core_action_back),
             textStyle = TextStyle(
                 color = MaterialTheme.colorScheme.onBackground,
-                fontSize = Dimension.mediumButtonFontSize,
+                fontSize = Dimension.TextSize.titleMedium,
                 fontWeight = FontWeight.SemiBold
             ),
             enabled = canClick,

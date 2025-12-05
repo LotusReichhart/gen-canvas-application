@@ -49,13 +49,13 @@ fun GradientButton(
                     if (enabled) Modifier.background(gradient)
                     else Modifier.background(Color.Transparent)
                 )
-                .padding(horizontal = Dimension.xlPadding, vertical = Dimension.smallPadding),
+                .padding(horizontal = Dimension.Spacing.xxl, vertical = Dimension.Spacing.l),
             contentAlignment = Alignment.Center
         ) {
             if (isLoading) {
                 BouncingDotsIndicator()
             } else {
-                Text(text = text, fontSize = Dimension.mediumButtonFontSize)
+                Text(text = text, fontSize = Dimension.TextSize.titleMedium)
             }
         }
     }

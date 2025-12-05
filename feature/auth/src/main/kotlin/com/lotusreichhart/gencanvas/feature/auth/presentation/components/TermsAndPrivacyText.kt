@@ -82,7 +82,7 @@ internal fun TermsAndPrivacyText(
         modifier = modifier,
         style = MaterialTheme.typography.bodySmall.copy(
             textAlign = TextAlign.Start,
-            fontSize = Dimension.mediumFontSize,
+            fontSize = Dimension.TextSize.bodyMedium,
             lineHeight = 23.sp
         )
     )

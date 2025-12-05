@@ -49,7 +49,7 @@ fun ImageViewerView(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .safeDrawingPadding()
-                .padding(Dimension.smallPadding)
+                .padding(Dimension.Spacing.l)
         ) {
             GenCanvasIconButton(
                 imageVector = Icons.Default.Close,
