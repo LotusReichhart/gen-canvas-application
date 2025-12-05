@@ -20,24 +20,24 @@ enum class AppTheme {
 }
 
 private val PurpleGradientTheme = darkColorScheme(
-    primary = Color(0xFF6A0DAD),
+    primary = Color(0xFF9D4EDD),
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFC080FF),
-    onPrimaryContainer = Color(0xFF2E004F),
+    primaryContainer = Color(0xFF520087),
+    onPrimaryContainer = Color(0xFFEADBFF),
 
     secondary = Color(0xFF00C8FF),
     onSecondary = Color.White,
     secondaryContainer = Color(0xFF80E7FF),
     onSecondaryContainer = Color(0xFF00303F),
 
-    background = Color(0xFF1A1A2E),
+    background = Color(0xFF0F0F1A),
     onBackground = Color.White,
 
-    surface = Color(0xFF2C2C4A),
+    surface = Color(0xFF1E1E2C),
     onSurface = Color.White,
-    surfaceVariant = Color(0xFF121220),
+    surfaceVariant = Color(0xFF080810),
     onSurfaceVariant = Color(0xFFCAC4D0),
-    surfaceContainer = Color(0xFF2C2C4A),
+    surfaceContainer = Color(0xFF1E1E2C),
 
     error = Color(0xFFCF6679),
     onError = Color.Black,
