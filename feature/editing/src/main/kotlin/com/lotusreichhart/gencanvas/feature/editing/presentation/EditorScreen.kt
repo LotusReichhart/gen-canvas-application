@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lotusreichhart.gencanvas.core.ui.constant.Dimension
 import com.lotusreichhart.gencanvas.feature.editing.presentation.components.EditorBottomBar
 import com.lotusreichhart.gencanvas.feature.editing.presentation.components.EditorCanvas
 import com.lotusreichhart.gencanvas.feature.editing.presentation.components.EditorTopBar

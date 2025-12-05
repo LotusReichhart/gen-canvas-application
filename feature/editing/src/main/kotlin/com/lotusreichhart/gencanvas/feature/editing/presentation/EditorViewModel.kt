@@ -124,16 +124,14 @@ internal class EditorViewModel @Inject constructor(
      * UI (Component) báo cáo đã xử lý xong và có ảnh mới
      */
     fun onNewImageApplied(uri: Uri) {
-        // 1. Cập nhật vào Repository (Lưu vào Stack)
         _uiState.update { it.copy(isImageTransitionAnimated = true) }
         editingRepository.updateImage(uri)
 
-        // 2. Đóng Feature menu, quay về màn hình chính
         _uiState.update {
             it.copy(
                 activeFeature = null,
                 activeTool = null,
-                shouldExecuteSave = false, // Reset cờ
+                shouldExecuteSave = false,
                 isLoading = false
             )
         }

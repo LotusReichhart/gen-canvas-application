@@ -10,6 +10,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,6 +41,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasIconButton
+import com.lotusreichhart.gencanvas.core.ui.constant.Dimension
 import com.lotusreichhart.gencanvas.feature.editing.domain.model.EditorFeature
 import com.lotusreichhart.gencanvas.feature.editing.domain.model.EditorTool
 import com.lotusreichhart.gencanvas.feature.editing.domain.model.ToolStyle
@@ -138,8 +142,8 @@ private fun FeatureDetailLayout(
                 contentPadding = PaddingValues(horizontal = 16.dp)
             ) {
                 items(styles) { style ->
-                    StyleChip(
-                        label = style.title,
+                    BottomBarItem(
+                        label = stringResource(style.titleRes),
                         icon = style.icon,
                         isSelected = style == activeStyle,
                         onClick = { onSelectStyle(style) }
@@ -155,9 +159,14 @@ private fun FeatureDetailLayout(
                 .height(56.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = onCancel, modifier = Modifier.weight(1f)) {
-                Icon(Icons.Default.Close, contentDescription = "Cancel", tint = Color.White)
-            }
+            GenCanvasIconButton(
+                modifier = Modifier.weight(1f),
+                imageVector = Icons.Default.Close,
+                contentDescription = "Cancel Icon",
+                iconSize = Dimension.Icon.m,
+                tint = Color.White,
+                onClick = onCancel,
+            )
 
             Box(modifier = Modifier.weight(4f)) {
                 LazyRow(
@@ -176,13 +185,14 @@ private fun FeatureDetailLayout(
                 }
             }
 
-            IconButton(onClick = onApply, modifier = Modifier.weight(1f)) {
-                Icon(
-                    Icons.Default.Check,
-                    contentDescription = "Apply",
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
+            GenCanvasIconButton(
+                modifier = Modifier.weight(1f),
+                imageVector = Icons.Default.Check,
+                contentDescription = "Apply Icon",
+                iconSize = Dimension.Icon.m,
+                tint =  MaterialTheme.colorScheme.primary,
+                onClick = onApply
+            )
         }
     }
 }
@@ -197,7 +207,11 @@ private fun BottomBarItem(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .clickable(onClick = onClick)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
+            )
             .padding(horizontal = 12.dp, vertical = 4.dp)
     ) {
         Icon(
@@ -211,35 +225,6 @@ private fun BottomBarItem(
             text = label,
             style = MaterialTheme.typography.labelSmall,
             color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Gray
-        )
-    }
-}
-
-@Composable
-private fun StyleChip(
-    label: String,
-    icon: ImageVector,
-    isSelected: Boolean,
-    onClick: () -> Unit
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 4.dp)
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = label,
-            tint = if (isSelected) MaterialTheme.colorScheme.primary else Color.White,
-            modifier = Modifier.size(24.dp)
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelMedium,
-            color = if (isSelected) MaterialTheme.colorScheme.primary else Color.White,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
         )
     }
 }

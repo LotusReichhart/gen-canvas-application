@@ -1,39 +1,38 @@
 package com.lotusreichhart.gencanvas.feature.editing.domain.model
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Crop32
-import androidx.compose.material.icons.filled.Crop75
 import androidx.compose.material.icons.filled.CropFree
 import androidx.compose.material.icons.filled.CropOriginal
-import androidx.compose.material.icons.filled.CropPortrait
 import androidx.compose.material.icons.filled.CropSquare
-import androidx.compose.material.icons.filled.Lens
+import androidx.compose.material.icons.outlined.Lens
 import androidx.compose.ui.graphics.vector.ImageVector
+
+import com.lotusreichhart.gencanvas.feature.editing.R
+import com.lotusreichhart.gencanvas.feature.editing.domain.util.createAspectRatioIcon
 
 /**
  * Các kiểu cắt ảnh (Tỉ lệ khung hình) cụ thể cho CropTool.
  */
 internal sealed class CropStyle(
     override val id: String,
-    override val title: String,
-    override val icon: ImageVector, // Override Icon
-    val aspectRatio: AspectRatio? // Null = Free hoặc Original (Xử lý logic riêng)
+    override val titleRes: Int,
+    override val icon: ImageVector,
+    val aspectRatio: AspectRatio?
 ) : ToolStyle {
 
     // 1. FREE ORIGINAL: Tự do hoàn toàn (Không khóa góc)
     data object Free : CropStyle(
         id = "free",
-        title = "Tự do",
+        titleRes = R.string.editing_style_free,
         icon = Icons.Default.CropFree,
         aspectRatio = null
     )
 
 
     // 2. ORIGINAL: Khóa tỷ lệ theo ảnh gốc (Kéo theo đường chéo)
-
     data object Original : CropStyle(
         id = "original",
-        title = "Gốc",
+        titleRes = R.string.editing_style_original,
         icon = Icons.Default.CropOriginal,
         aspectRatio = null
     )
@@ -41,56 +40,57 @@ internal sealed class CropStyle(
     // 3. Các tỷ lệ cố định
     data object Square : CropStyle(
         id = "1:1",
-        title = "Vuông",
+        titleRes = R.string.editing_style_square,
         icon = Icons.Default.CropSquare,
         aspectRatio = AspectRatio(1, 1)
     )
 
     data object Circle : CropStyle(
-        "circle",
-        "Tròn", Icons.Default.Lens,
-        AspectRatio(1, 1)
+        id = "circle",
+        titleRes = R.string.editing_style_circle,
+        icon = Icons.Outlined.Lens,
+        aspectRatio = AspectRatio(1, 1)
     )
 
     data object Ratio2_3 : CropStyle(
         id = "2:3",
-        title = "2:3",
-        icon = Icons.Default.CropPortrait, // Tạm dùng icon có sẵn
+        titleRes = R.string.editing_style_ratio_2_3,
+        icon = createAspectRatioIcon(2f, 3f),
         aspectRatio = AspectRatio(2, 3)
     )
 
     data object Ratio3_2 : CropStyle(
         id = "3:2",
-        title = "3:2",
-        icon = Icons.Default.Crop32, // Tạm dùng icon có sẵn
+        titleRes = R.string.editing_style_ratio_3_2,
+        icon = createAspectRatioIcon(3f, 2f),
         aspectRatio = AspectRatio(3, 2)
     )
 
     data object Ratio3_4 : CropStyle(
         id = "3:4",
-        title = "3:4",
-        icon = Icons.Default.Crop32, // Tạm dùng icon có sẵn
+        titleRes = R.string.editing_style_ratio_3_4,
+        icon = createAspectRatioIcon(3f, 4f),
         aspectRatio = AspectRatio(3, 4)
     )
 
     data object Ratio4_3 : CropStyle(
         id = "4:3",
-        title = "4:3",
-        icon = Icons.Default.CropPortrait, // Tạm dùng icon có sẵn
+        titleRes = R.string.editing_style_ratio_4_3,
+        icon = createAspectRatioIcon(4f, 3f),
         aspectRatio = AspectRatio(4, 3)
     )
 
     data object Ratio9_16 : CropStyle(
         id = "9:16",
-        title = "9:16",
-        icon = Icons.Default.Crop75, // Tạm dùng icon có sẵn
+        titleRes = R.string.editing_style_ratio_9_16,
+        icon = createAspectRatioIcon(9f, 16f),
         aspectRatio = AspectRatio(9, 16)
     )
 
     data object Ratio16_9 : CropStyle(
         id = "16:9",
-        title = "16:9",
-        icon = Icons.Default.Crop75, // Tạm dùng icon có sẵn
+        titleRes = R.string.editing_style_ratio_16_9,
+        icon = createAspectRatioIcon(16f, 9f),
         aspectRatio = AspectRatio(16, 9)
     )
 
