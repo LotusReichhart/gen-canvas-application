@@ -4,14 +4,14 @@ import android.net.Uri
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
-object EditingRoute {
+object StudioRoute {
     const val ARG_IMAGE_URI = "image_uri"
-    const val EDITING_SCREEN = "editing_screen/{$ARG_IMAGE_URI}"
+    const val STUDIO_SCREEN = "studio_screen/{$ARG_IMAGE_URI}"
 
     const val KEY_EDITED_IMAGE_RESULT = "edited_image_result"
 
-    fun createEditingRoute(uri: Uri): String {
+    fun createStudioRoute(uri: Uri): String {
         val encodedUri = URLEncoder.encode(uri.toString(), StandardCharsets.UTF_8.toString())
-        return "editing_screen/$encodedUri"
+        return "studio_screen/$encodedUri"
     }
 }

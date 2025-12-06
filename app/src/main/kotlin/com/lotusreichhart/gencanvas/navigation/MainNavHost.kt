@@ -18,7 +18,7 @@ import com.lotusreichhart.gencanvas.core.common.util.TextResource
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.AccountRoute
 import com.lotusreichhart.gencanvas.core.ui.view.ImageViewerView
 import com.lotusreichhart.gencanvas.feature.account.navigation.accountGraph
-import com.lotusreichhart.gencanvas.feature.editing.navigation.editingGraph
+import com.lotusreichhart.gencanvas.feature.studio.navigation.studioGraph
 
 @Composable
 fun MainNavHost(
@@ -64,7 +64,7 @@ fun MainNavHost(
             navController = navController
         )
 
-        editingGraph(
+        studioGraph(
             navController = navController
         )
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Feature Names -->
+    <string name="studio_feature_edit">Chỉnh sửa</string>
+    <string name="studio_feature_adjust">Điều chỉnh</string>
+    <string name="studio_feature_filter">Bộ lọc</string>
+
+    <!-- Tool Names -->
+    <string name="studio_tool_crop">Cắt</string>
+    <string name="studio_tool_rotate">Xoay</string>
+
+    <string name="studio_style_free">Tự do</string>
+    <string name="studio_style_original">Gốc</string>
+    <string name="studio_style_square">Vuông</string>
+    <string name="studio_style_circle">Tròn</string>
+    <string name="studio_style_ratio_2_3">2:3</string>
+    <string name="studio_style_ratio_3_2">3:2</string>
+    <string name="studio_style_ratio_3_4">3:4</string>
+    <string name="studio_style_ratio_4_3">4:3</string>
+    <string name="studio_style_ratio_9_16">9:16</string>
+    <string name="studio_style_ratio_16_9">16:9</string>
+
+    <string name="studio_style_rotate_left">Trái 90°</string>
+    <string name="studio_style_rotate_right">Phải 90°</string>
+    <string name="studio_style_flip_h">Lật ngang</string>
+    <string name="studio_style_flip_v">Lật dọc</string>
+
+    <!-- Actions -->
+    <string name="studio_action_save">Lưu</string>
+    <string name="studio_action_apply">Áp dụng</string>
+    <string name="studio_action_cancel">Hủy</string>
+</resources>
