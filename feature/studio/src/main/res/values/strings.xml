@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Feature Names -->
+    <string name="studio_feature_edit">Edit</string>
+    <string name="studio_feature_adjust">Adjust</string>
+    <string name="studio_feature_filter">Filter</string>
+
+    <!-- Tool Names -->
+    <string name="studio_tool_crop">Crop</string>
+    <string name="studio_tool_rotate">Rotate</string>
+
+    <string name="studio_style_free">Free</string>
+    <string name="studio_style_original">Original</string>
+    <string name="studio_style_square">Square</string>
+    <string name="studio_style_circle">Circle</string>
+    <string name="studio_style_ratio_2_3">2:3</string>
+    <string name="studio_style_ratio_3_2">3:2</string>
+    <string name="studio_style_ratio_3_4">3:4</string>
+    <string name="studio_style_ratio_4_3">4:3</string>
+    <string name="studio_style_ratio_9_16">9:16</string>
+    <string name="studio_style_ratio_16_9">16:9</string>
+
+    <string name="studio_style_rotate_left">Left 90°</string>
+    <string name="studio_style_rotate_right">Right 90°</string>
+    <string name="studio_style_flip_h">Horizontal</string>
+    <string name="studio_style_flip_v">Vertical</string>
+
+    <!-- Actions -->
+    <string name="studio_action_save">Save</string>
+    <string name="studio_action_apply">Apply</string>
+    <string name="studio_action_cancel">Cancel</string>
+</resources>
