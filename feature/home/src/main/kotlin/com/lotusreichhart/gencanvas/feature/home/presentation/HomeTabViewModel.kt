@@ -11,8 +11,6 @@ import com.lotusreichhart.gencanvas.core.domain.usecase.user.GetProfileStreamUse
 import com.lotusreichhart.gencanvas.core.domain.util.NetworkMonitor
 import com.lotusreichhart.gencanvas.core.ui.viewmodel.AuthenticatedViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,8 +26,10 @@ import com.lotusreichhart.gencanvas.feature.home.presentation.model.GridItemData
 import com.lotusreichhart.gencanvas.feature.home.presentation.model.HorizontalItemData
 import com.lotusreichhart.gencanvas.feature.home.presentation.model.MainListItemData
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withTimeout
 
 @HiltViewModel
 internal class HomeTabViewModel @Inject constructor(
@@ -97,23 +97,18 @@ internal class HomeTabViewModel @Inject constructor(
         startBannerStreamListening()
 
         viewModelScope.launch {
-            val bannerJob = async {
-                try {
-                    getListBannerUseCase().first()
-                } catch (e: Exception) {
-                    Timber.e("Lỗi lấy banner $e")
-                    emptyList()
+            try {
+                withTimeout(3000L) {
+                    getListBannerUseCase()
+                        .filter { it.isNotEmpty() }
+                        .first()
                 }
-            }
-
-            delay(1500)
-            val banners = bannerJob.await()
-
-            _uiState.update {
-                it.copy(
-                    isLoading = false,
-                    banners = banners.ifEmpty { defaultBanners }
-                )
+            } catch (e: Exception) {
+                Timber.w("Timeout hoặc lỗi khi tải banner ban đầu: ${e.message}. Chuyển sang hiển thị UI.")
+            } finally {
+                _uiState.update {
+                    it.copy(isLoading = false)
+                }
             }
         }
     }
