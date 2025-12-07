@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -54,26 +57,41 @@ internal fun StudioTopBar(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
+                .height(56.dp)
                 .background(Color.Transparent)
-                .padding(horizontal = Dimension.Spacing.m)
+                .padding(Dimension.Spacing.m)
         ) {
-            GenCanvasIconButton(
-                modifier = Modifier.align(Alignment.CenterStart),
-                imageVector = Icons.Default.Close,
-                contentDescription = "Back Icon",
-                iconSize = Dimension.Icon.m,
-                tint = Color.White,
-                onClick = onBack,
-            )
+            IconButton(
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .background(Color.Gray.copy(alpha = 0.3f), CircleShape)
+                    .size(32.dp),
+                onClick = onBack
+            ) {
+                Icon(
+                    modifier = Modifier.size(Dimension.Icon.m),
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Back Icon",
+                    tint = Color.White
+                )
+            }
 
             if (isCenterVisible) {
                 Row(
                     modifier = Modifier.align(Alignment.Center),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.spacedBy(
+                        space = Dimension.Spacing.m,
+                        alignment = Alignment.CenterHorizontally
+                    ),
                 ) {
-                    IconButton(onClick = onUndo, enabled = canUndo) {
+                    IconButton(
+                        modifier = Modifier
+                            .background(Color.Gray.copy(alpha = 0.3f), CircleShape)
+                            .size(32.dp),
+                        onClick = onUndo,
+                        enabled = canUndo,
+                    ) {
                         Icon(
                             painter = painterResource(CoreUiR.drawable.ic_undo),
                             contentDescription = "Undo",
@@ -81,7 +99,13 @@ internal fun StudioTopBar(
                         )
                     }
 
-                    IconButton(onClick = onRedo, enabled = canRedo) {
+                    IconButton(
+                        modifier = Modifier
+                            .background(Color.Gray.copy(alpha = 0.3f), CircleShape)
+                            .size(32.dp),
+                        onClick = onRedo,
+                        enabled = canRedo
+                    ) {
                         Icon(
                             painter = painterResource(CoreUiR.drawable.ic_redo),
                             contentDescription = "Redo",
@@ -92,9 +116,14 @@ internal fun StudioTopBar(
             }
 
             GenCanvasTextButton(
-                modifier = Modifier.align(Alignment.CenterEnd),
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .background(
+                        Color.Gray.copy(alpha = 0.3f),
+                        RoundedCornerShape(Dimension.Radius.m)
+                    ),
                 text = stringResource(id = CoreR.string.core_action_save),
-                textColor = MaterialTheme.colorScheme.primary,
+                textColor = Color.White,
                 textStyle = MaterialTheme.typography.labelMedium.copy(
                     fontSize = Dimension.TextSize.titleSmall
                 ),

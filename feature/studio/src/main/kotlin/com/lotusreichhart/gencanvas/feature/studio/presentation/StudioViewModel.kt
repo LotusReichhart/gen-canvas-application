@@ -32,10 +32,6 @@ internal class StudioViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(StudioUiState())
     val uiState: StateFlow<StudioUiState> = _uiState.asStateFlow()
-
-    /** Map lưu trạng thái Style của từng Tool */
-    private val toolStyleHistory = mutableMapOf<String, StudioStyle>()
-
     val currentImageUri = editingRepository.currentImageUri
     val canUndo = editingRepository.canUndo
     val canRedo = editingRepository.canRedo
@@ -58,21 +54,16 @@ internal class StudioViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Người dùng chọn một nhóm tính năng (VD: Bấm vào "Điều chỉnh")
-     */
     fun onSelectFeature(feature: StudioFeature) {
-        // Lấy danh sách tool của feature này
         val tools = feature.tools
-        // Lấy tool mặc định
         val defaultTool = feature.defaultTool ?: tools.firstOrNull()
 
-        // Lấy danh sách style và style mặc định cho tool đó
         val styles = defaultTool?.styles ?: emptyList()
         val defaultStyle = defaultTool?.defaultStyle
 
         _uiState.update {
             it.copy(
+                toolStyleHistory = emptyMap(),
                 activeFeature = feature,
                 availableTools = tools,
                 activeTool = defaultTool,
@@ -83,19 +74,10 @@ internal class StudioViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Người dùng chuyển sang công cụ khác trong cùng nhóm (VD: Từ Cắt sang Xoay)
-     */
     fun onSelectTool(tool: StudioTool) {
-        val currentTool = _uiState.value.activeTool
-        val currentStyle = _uiState.value.activeStyle
-        if (currentTool != null && currentStyle != null) {
-            toolStyleHistory[currentTool.id] = currentStyle
-        }
-
         val styles = tool.styles
 
-        val savedStyle = toolStyleHistory[tool.id]
+        val savedStyle = _uiState.value.toolStyleHistory[tool]
         val activeStyle = savedStyle ?: tool.defaultStyle
 
         _uiState.update {
@@ -107,9 +89,6 @@ internal class StudioViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Người dùng chọn một kiểu (VD: Tỉ lệ 1:1)
-     */
     fun onSelectStyle(style: StudioStyle) {
         if (style is RotateStyle) {
             viewModelScope.launch {
@@ -118,20 +97,25 @@ internal class StudioViewModel @Inject constructor(
                 _uiState.update { it.copy(activeStyle = null) }
             }
         } else {
-            _uiState.update { it.copy(activeStyle = style) }
-            val currentTool = _uiState.value.activeTool
-            if (currentTool != null) {
-                toolStyleHistory[currentTool.id] = style
+            _uiState.update { state ->
+                var newHistory = state.toolStyleHistory
+                val currentTool = state.activeTool
+                if (currentTool != null) {
+                    newHistory = newHistory + (currentTool to style)
+                }
+
+                state.copy(
+                    activeStyle = style,
+                    toolStyleHistory = newHistory
+                )
             }
         }
     }
 
-    /**
-     * Người dùng bấm nút "Hủy" (X) -> Thoát Feature, không lưu
-     */
     fun onCancelFeature() {
         _uiState.update {
             it.copy(
+                toolStyleHistory = emptyMap(),
                 activeFeature = null,
                 activeTool = null,
                 activeStyle = null,
@@ -140,16 +124,10 @@ internal class StudioViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Người dùng bấm nút "Áp dụng" (V) -> Kích hoạt cờ hiệu để UI thực thi lệnh
-     */
     fun onApplyRequest() {
         _uiState.update { it.copy(shouldExecuteSave = true) }
     }
 
-    /**
-     * UI (Component) báo cáo đã xử lý xong và có ảnh mới
-     */
     fun onNewImageApplied(uri: Uri) {
         _uiState.update { it.copy(isImageTransitionAnimated = true) }
         editingRepository.updateImage(uri)

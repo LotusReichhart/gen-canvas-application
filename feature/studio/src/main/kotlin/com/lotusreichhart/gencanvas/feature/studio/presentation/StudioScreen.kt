@@ -1,5 +1,6 @@
 package com.lotusreichhart.gencanvas.feature.studio.presentation
 
+import android.app.Activity
 import android.net.Uri
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -11,11 +12,16 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.lotusreichhart.gencanvas.feature.studio.presentation.components.StudioBottomBar
@@ -23,7 +29,8 @@ import com.lotusreichhart.gencanvas.feature.studio.presentation.components.Studi
 import com.lotusreichhart.gencanvas.feature.studio.presentation.components.StudioTopBar
 
 private val FIXED_TOP_PADDING = 90.dp
-private val FIXED_BOTTOM_PADDING = 130.dp
+private val FIXED_BOTTOM_PADDING = 80.dp
+private val FIXED_HORIZONTAL_PADDING = 20.dp
 
 @Composable
 internal fun StudioScreen(
@@ -38,13 +45,39 @@ internal fun StudioScreen(
 
     val isEditing = uiState.activeFeature != null
 
-    val targetExtraPadding = if (isEditing) 20.dp else 0.dp
-
-    val animatedExtraPadding by animateDpAsState(
-        targetValue = targetExtraPadding,
+    val animatedTopPadding by animateDpAsState(
+        targetValue = if (isEditing) FIXED_TOP_PADDING else 0.dp,
         animationSpec = tween(durationMillis = 350, easing = FastOutSlowInEasing),
-        label = "WorkspacePadding"
+        label = "TopPadding"
     )
+
+    val animatedBottomPadding by animateDpAsState(
+        targetValue = if (isEditing) 80.dp else 0.dp,
+        animationSpec = tween(durationMillis = 350, easing = FastOutSlowInEasing),
+        label = "BottomPadding"
+    )
+
+    val animatedHorizontalPadding by animateDpAsState(
+        targetValue = if (isEditing) FIXED_HORIZONTAL_PADDING else 0.dp,
+        animationSpec = tween(durationMillis = 350, easing = FastOutSlowInEasing),
+        label = "HorizontalPadding"
+    )
+
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        DisposableEffect(Unit) {
+            val window = (view.context as Activity).window
+            val insetsController = WindowCompat.getInsetsController(window, view)
+
+            insetsController.hide(WindowInsetsCompat.Type.statusBars())
+            insetsController.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+            onDispose {
+                insetsController.show(WindowInsetsCompat.Type.statusBars())
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -56,10 +89,10 @@ internal fun StudioScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    top = FIXED_TOP_PADDING + animatedExtraPadding,
-                    bottom = FIXED_BOTTOM_PADDING + animatedExtraPadding,
-                    start = animatedExtraPadding,
-                    end = animatedExtraPadding
+                    top = animatedTopPadding,
+                    bottom = FIXED_BOTTOM_PADDING + animatedBottomPadding,
+                    start = animatedHorizontalPadding,
+                    end = animatedHorizontalPadding
                 ),
             contentAlignment = Alignment.Center
         ) {
@@ -77,9 +110,7 @@ internal fun StudioScreen(
         }
 
         Box(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .statusBarsPadding()
+            modifier = Modifier.align(Alignment.TopCenter)
         ) {
             StudioTopBar(
                 isVisible = (uiState.activeFeature == null),

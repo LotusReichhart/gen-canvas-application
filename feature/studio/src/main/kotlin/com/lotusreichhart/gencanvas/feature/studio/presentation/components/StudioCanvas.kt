@@ -25,6 +25,7 @@ import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioTool
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.EditFeature
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.crop.CropTool
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.rotate.RotateTool
+import com.lotusreichhart.gencanvas.feature.studio.presentation.components.edit.EditToolView
 
 /**
  * Vùng hiển thị chính.
@@ -82,7 +83,7 @@ internal fun StudioCanvas(
                         EditToolView(
                             imageUri = currentImageUri!!,
                             activeTool = activeTool,
-                            studioStyle = activeStyle,
+                            activeStyle = activeStyle,
                             shouldExecuteCrop = shouldExecuteSave,
                             onCropSuccess = onSaveSuccess,
                             onCropError = { onSaveError(it?.message) }
