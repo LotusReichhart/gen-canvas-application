@@ -1,4 +1,4 @@
-package com.lotusreichhart.gencanvas.feature.studio.presentation.components
+package com.lotusreichhart.gencanvas.feature.studio.presentation.components.edit
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -24,7 +24,9 @@ import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioTool
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.crop.CropStyle
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.crop.CropTool
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.rotate.RotateStyle
+import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.rotate.RotateTool
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
 import kotlin.math.roundToInt
 
@@ -34,7 +36,7 @@ internal fun EditToolView(
     modifier: Modifier = Modifier,
     imageUri: Uri,
     activeTool: StudioTool?,
-    studioStyle: StudioStyle?,
+    activeStyle: StudioStyle?,
     shouldExecuteCrop: Boolean,
     onCropSuccess: (Uri) -> Unit,
     onCropError: (Exception?) -> Unit
@@ -57,12 +59,15 @@ internal fun EditToolView(
         }
     }
 
-    LaunchedEffect(studioStyle) {
+    LaunchedEffect(activeStyle) {
         val view = cropImageView ?: return@LaunchedEffect
 
-        if (studioStyle is RotateStyle) {
+        if (activeStyle is RotateStyle) {
+
+            view.setFixedAspectRatio(false)
+
             scope.launch {
-                when (studioStyle) {
+                when (activeStyle) {
                     RotateStyle.RotateLeft -> {
                         rotationAnim.animateTo(-90f, animationSpec = tween(300))
                         view.rotateImage(-90)
@@ -91,19 +96,19 @@ internal fun EditToolView(
             return@LaunchedEffect
         }
 
-        if (isCropMode && studioStyle is CropStyle) {
+        if (isCropMode && activeStyle is CropStyle) {
             val wholeImageRect = view.wholeImageRect ?: return@LaunchedEffect
             val currentRect = view.cropRect ?: return@LaunchedEffect
             currentAnimator?.cancel()
 
             val targetRect: Rect? = when {
-                studioStyle is CropStyle.Free || studioStyle is CropStyle.Original -> wholeImageRect
-                studioStyle.aspectRatio != null -> {
+                activeStyle is CropStyle.Free || activeStyle is CropStyle.Original -> wholeImageRect
+                activeStyle.aspectRatio != null -> {
                     calculateTargetRect(
                         currentRect,
                         wholeImageRect,
-                        studioStyle.aspectRatio.x.toFloat(),
-                        studioStyle.aspectRatio.y.toFloat()
+                        activeStyle.aspectRatio.x.toFloat(),
+                        activeStyle.aspectRatio.y.toFloat()
                     )
                 }
 
@@ -120,13 +125,13 @@ internal fun EditToolView(
                 }
                 animator.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        applyFinalStyleAttributes(view, studioStyle)
+                        applyFinalStyleAttributes(view, activeStyle)
                     }
                 })
                 currentAnimator = animator
                 animator.start()
             } else {
-                applyFinalStyleAttributes(view, studioStyle)
+                applyFinalStyleAttributes(view, activeStyle)
             }
         }
     }
@@ -147,7 +152,7 @@ internal fun EditToolView(
                     setImageUriAsync(imageUri)
                     guidelines = CropImageView.Guidelines.ON
                     scaleType = CropImageView.ScaleType.FIT_CENTER
-                    isAutoZoomEnabled = true
+                    isAutoZoomEnabled = false
                     isShowProgressBar = false
                     setFixedAspectRatio(false)
 
@@ -208,11 +213,6 @@ private fun applyFinalStyleAttributes(view: CropImageView, style: CropStyle?) {
     }
 }
 
-/**
- * Thuật toán tính toán Rect đích dựa trên tỷ lệ mới.
- * Logic: Cố gắng giữ tâm (Center) của khung hiện tại.
- * Thu hẹp chiều rộng hoặc chiều cao để khớp tỷ lệ mà vẫn nằm trong ảnh.
- */
 private fun calculateTargetRect(current: Rect, bounds: Rect, ratioX: Float, ratioY: Float): Rect {
     val currentCenterX = current.centerX()
     val currentCenterY = current.centerY()

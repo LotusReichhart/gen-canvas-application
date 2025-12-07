@@ -24,21 +24,19 @@ internal sealed class CropStyle(
         null
     )
 
-    data object Original :
-        CropStyle(
-            "original",
-            R.string.studio_style_original,
-            UiIcon.Vector(Icons.Default.CropOriginal),
-            null
-        )
+    data object Original : CropStyle(
+        "original",
+        R.string.studio_style_original,
+        UiIcon.Vector(Icons.Default.CropOriginal),
+        null
+    )
 
-    data object Square :
-        CropStyle(
-            "1:1",
-            R.string.studio_style_square,
-            UiIcon.Vector(Icons.Default.CropSquare),
-            AspectRatio(1, 1)
-        )
+    data object Square : CropStyle(
+        "1:1",
+        R.string.studio_style_square,
+        UiIcon.Vector(Icons.Default.CropSquare),
+        AspectRatio(1, 1)
+    )
 
     data object Circle : CropStyle(
         "circle",
