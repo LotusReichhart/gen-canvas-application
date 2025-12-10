@@ -3,7 +3,6 @@ package com.lotusreichhart.gencanvas.feature.studio.presentation
 import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.lotusreichhart.gencanvas.core.domain.repository.EditingRepository
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.StudioRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +19,7 @@ import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioFeature
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioStyle
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioTool
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.rotate.RotateStyle
+import com.lotusreichhart.gencanvas.feature.studio.domain.repository.EditingRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber

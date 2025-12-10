@@ -54,10 +54,10 @@ internal fun StudioCanvas(
             label = "ImageTransition",
             transitionSpec = {
                 if (isImageTransitionAnimated) {
-                    (fadeIn(animationSpec = tween(400)) +
-                            scaleIn(initialScale = 0.85f, animationSpec = tween(400)))
+                    (fadeIn(animationSpec = tween(300)) +
+                            scaleIn(initialScale = 0.95f, animationSpec = tween(300)))
                         .togetherWith(
-                            fadeOut(animationSpec = tween(400))
+                            fadeOut(animationSpec = tween(300))
                         )
                 } else {
                     EnterTransition.None togetherWith ExitTransition.None
@@ -82,7 +82,6 @@ internal fun StudioCanvas(
                     CropTool, RotateTool -> {
                         EditToolView(
                             imageUri = currentImageUri!!,
-                            activeTool = activeTool,
                             activeStyle = activeStyle,
                             shouldExecuteCrop = shouldExecuteSave,
                             onCropSuccess = onSaveSuccess,

@@ -6,7 +6,6 @@ import com.lotusreichhart.gencanvas.core.common.event.GlobalUiEventManager
 import com.lotusreichhart.gencanvas.core.common.event.UiEvent
 import com.lotusreichhart.gencanvas.core.common.util.TextResource
 import com.lotusreichhart.gencanvas.core.data.network.util.ServerException
-import com.lotusreichhart.gencanvas.core.domain.repository.EditingRepository
 import com.lotusreichhart.gencanvas.core.domain.usecase.user.GetProfileStreamUseCase
 import com.lotusreichhart.gencanvas.core.domain.usecase.user.UpdateUserProfileUseCase
 import com.lotusreichhart.gencanvas.core.domain.util.NetworkMonitor
@@ -31,7 +30,6 @@ internal class EditProfileViewModel @Inject constructor(
     globalUiEventManager: GlobalUiEventManager,
     getProfileStreamUseCase: GetProfileStreamUseCase,
     private val updateUserProfileUseCase: UpdateUserProfileUseCase,
-    private val editingRepository: EditingRepository
 ) : AuthenticatedViewModel(
     networkMonitor = networkMonitor,
     globalUiEventManager = globalUiEventManager,
@@ -81,7 +79,6 @@ internal class EditProfileViewModel @Inject constructor(
                         type = UiEvent.SnackBarType.SUCCESS
                     )
                 )
-                editingRepository.clearSession()
                 _uiState.update { it.copy(isLoading = false, isSuccess = true) }
             } else {
                 val exception = result.exceptionOrNull()

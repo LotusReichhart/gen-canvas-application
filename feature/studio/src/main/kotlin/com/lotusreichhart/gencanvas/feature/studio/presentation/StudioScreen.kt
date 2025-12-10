@@ -38,6 +38,22 @@ internal fun StudioScreen(
     onBack: () -> Unit,
     onSave: (Uri) -> Unit
 ) {
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        DisposableEffect(Unit) {
+            val window = (view.context as Activity).window
+            val insetsController = WindowCompat.getInsetsController(window, view)
+
+            insetsController.hide(WindowInsetsCompat.Type.statusBars())
+            insetsController.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+            onDispose {
+                insetsController.show(WindowInsetsCompat.Type.statusBars())
+            }
+        }
+    }
+
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val currentImageUri by viewModel.currentImageUri.collectAsStateWithLifecycle()
     val canUndo by viewModel.canUndo.collectAsStateWithLifecycle()
@@ -62,22 +78,6 @@ internal fun StudioScreen(
         animationSpec = tween(durationMillis = 350, easing = FastOutSlowInEasing),
         label = "HorizontalPadding"
     )
-
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        DisposableEffect(Unit) {
-            val window = (view.context as Activity).window
-            val insetsController = WindowCompat.getInsetsController(window, view)
-
-            insetsController.hide(WindowInsetsCompat.Type.statusBars())
-            insetsController.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-            onDispose {
-                insetsController.show(WindowInsetsCompat.Type.statusBars())
-            }
-        }
-    }
 
     Box(
         modifier = Modifier
