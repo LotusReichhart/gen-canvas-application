@@ -28,7 +28,7 @@ internal data object FilterFeature : StyleGroupFeature {
         FilterStyle(
             id = "none",
             titleRes = R.string.studio_style_filter_none,
-            icon = UiIcon.Vector(Icons.Default.FilterNone),
+            icon = UiIcon.Drawable(R.drawable.filters),
             isDefault = true,
             filterEffect = PhotoFilter.NONE
         ),
@@ -41,25 +41,25 @@ internal data object FilterFeature : StyleGroupFeature {
         FilterStyle(
             id = "contrast",
             titleRes = R.string.studio_style_filter_contrast,
-            icon = UiIcon.Vector(Icons.Default.Contrast),
+            icon = UiIcon.Drawable(R.drawable.contrast),
             filterEffect = PhotoFilter.CONTRAST
         ),
         FilterStyle(
             id = "gray_scale",
             titleRes = R.string.studio_style_filter_gray_scale,
-            icon = UiIcon.Vector(Icons.Default.Scale),
+            icon = UiIcon.Drawable(R.drawable.black_white),
             filterEffect = PhotoFilter.GRAY_SCALE
         ),
         FilterStyle(
             id = "sepia",
             titleRes = R.string.studio_style_filter_sepia,
-            icon = UiIcon.Vector(Icons.Default.Star),
+            icon = UiIcon.Drawable(R.drawable.black_white),
             filterEffect = PhotoFilter.SEPIA
         ),
         FilterStyle(
             id = "sharp",
             titleRes = R.string.studio_style_filter_sharp,
-            icon = UiIcon.Vector(Icons.Default.TurnSharpRight),
+            icon = UiIcon.Drawable(R.drawable.triangles),
             filterEffect = PhotoFilter.SHARPEN
         ),
         FilterStyle(
@@ -83,13 +83,13 @@ internal data object FilterFeature : StyleGroupFeature {
         FilterStyle(
             id = "poster",
             titleRes = R.string.studio_style_filter_poster,
-            icon = UiIcon.Vector(Icons.Default.PostAdd),
+            icon = UiIcon.Drawable(R.drawable.poster),
             filterEffect = PhotoFilter.POSTERIZE
         ),
         FilterStyle(
             id = "black_white",
             titleRes = R.string.studio_style_filter_black_white,
-            icon = UiIcon.Vector(Icons.Default.Contrast),
+            icon = UiIcon.Drawable(R.drawable.black_white),
             filterEffect = PhotoFilter.BLACK_WHITE
         )
     )

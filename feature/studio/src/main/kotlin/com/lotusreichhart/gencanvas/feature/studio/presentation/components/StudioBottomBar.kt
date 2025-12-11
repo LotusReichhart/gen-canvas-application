@@ -105,8 +105,11 @@ private fun FeatureListRow(
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = Dimension.Spacing.m),
-        horizontalArrangement = Arrangement.Center,
+            .padding(vertical = Dimension.Spacing.s),
+        horizontalArrangement = Arrangement.spacedBy(
+            space = Dimension.Spacing.m,
+            alignment = Alignment.CenterHorizontally
+        ),
         contentPadding = PaddingValues(horizontal = Dimension.Spacing.m)
     ) {
         items(features) { feature ->

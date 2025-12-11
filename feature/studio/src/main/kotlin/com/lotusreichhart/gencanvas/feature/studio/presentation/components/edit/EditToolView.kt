@@ -21,9 +21,9 @@ import com.canhub.cropper.CropImageView
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioStyle
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.crop.CropStyle
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.rotate.RotateStyle
-import kotlinx.coroutines.delay
 
 import java.io.File
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 @Suppress("COMPOSE_APPLIER_CALL_MISMATCH")
@@ -68,10 +68,10 @@ internal fun EditToolView(
             return
         }
         val tolerance = 3
-        val diffLeft = kotlin.math.abs(cropRect.left - wholeRect.left)
-        val diffTop = kotlin.math.abs(cropRect.top - wholeRect.top)
-        val diffRight = kotlin.math.abs(cropRect.right - wholeRect.right)
-        val diffBottom = kotlin.math.abs(cropRect.bottom - wholeRect.bottom)
+        val diffLeft = abs(cropRect.left - wholeRect.left)
+        val diffTop = abs(cropRect.top - wholeRect.top)
+        val diffRight = abs(cropRect.right - wholeRect.right)
+        val diffBottom = abs(cropRect.bottom - wholeRect.bottom)
 
         val isCropChanged = (diffLeft > tolerance || diffTop > tolerance ||
                 diffRight > tolerance || diffBottom > tolerance)
