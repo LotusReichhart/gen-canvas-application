@@ -1,5 +1,7 @@
 package com.lotusreichhart.gencanvas.feature.account.presentation.profile.edit
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,6 +45,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
@@ -52,6 +55,7 @@ import com.lotusreichhart.gencanvas.core.ui.constant.Dimension
 
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import com.lotusreichhart.gencanvas.core.common.util.createTempPictureUri
 import com.lotusreichhart.gencanvas.core.common.util.toPhysicalFile
 import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasBottomSheet
 import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasBottomSheetItem
@@ -87,6 +91,8 @@ internal fun EditProfileScreen(
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
+    var tempCameraUri by remember { mutableStateOf<Uri?>(null) }
+
     val onSave = {
         scope.launch {
             val currentUri = uiState.avatarUri
@@ -109,6 +115,54 @@ internal fun EditProfileScreen(
     ) { uri: Uri? ->
         if (uri != null) {
             onNavigateToEditor(uri)
+        }
+    }
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success && tempCameraUri != null) {
+            onNavigateToEditor(tempCameraUri!!)
+        }
+    }
+
+    val launchCameraProcess = {
+        val uri = context.createTempPictureUri()
+        tempCameraUri = uri
+        cameraLauncher.launch(uri)
+    }
+
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            launchCameraProcess()
+        } else {
+            viewModel.onCameraPermissionDenied()
+        }
+    }
+
+    val onPickFromGallery = {
+        scope.launch { sheetState.hide() }.invokeOnCompletion {
+            showBottomSheet = false
+            galleryLauncher.launch("image/*")
+        }
+    }
+
+    val onTakePhoto = {
+        scope.launch { sheetState.hide() }.invokeOnCompletion {
+            showBottomSheet = false
+            val permissionCheck = ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.CAMERA
+            )
+
+            if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                launchCameraProcess()
+            } else {
+                permissionLauncher.launch(Manifest.permission.CAMERA)
+            }
         }
     }
 
@@ -260,21 +314,12 @@ internal fun EditProfileScreen(
                 GenCanvasBottomSheetItem(
                     text = stringResource(id = CoreR.string.core_action_take_photo),
                     showDivider = true,
-                    onClick = {
-                        scope.launch { sheetState.hide() }.invokeOnCompletion {
-                            showBottomSheet = false
-                        }
-                    }
+                    onClick = { onTakePhoto() }
                 )
 
                 GenCanvasBottomSheetItem(
                     text = stringResource(id = CoreR.string.core_action_pick_from_gallery),
-                    onClick = {
-                        scope.launch { sheetState.hide() }.invokeOnCompletion {
-                            showBottomSheet = false
-                            galleryLauncher.launch("image/*")
-                        }
-                    }
+                    onClick = { onPickFromGallery() }
                 )
             }
         }
