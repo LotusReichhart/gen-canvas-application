@@ -21,6 +21,7 @@ import com.canhub.cropper.CropImageView
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioStyle
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.crop.CropStyle
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.rotate.RotateStyle
+import kotlinx.coroutines.delay
 
 import java.io.File
 import kotlin.math.roundToInt
@@ -31,9 +32,10 @@ internal fun EditToolView(
     modifier: Modifier = Modifier,
     imageUri: Uri,
     activeStyle: StudioStyle?,
-    shouldExecuteCrop: Boolean,
-    onCropSuccess: (Uri) -> Unit,
-    onCropError: (Exception?) -> Unit
+    shouldExecuteEdit: Boolean,
+    onInteract: (Boolean) -> Unit,
+    onEditSuccess: (Uri) -> Unit,
+    onEditError: (Exception?) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -44,8 +46,41 @@ internal fun EditToolView(
     val scaleXAnim = remember { Animatable(1f) }
     val scaleYAnim = remember { Animatable(1f) }
 
-    LaunchedEffect(shouldExecuteCrop) {
-        if (shouldExecuteCrop) {
+    var accumulatedRotation by remember { mutableIntStateOf(0) }
+    var accumulatedFlipH by remember { mutableStateOf(false) }
+    var accumulatedFlipV by remember { mutableStateOf(false) }
+
+    LaunchedEffect(imageUri) {
+        accumulatedRotation = 0
+        accumulatedFlipH = false
+        accumulatedFlipV = false
+    }
+
+    fun checkAndReportChanges(view: CropImageView) {
+        val cropRect = view.cropRect ?: return
+        val wholeRect = view.wholeImageRect ?: return
+
+        val isRotated = accumulatedRotation % 360 != 0
+        val isFlipped = accumulatedFlipH || accumulatedFlipV
+
+        if (isRotated || isFlipped) {
+            onInteract(true)
+            return
+        }
+        val tolerance = 3
+        val diffLeft = kotlin.math.abs(cropRect.left - wholeRect.left)
+        val diffTop = kotlin.math.abs(cropRect.top - wholeRect.top)
+        val diffRight = kotlin.math.abs(cropRect.right - wholeRect.right)
+        val diffBottom = kotlin.math.abs(cropRect.bottom - wholeRect.bottom)
+
+        val isCropChanged = (diffLeft > tolerance || diffTop > tolerance ||
+                diffRight > tolerance || diffBottom > tolerance)
+
+        onInteract(isCropChanged)
+    }
+
+    LaunchedEffect(shouldExecuteEdit) {
+        if (shouldExecuteEdit) {
             cropImageView?.croppedImageAsync()
         }
     }
@@ -55,11 +90,25 @@ internal fun EditToolView(
 
         if (activeStyle is RotateStyle) {
             when (activeStyle) {
-                RotateStyle.RotateLeft -> view.rotateImage(-90)
-                RotateStyle.RotateRight -> view.rotateImage(90)
-                RotateStyle.FlipHorizontal -> view.flipImageHorizontally()
-                RotateStyle.FlipVertical -> view.flipImageVertically()
+                RotateStyle.RotateLeft -> {
+                    view.rotateImage(-90)
+                    accumulatedRotation -= 90
+                }
+                RotateStyle.RotateRight -> {
+                    view.rotateImage(90)
+                    accumulatedRotation += 90
+                }
+                RotateStyle.FlipHorizontal -> {
+                    view.flipImageHorizontally()
+                    accumulatedFlipH = !accumulatedFlipH
+                }
+                RotateStyle.FlipVertical -> {
+                    view.flipImageVertically()
+                    accumulatedFlipV = !accumulatedFlipV
+                }
             }
+
+            checkAndReportChanges(view)
             return@LaunchedEffect
         }
 
@@ -93,12 +142,14 @@ internal fun EditToolView(
                 animator.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         applyFinalStyleAttributes(view, activeStyle)
+                        checkAndReportChanges(view)
                     }
                 })
                 currentAnimator = animator
                 animator.start()
             } else {
                 applyFinalStyleAttributes(view, activeStyle)
+                checkAndReportChanges(view)
             }
         }
     }
@@ -123,6 +174,15 @@ internal fun EditToolView(
                     isShowProgressBar = false
                     isShowCropOverlay = true
 
+                    setOnCropWindowChangedListener {
+                        checkAndReportChanges(this)
+                    }
+
+                    setOnSetImageUriCompleteListener { view, _, _ ->
+                        view.cropRect = view.wholeImageRect
+                        onInteract(false)
+                    }
+
                     setOnCropImageCompleteListener { _, result ->
                         if (result.isSuccessful) {
                             val resultUri = result.uriContent
@@ -131,12 +191,12 @@ internal fun EditToolView(
                                 }
 
                             if (resultUri != null) {
-                                onCropSuccess(resultUri)
+                                onEditSuccess(resultUri)
                             } else {
-                                onCropError(Exception("Crop URI is null"))
+                                onEditError(Exception("Crop URI is null"))
                             }
                         } else {
-                            onCropError(result.error)
+                            onEditError(result.error)
                         }
                     }
                 }.also {

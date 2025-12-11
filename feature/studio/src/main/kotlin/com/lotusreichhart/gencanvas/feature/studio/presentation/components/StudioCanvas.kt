@@ -1,15 +1,6 @@
 package com.lotusreichhart.gencanvas.feature.studio.presentation.components
 
 import android.net.Uri
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,12 +16,10 @@ import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioTool
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.EditFeature
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.crop.CropTool
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.rotate.RotateTool
+import com.lotusreichhart.gencanvas.feature.studio.domain.model.filter.FilterFeature
 import com.lotusreichhart.gencanvas.feature.studio.presentation.components.edit.EditToolView
+import com.lotusreichhart.gencanvas.feature.studio.presentation.components.filter.FilterToolView
 
-/**
- * Vùng hiển thị chính.
- * Quản lý Layering: Ảnh nền (Base) và Công cụ phủ (Overlay Tool).
- */
 @Composable
 internal fun StudioCanvas(
     modifier: Modifier = Modifier,
@@ -39,7 +28,7 @@ internal fun StudioCanvas(
     activeTool: StudioTool?,
     activeStyle: StudioStyle?,
     shouldExecuteSave: Boolean,
-    isImageTransitionAnimated: Boolean = true,
+    onInteract:(Boolean) -> Unit,
     onSaveSuccess: (Uri) -> Unit,
     onSaveError: (String?) -> Unit
 ) {
@@ -49,47 +38,43 @@ internal fun StudioCanvas(
             .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
-        AnimatedContent(
-            targetState = currentImageUri,
-            label = "ImageTransition",
-            transitionSpec = {
-                if (isImageTransitionAnimated) {
-                    (fadeIn(animationSpec = tween(300)) +
-                            scaleIn(initialScale = 0.95f, animationSpec = tween(300)))
-                        .togetherWith(
-                            fadeOut(animationSpec = tween(300))
-                        )
-                } else {
-                    EnterTransition.None togetherWith ExitTransition.None
-                }
-            }
-        ) { uri ->
-            AsyncImage(
-                model = uri,
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Fit
-            )
-        }
 
-        AnimatedVisibility(
-            visible = (activeFeature != null && currentImageUri != null),
-            enter = fadeIn(animationSpec = tween(300)),
-            exit = fadeOut(animationSpec = tween(300))
-        ) {
-            if (activeFeature == EditFeature) {
+        AsyncImage(
+            model = currentImageUri,
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Fit
+        )
+
+        when (activeFeature) {
+            EditFeature -> {
                 when (activeTool) {
                     CropTool, RotateTool -> {
                         EditToolView(
                             imageUri = currentImageUri!!,
                             activeStyle = activeStyle,
-                            shouldExecuteCrop = shouldExecuteSave,
-                            onCropSuccess = onSaveSuccess,
-                            onCropError = { onSaveError(it?.message) }
+                            shouldExecuteEdit = shouldExecuteSave,
+                            onInteract = onInteract,
+                            onEditSuccess = onSaveSuccess,
+                            onEditError = { onSaveError(it?.message) }
                         )
                     }
+
                 }
             }
+
+            FilterFeature -> {
+                FilterToolView(
+                    imageUri = currentImageUri!!,
+                    activeStyle = activeStyle,
+                    shouldExecuteFilter = shouldExecuteSave,
+                    onInteract = onInteract,
+                    onFilterSuccess = onSaveSuccess,
+                    onFilterError = { onSaveError(it?.message) }
+                )
+            }
+
+            else -> {}
         }
     }
 }

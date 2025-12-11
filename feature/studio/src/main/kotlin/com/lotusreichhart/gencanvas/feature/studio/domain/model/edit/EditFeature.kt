@@ -8,7 +8,7 @@ import com.lotusreichhart.gencanvas.feature.studio.domain.model.*
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.crop.CropTool
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.rotate.RotateTool
 
-internal data object EditFeature : StudioFeature {
+internal data object EditFeature : ToolGroupFeature {
     override val id = "edit_feature"
     override val titleRes = R.string.studio_feature_edit
     override val icon = UiIcon.Vector(Icons.Default.Crop)

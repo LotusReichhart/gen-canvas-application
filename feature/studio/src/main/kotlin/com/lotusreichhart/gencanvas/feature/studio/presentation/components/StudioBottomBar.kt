@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasHorizontalDivider
 import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasIcon
@@ -81,6 +82,7 @@ internal fun StudioBottomBar(
                 )
             } else {
                 FeatureDetailLayout(
+                    featureTitle = stringResource(feature.titleRes),
                     tools = uiState.availableTools,
                     styles = uiState.availableStyles,
                     activeTool = uiState.activeTool,
@@ -120,6 +122,7 @@ private fun FeatureListRow(
 
 @Composable
 private fun FeatureDetailLayout(
+    featureTitle: String,
     tools: List<StudioTool>,
     styles: List<StudioStyle>,
     activeTool: StudioTool?,
@@ -129,7 +132,9 @@ private fun FeatureDetailLayout(
     onSelectTool: (StudioTool) -> Unit,
     onSelectStyle: (StudioStyle) -> Unit
 ) {
-    Column {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
         if (styles.isNotEmpty()) {
             LazyRow(
                 modifier = Modifier
@@ -174,22 +179,32 @@ private fun FeatureDetailLayout(
             )
 
             Box(modifier = Modifier.weight(4f)) {
-                LazyRow(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        space = Dimension.Spacing.m,
-                        alignment = Alignment.CenterHorizontally
-                    ),
-                ) {
-                    items(tools) { tool ->
-                        BottomBarItem(
-                            icon = tool.icon,
-                            label = stringResource(tool.titleRes),
-                            isSelected = tool == activeTool,
-                            onClick = { onSelectTool(tool) }
-                        )
+                if (tools.isNotEmpty()) {
+                    LazyRow(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            Dimension.Spacing.m,
+                            Alignment.CenterHorizontally
+                        ),
+                    ) {
+                        items(tools) { tool ->
+                            BottomBarItem(
+                                icon = tool.icon,
+                                label = stringResource(tool.titleRes),
+                                isSelected = tool == activeTool,
+                                onClick = { onSelectTool(tool) }
+                            )
+                        }
                     }
+                } else {
+                    Text(
+                        modifier = Modifier.align(Alignment.Center),
+                        text = featureTitle.uppercase(),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
                 }
             }
 
