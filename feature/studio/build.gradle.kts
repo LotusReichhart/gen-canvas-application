@@ -8,4 +8,5 @@ android {
 
 dependencies {
     implementation(libs.android.image.cropper)
+    implementation(libs.photoeditor)
 }

@@ -2,15 +2,11 @@ package com.lotusreichhart.gencanvas.feature.studio.presentation
 
 import android.app.Activity
 import android.net.Uri
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -28,9 +24,7 @@ import com.lotusreichhart.gencanvas.feature.studio.presentation.components.Studi
 import com.lotusreichhart.gencanvas.feature.studio.presentation.components.StudioCanvas
 import com.lotusreichhart.gencanvas.feature.studio.presentation.components.StudioTopBar
 
-private val FIXED_TOP_PADDING = 90.dp
-private val FIXED_BOTTOM_PADDING = 80.dp
-private val FIXED_HORIZONTAL_PADDING = 20.dp
+private val FIXED_BOTTOM_PADDING = 150.dp
 
 @Composable
 internal fun StudioScreen(
@@ -38,31 +32,6 @@ internal fun StudioScreen(
     onBack: () -> Unit,
     onSave: (Uri) -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val currentImageUri by viewModel.currentImageUri.collectAsStateWithLifecycle()
-    val canUndo by viewModel.canUndo.collectAsStateWithLifecycle()
-    val canRedo by viewModel.canRedo.collectAsStateWithLifecycle()
-
-    val isEditing = uiState.activeFeature != null
-
-    val animatedTopPadding by animateDpAsState(
-        targetValue = if (isEditing) FIXED_TOP_PADDING else 0.dp,
-        animationSpec = tween(durationMillis = 350, easing = FastOutSlowInEasing),
-        label = "TopPadding"
-    )
-
-    val animatedBottomPadding by animateDpAsState(
-        targetValue = if (isEditing) 80.dp else 0.dp,
-        animationSpec = tween(durationMillis = 350, easing = FastOutSlowInEasing),
-        label = "BottomPadding"
-    )
-
-    val animatedHorizontalPadding by animateDpAsState(
-        targetValue = if (isEditing) FIXED_HORIZONTAL_PADDING else 0.dp,
-        animationSpec = tween(durationMillis = 350, easing = FastOutSlowInEasing),
-        label = "HorizontalPadding"
-    )
-
     val view = LocalView.current
     if (!view.isInEditMode) {
         DisposableEffect(Unit) {
@@ -79,6 +48,11 @@ internal fun StudioScreen(
         }
     }
 
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val currentImageUri by viewModel.currentImageUri.collectAsStateWithLifecycle()
+    val canUndo by viewModel.canUndo.collectAsStateWithLifecycle()
+    val canRedo by viewModel.canRedo.collectAsStateWithLifecycle()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -89,10 +63,7 @@ internal fun StudioScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    top = animatedTopPadding,
-                    bottom = FIXED_BOTTOM_PADDING + animatedBottomPadding,
-                    start = animatedHorizontalPadding,
-                    end = animatedHorizontalPadding
+                    bottom = FIXED_BOTTOM_PADDING,
                 ),
             contentAlignment = Alignment.Center
         ) {
@@ -103,7 +74,7 @@ internal fun StudioScreen(
                 activeTool = uiState.activeTool,
                 activeStyle = uiState.activeStyle,
                 shouldExecuteSave = uiState.shouldExecuteSave,
-                isImageTransitionAnimated = uiState.isImageTransitionAnimated,
+                onInteract = { hasInteracting -> viewModel.onUserInteraction(hasInteracting) },
                 onSaveSuccess = { newUri -> viewModel.onNewImageApplied(newUri) },
                 onSaveError = { errorMsg -> viewModel.onApplyError(errorMsg) }
             )

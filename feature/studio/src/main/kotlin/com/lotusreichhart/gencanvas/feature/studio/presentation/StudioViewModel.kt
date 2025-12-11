@@ -3,7 +3,6 @@ package com.lotusreichhart.gencanvas.feature.studio.presentation
 import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.lotusreichhart.gencanvas.core.domain.repository.EditingRepository
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.StudioRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +18,10 @@ import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioConfig
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioFeature
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioStyle
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioTool
+import com.lotusreichhart.gencanvas.feature.studio.domain.model.StyleGroupFeature
+import com.lotusreichhart.gencanvas.feature.studio.domain.model.ToolGroupFeature
 import com.lotusreichhart.gencanvas.feature.studio.domain.model.edit.rotate.RotateStyle
+import com.lotusreichhart.gencanvas.feature.studio.domain.repository.EditingRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -55,22 +57,44 @@ internal class StudioViewModel @Inject constructor(
     }
 
     fun onSelectFeature(feature: StudioFeature) {
-        val tools = feature.tools
-        val defaultTool = feature.defaultTool ?: tools.firstOrNull()
+        when (feature) {
+            is ToolGroupFeature -> {
+                val tools = feature.tools
+                val defaultTool = feature.defaultTool ?: tools.firstOrNull()
 
-        val styles = defaultTool?.styles ?: emptyList()
-        val defaultStyle = defaultTool?.defaultStyle
+                val styles = defaultTool?.styles ?: emptyList()
+                val savedStyle = _uiState.value.toolStyleHistory[defaultTool]
+                val activeStyle = savedStyle ?: defaultTool?.defaultStyle
 
-        _uiState.update {
-            it.copy(
-                toolStyleHistory = emptyMap(),
-                activeFeature = feature,
-                availableTools = tools,
-                activeTool = defaultTool,
-                availableStyles = styles,
-                activeStyle = defaultStyle,
-                shouldExecuteSave = false
-            )
+                _uiState.update {
+                    it.copy(
+                        activeFeature = feature,
+                        availableTools = tools,
+                        activeTool = defaultTool,
+                        availableStyles = styles,
+                        activeStyle = activeStyle,
+                        shouldExecuteSave = false
+                    )
+                }
+            }
+
+            is StyleGroupFeature -> {
+                val styles = feature.styles
+
+                val savedStyle = _uiState.value.featureStyleHistory[feature.id]
+                val activeStyle = savedStyle ?: feature.defaultStyle
+
+                _uiState.update {
+                    it.copy(
+                        activeFeature = feature,
+                        availableTools = emptyList(),
+                        activeTool = null,
+                        availableStyles = styles,
+                        activeStyle = activeStyle,
+                        shouldExecuteSave = false
+                    )
+                }
+            }
         }
     }
 
@@ -93,22 +117,30 @@ internal class StudioViewModel @Inject constructor(
         if (style is RotateStyle) {
             viewModelScope.launch {
                 _uiState.update { it.copy(activeStyle = style) }
-                delay(50)
+                delay(50) // Hiệu ứng click
                 _uiState.update { it.copy(activeStyle = null) }
             }
-        } else {
-            _uiState.update { state ->
-                var newHistory = state.toolStyleHistory
-                val currentTool = state.activeTool
-                if (currentTool != null) {
-                    newHistory = newHistory + (currentTool to style)
-                }
+            return
+        }
 
-                state.copy(
-                    activeStyle = style,
-                    toolStyleHistory = newHistory
-                )
+        _uiState.update { state ->
+            val currentFeature = state.activeFeature
+            val currentTool = state.activeTool
+
+            var newToolHistory = state.toolStyleHistory
+            var newFeatureHistory = state.featureStyleHistory
+
+            if (currentTool != null) {
+                newToolHistory = newToolHistory + (currentTool to style)
+            } else if (currentFeature != null) {
+                newFeatureHistory = newFeatureHistory + (currentFeature.id to style)
             }
+
+            state.copy(
+                activeStyle = style,
+                toolStyleHistory = newToolHistory,
+                featureStyleHistory = newFeatureHistory
+            )
         }
     }
 
@@ -116,27 +148,46 @@ internal class StudioViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 toolStyleHistory = emptyMap(),
+                featureStyleHistory = emptyMap(),
                 activeFeature = null,
                 activeTool = null,
                 activeStyle = null,
-                shouldExecuteSave = false
+                shouldExecuteSave = false,
+                availableTools = emptyList(),
+                availableStyles = emptyList()
             )
         }
     }
 
+    fun onUserInteraction(hasInteracting: Boolean = false) {
+        _uiState.update { it.copy(hasUserInteracted = hasInteracting) }
+    }
+
     fun onApplyRequest() {
-        _uiState.update { it.copy(shouldExecuteSave = true) }
+        if (_uiState.value.hasUserInteracted) {
+            _uiState.update {
+                it.copy(
+                    shouldExecuteSave = true,
+                )
+            }
+        } else {
+            onCancelFeature()
+        }
     }
 
     fun onNewImageApplied(uri: Uri) {
-        _uiState.update { it.copy(isImageTransitionAnimated = true) }
         editingRepository.updateImage(uri)
 
         _uiState.update {
             it.copy(
+                toolStyleHistory = emptyMap(),
+                featureStyleHistory = emptyMap(),
                 activeFeature = null,
                 activeTool = null,
+                activeStyle = null,
                 shouldExecuteSave = false,
+                availableTools = emptyList(),
+                availableStyles = emptyList(),
                 isLoading = false
             )
         }
@@ -153,12 +204,10 @@ internal class StudioViewModel @Inject constructor(
     }
 
     fun onUndo() {
-        _uiState.update { it.copy(isImageTransitionAnimated = false) }
         editingRepository.undo()
     }
 
     fun onRedo() {
-        _uiState.update { it.copy(isImageTransitionAnimated = false) }
         editingRepository.redo()
     }
 

@@ -31,7 +31,14 @@ internal interface StudioTool : StudioItem {
  * Tính năng.
  * Chứa danh sách các Tool của nó.
  */
-internal interface StudioFeature : StudioItem {
+internal sealed interface StudioFeature : StudioItem
+
+internal interface ToolGroupFeature : StudioFeature {
     val tools: List<StudioTool>
     val defaultTool: StudioTool?
+}
+
+internal interface StyleGroupFeature : StudioFeature {
+    val styles: List<StudioStyle>
+    val defaultStyle: StudioStyle?
 }

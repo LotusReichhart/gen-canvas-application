@@ -25,6 +25,18 @@
     <string name="studio_style_flip_h">Lật ngang</string>
     <string name="studio_style_flip_v">Lật dọc</string>
 
+    <string name="studio_style_filter_none">Gốc</string>
+    <string name="studio_style_filter_brightness">Độ sáng</string>
+    <string name="studio_style_filter_contrast">Tương phản</string>
+    <string name="studio_style_filter_gray_scale">Xám</string>
+    <string name="studio_style_filter_sepia">Nâu đỏ</string>
+    <string name="studio_style_filter_sharp">Sắc nét</string>
+    <string name="studio_style_filter_warm">Ấm áp</string>
+    <string name="studio_style_filter_vignette">Viền</string>
+    <string name="studio_style_filter_cross">Xuyên thấu</string>
+    <string name="studio_style_filter_poster">Áp phíc</string>
+    <string name="studio_style_filter_black_white">Đen trắng</string>
+
     <!-- Actions -->
     <string name="studio_action_save">Lưu</string>
     <string name="studio_action_apply">Áp dụng</string>

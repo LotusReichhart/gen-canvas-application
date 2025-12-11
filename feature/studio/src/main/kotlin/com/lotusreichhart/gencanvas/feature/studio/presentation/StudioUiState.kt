@@ -6,6 +6,7 @@ import com.lotusreichhart.gencanvas.feature.studio.domain.model.StudioTool
 
 internal data class StudioUiState(
     val toolStyleHistory: Map<StudioTool, StudioStyle> = emptyMap(),
+    val featureStyleHistory: Map<String, StudioStyle> = emptyMap(),
 
     val activeFeature: StudioFeature? = null,
     val activeTool: StudioTool? = null,
@@ -15,9 +16,9 @@ internal data class StudioUiState(
     val availableTools: List<StudioTool> = emptyList(),
     val availableStyles: List<StudioStyle> = emptyList(),
 
+    val hasUserInteracted : Boolean = false,
     val shouldExecuteSave: Boolean = false,
 
-    val isImageTransitionAnimated: Boolean = false,
     val isLoading: Boolean = false,
     val error: String? = null
 )
