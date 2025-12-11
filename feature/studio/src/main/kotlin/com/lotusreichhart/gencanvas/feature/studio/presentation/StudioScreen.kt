@@ -24,7 +24,8 @@ import com.lotusreichhart.gencanvas.feature.studio.presentation.components.Studi
 import com.lotusreichhart.gencanvas.feature.studio.presentation.components.StudioCanvas
 import com.lotusreichhart.gencanvas.feature.studio.presentation.components.StudioTopBar
 
-private val FIXED_BOTTOM_PADDING = 150.dp
+private val FIXED_TOP_PADDING = 50.dp
+private val FIXED_BOTTOM_PADDING = 140.dp
 
 @Composable
 internal fun StudioScreen(
@@ -63,6 +64,7 @@ internal fun StudioScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
+                    top = FIXED_TOP_PADDING,
                     bottom = FIXED_BOTTOM_PADDING,
                 ),
             contentAlignment = Alignment.Center
