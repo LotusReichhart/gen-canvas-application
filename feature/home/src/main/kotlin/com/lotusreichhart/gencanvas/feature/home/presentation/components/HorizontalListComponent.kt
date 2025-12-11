@@ -30,7 +30,7 @@ internal fun HorizontalListComponent(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
-            .padding(top = statusBarHeight + 60.dp)
+            .padding(top = statusBarHeight + 65.dp)
     ) {
         LazyRow(
             contentPadding = PaddingValues(horizontal = Dimension.Spacing.m),

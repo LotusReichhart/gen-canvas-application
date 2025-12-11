@@ -124,7 +124,7 @@ internal fun AccountTab(
             }
         )
 
-        Spacer(modifier = Modifier.height(Dimension.Spacing.xxl))
+        Spacer(modifier = Modifier.height(Dimension.Spacing.xxxl))
     }
 }
 

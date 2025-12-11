@@ -41,5 +41,7 @@
     <string name="core_action_take_photo">Chụp ảnh</string>
     <string name="core_action_pick_from_gallery">Chọn từ thư viện</string>
 
+    <string name="core_permission_camera">Cần quyền Camera để chụp ảnh</string>
+
     <string name="core_msg_press_back_again_to_exit">Nhấn lần nữa để thoát</string>
 </resources>
