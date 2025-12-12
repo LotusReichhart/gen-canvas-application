@@ -18,6 +18,7 @@ import com.lotusreichhart.gencanvas.core.common.util.TextResource
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.AccountRoute
 import com.lotusreichhart.gencanvas.core.ui.view.ImageViewerView
 import com.lotusreichhart.gencanvas.feature.account.navigation.accountGraph
+import com.lotusreichhart.gencanvas.feature.camera.navigation.cameraGraph
 import com.lotusreichhart.gencanvas.feature.studio.navigation.studioGraph
 
 @Composable
@@ -61,6 +62,10 @@ fun MainNavHost(
         )
 
         accountGraph(
+            navController = navController
+        )
+
+        cameraGraph(
             navController = navController
         )
 

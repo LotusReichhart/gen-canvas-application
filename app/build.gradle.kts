@@ -50,6 +50,7 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.account)
     implementation(projects.feature.auth)
+    implementation(projects.feature.camera)
     implementation(projects.feature.studio)
 
     implementation(libs.androidx.appcompat)

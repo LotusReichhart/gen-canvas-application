@@ -66,6 +66,9 @@ fun NavGraphBuilder.accountGraph(
                 onConsumeEditedImageResult = {
                     backStackEntry.savedStateHandle.remove<String>(StudioRoute.KEY_EDITED_IMAGE_RESULT)
                 },
+                onNavigateToCamera = {
+                    navController.navigate(GenCanvasRoute.CAMERA_FLOW_ROUTE)
+                },
                 onNavigateToEditor = { uri ->
                     navController.navigate(
                         route = StudioRoute.createStudioRoute(uri)
