@@ -109,7 +109,10 @@ internal fun CameraScreen(
         }
     }
 
-    val exposureState = cameraController.cameraInfo?.exposureState
+    val zoomState by cameraController.zoomState.observeAsState()
+    val exposureState = remember(zoomState) {
+        cameraController.cameraInfo?.exposureState
+    }
 
     var sliderValue by remember { mutableFloatStateOf(0f) }
     var lastExposureIndex by remember { mutableIntStateOf(0) }
