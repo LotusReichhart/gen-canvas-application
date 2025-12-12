@@ -6,6 +6,7 @@ object GenCanvasRoute {
     const val ACCOUNT_FLOW_ROUTE = "account_flow"
     const val AUTH_FLOW_ROUTE = "auth_flow"
 
+    const val CAMERA_FLOW_ROUTE = "camera_flow"
     const val STUDIO_FLOW_ROUTE = "editing_flow"
 
 

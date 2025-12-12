@@ -2,6 +2,7 @@ package com.lotusreichhart.gencanvas.core.ui.navigation
 
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.AccountRoute
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.AuthRoute
+import com.lotusreichhart.gencanvas.core.ui.navigation.routes.CameraRoute
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.StudioRoute
 import com.lotusreichhart.gencanvas.core.ui.navigation.routes.GenCanvasRoute
 
@@ -9,7 +10,8 @@ object RouteTransition {
     // -------------------------Zoom List------------------------ //
     val ZOOM_TRANSITION_ROUTES = listOf(
         GenCanvasRoute.IMAGE_VIEWER_VIEW,
-        StudioRoute.STUDIO_SCREEN
+        StudioRoute.STUDIO_SCREEN,
+        CameraRoute.CAMERA_SCREEN
     )
 
     fun isZoomRoute(route: String?): Boolean {

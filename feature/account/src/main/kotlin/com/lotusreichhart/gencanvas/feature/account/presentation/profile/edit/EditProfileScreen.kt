@@ -55,7 +55,6 @@ import com.lotusreichhart.gencanvas.core.ui.constant.Dimension
 
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
-import com.lotusreichhart.gencanvas.core.common.util.createTempPictureUri
 import com.lotusreichhart.gencanvas.core.common.util.toPhysicalFile
 import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasBottomSheet
 import com.lotusreichhart.gencanvas.core.ui.components.GenCanvasBottomSheetItem
@@ -74,6 +73,7 @@ internal fun EditProfileScreen(
     viewModel: EditProfileViewModel = hiltViewModel(),
     editedImageResult: String?,
     onConsumeEditedImageResult: () -> Unit,
+    onNavigateToCamera: () -> Unit,
     onNavigateToEditor: (Uri) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -91,8 +91,6 @@ internal fun EditProfileScreen(
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
-    var tempCameraUri by remember { mutableStateOf<Uri?>(null) }
-
     val onSave = {
         scope.launch {
             val currentUri = uiState.avatarUri
@@ -109,7 +107,6 @@ internal fun EditProfileScreen(
         }
     }
 
-
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -118,26 +115,11 @@ internal fun EditProfileScreen(
         }
     }
 
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture()
-    ) { success ->
-        if (success && tempCameraUri != null) {
-            onNavigateToEditor(tempCameraUri!!)
-        }
-    }
-
-    val launchCameraProcess = {
-        val uri = context.createTempPictureUri()
-        tempCameraUri = uri
-        cameraLauncher.launch(uri)
-    }
-
-
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            launchCameraProcess()
+            onNavigateToCamera()
         } else {
             viewModel.onCameraPermissionDenied()
         }
@@ -159,7 +141,7 @@ internal fun EditProfileScreen(
             )
 
             if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                launchCameraProcess()
+                onNavigateToCamera()
             } else {
                 permissionLauncher.launch(Manifest.permission.CAMERA)
             }

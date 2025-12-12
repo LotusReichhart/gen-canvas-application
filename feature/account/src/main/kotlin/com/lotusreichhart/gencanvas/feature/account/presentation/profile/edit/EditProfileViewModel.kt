@@ -104,9 +104,8 @@ internal class EditProfileViewModel @Inject constructor(
 
     fun onCameraPermissionDenied() {
         sendUiEvent(
-            UiEvent.ShowSnackBar(
-                TextResource.Id(CoreR.string.core_permission_camera),
-                type = UiEvent.SnackBarType.WARNING
+            UiEvent.ShowToast(
+                TextResource.Id(CoreR.string.core_permission_camera)
             )
         )
     }
